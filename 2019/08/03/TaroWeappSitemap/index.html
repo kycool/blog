@@ -22,7 +22,7 @@
         &#125;
     ],
     options: &#123;&#125;
-&#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>再次编译测试，正常，查看 <code>dist</code> 文件夹也存在 <code>sitemap.json</code> 文件。</p><h3 id="3-聊下-sitemap"><a href="#3-聊下-sitemap" class="headerlink" title="3 聊下 sitemap"></a>3 聊下 sitemap</h3><p>这个功能不错，增加小程序的曝光度，而且开发者还可以根据业务需要自定义被索引的页面，很实用。如果你不关心这些东西，就参考我的 <code>sitemap.json</code> 配置。</p></div><footer class="post-footer"><div class="reward-container"><div></div><button onclick='document.querySelector(".post-reward").classList.toggle("active")'>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.jpg" alt="独步天下·无与为偶 微信"> <span>微信</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>独步天下·无与为偶</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://kycool.cn/2019/08/03/TaroWeappSitemap/" title="微信小程序未找到入口 sitemap.json">https://kycool.cn/2019/08/03/TaroWeappSitemap/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/Taro/" rel="tag"><i class="fa fa-tag"></i> Taro</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i> 小程序</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2020/03/03/AntdFormInitialValues/" rel="prev" title="Antd：Form 的 InitialValues 重置"><i class="fa fa-chevron-left"></i> Antd：Form 的 InitialValues 重置</a></div><div class="post-nav-item"><a href="/2019/04/05/LocalHttpsByMkcert/" rel="next" title="本地开发使用 https">本地开发使用 https <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments gitalk-container"></div><script>window.addEventListener('tabs:register', () => {
+&#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>再次编译测试，正常，查看 <code>dist</code> 文件夹也存在 <code>sitemap.json</code> 文件。</p><h3 id="3-聊下-sitemap"><a href="#3-聊下-sitemap" class="headerlink" title="3 聊下 sitemap"></a>3 聊下 sitemap</h3><p>这个功能不错，增加小程序的曝光度，而且开发者还可以根据业务需要自定义被索引的页面，很实用。如果你不关心这些东西，就参考我的 <code>sitemap.json</code> 配置。</p></div><footer class="post-footer"><div class="reward-container"><div></div><button onclick='document.querySelector(".post-reward").classList.toggle("active")'>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.jpg" alt="独步天下·无与为偶 微信"> <span>微信</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>独步天下·无与为偶</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://kycool.cn/2019/08/03/TaroWeappSitemap/" title="微信小程序未找到入口 sitemap.json">https://kycool.cn/2019/08/03/TaroWeappSitemap/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/Taro/" rel="tag"><i class="fa fa-tag"></i> Taro</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i> 小程序</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2020/03/03/AntdFormInitialValues/" rel="prev" title="Antd：Form 的 InitialValues 重置"><i class="fa fa-chevron-left"></i> Antd：Form 的 InitialValues 重置</a></div><div class="post-nav-item"><a href="/2019/04/05/LocalHttpsByMkcert/" rel="next" title="本地开发使用 https">本地开发使用 https <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments utterances-container"></div><script>window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -57,19 +57,13 @@
     });
     document.addEventListener('pjax:success', () => {
       NProgress.done();
-    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css"><script>NexT.utils.loadComments('.gitalk-container', () => {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : 'c5e60ddca656581e8426',
-      clientSecret: 'e6b1a84a820c6393afcb9e6db28392bb9e79009b',
-      repo        : 'blog',
-      owner       : 'kycool',
-      admin       : ['kycool'],
-      id          : '4ab5878f947e8f2af246f377dd6ea50c',
-      proxy       : 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'',
-        language: 'zh-CN',
-      distractionFreeMode: true
-    });
-    gitalk.render(document.querySelector('.gitalk-container'));
-  }, window.Gitalk);
+    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script>NexT.utils.loadComments('.utterances-container', () => {
+  const script = document.createElement('script');
+  script.src = 'https://utteranc.es/client.js';
+  script.setAttribute('repo', "kycool/blog");
+  script.setAttribute('issue-term', "pathname");
+  script.setAttribute('theme', "github-light");
+  script.crossOrigin = 'anonymous';
+  script.async = true;
+  document.querySelector('.utterances-container').appendChild(script);
 });</script></body></html>

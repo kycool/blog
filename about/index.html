@@ -13,7 +13,7 @@
         &#39;基于 DRF 实现接口自动化工具以及业务插件&#39;,
         &#39;用 C 做些小玩意&#39;,
         &#39;因业务温习 Java&#39;,
-    ]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></div><div class="comments gitalk-container"></div><script>window.addEventListener('tabs:register', () => {
+    ]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></div><div class="comments utterances-container"></div><script>window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -48,19 +48,13 @@
     });
     document.addEventListener('pjax:success', () => {
       NProgress.done();
-    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css"><script>NexT.utils.loadComments('.gitalk-container', () => {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : 'c5e60ddca656581e8426',
-      clientSecret: 'e6b1a84a820c6393afcb9e6db28392bb9e79009b',
-      repo        : 'blog',
-      owner       : 'kycool',
-      admin       : ['kycool'],
-      id          : '3be7aa98d992907175cbd79c194399f2',
-      proxy       : 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'',
-        language: 'zh-CN',
-      distractionFreeMode: true
-    });
-    gitalk.render(document.querySelector('.gitalk-container'));
-  }, window.Gitalk);
+    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script>NexT.utils.loadComments('.utterances-container', () => {
+  const script = document.createElement('script');
+  script.src = 'https://utteranc.es/client.js';
+  script.setAttribute('repo', "kycool/blog");
+  script.setAttribute('issue-term', "pathname");
+  script.setAttribute('theme', "github-light");
+  script.crossOrigin = 'anonymous';
+  script.async = true;
+  document.querySelector('.utterances-container').appendChild(script);
 });</script></body></html>

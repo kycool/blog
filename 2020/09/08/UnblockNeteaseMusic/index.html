@@ -22,7 +22,7 @@ MITM &gt; music.163.com
 MITM &gt; music.163.com
 [1400394244] 以父之名 (Live)
 http:&#x2F;&#x2F;sz.sycdn.kuwo.cn&#x2F;cadd34fd7d42d643db5257b182f07ad5&#x2F;5f57a6b9&#x2F;resource&#x2F;n1&#x2F;69&#x2F;17&#x2F;1415834243.mp3
-MITM &gt; music.163.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>使用这种方式听歌呢，因为要跑服务和代理，so 最好还是用脚本打开网易云音乐，省事。</p></div><footer class="post-footer"><div class="reward-container"><div></div><button onclick='document.querySelector(".post-reward").classList.toggle("active")'>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.jpg" alt="独步天下·无与为偶 微信"> <span>微信</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>独步天下·无与为偶</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://kycool.cn/2020/09/08/UnblockNeteaseMusic/" title="Mac-解锁网易云置灰音乐">https://kycool.cn/2020/09/08/UnblockNeteaseMusic/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/Mac/" rel="tag"><i class="fa fa-tag"></i> Mac</a></div><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a href="/2020/04/26/DjangoVirtualField/" rel="next" title="Django | 虚拟字段">Django | 虚拟字段 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments gitalk-container"></div><script>window.addEventListener('tabs:register', () => {
+MITM &gt; music.163.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>使用这种方式听歌呢，因为要跑服务和代理，so 最好还是用脚本打开网易云音乐，省事。</p></div><footer class="post-footer"><div class="reward-container"><div></div><button onclick='document.querySelector(".post-reward").classList.toggle("active")'>赞赏</button><div class="post-reward"><div><img src="/images/wechatpay.jpg" alt="独步天下·无与为偶 微信"> <span>微信</span></div></div></div><div class="post-copyright"><ul><li class="post-copyright-author"><strong>本文作者： </strong>独步天下·无与为偶</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://kycool.cn/2020/09/08/UnblockNeteaseMusic/" title="Mac-解锁网易云置灰音乐">https://kycool.cn/2020/09/08/UnblockNeteaseMusic/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><div class="post-tags"><a href="/tags/Mac/" rel="tag"><i class="fa fa-tag"></i> Mac</a></div><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a href="/2020/04/26/DjangoVirtualField/" rel="next" title="Django | 虚拟字段">Django | 虚拟字段 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments utterances-container"></div><script>window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -57,19 +57,13 @@ MITM &gt; music.163.com<span aria-hidden="true" class="line-numbers-rows"><span>
     });
     document.addEventListener('pjax:success', () => {
       NProgress.done();
-    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css"><script>NexT.utils.loadComments('.gitalk-container', () => {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : 'c5e60ddca656581e8426',
-      clientSecret: 'e6b1a84a820c6393afcb9e6db28392bb9e79009b',
-      repo        : 'blog',
-      owner       : 'kycool',
-      admin       : ['kycool'],
-      id          : '5c0a383bea16e0d075d2a7501b72c4a9',
-      proxy       : 'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'',
-        language: 'zh-CN',
-      distractionFreeMode: true
-    });
-    gitalk.render(document.querySelector('.gitalk-container'));
-  }, window.Gitalk);
+    });</script><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script>NexT.utils.loadComments('.utterances-container', () => {
+  const script = document.createElement('script');
+  script.src = 'https://utteranc.es/client.js';
+  script.setAttribute('repo', "kycool/blog");
+  script.setAttribute('issue-term', "pathname");
+  script.setAttribute('theme', "github-light");
+  script.crossOrigin = 'anonymous';
+  script.async = true;
+  document.querySelector('.utterances-container').appendChild(script);
 });</script></body></html>
