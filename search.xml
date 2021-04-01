@@ -1,56 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>资源加速系列之 pip</title>
-    <url>/2015/09/01/AddPipSpeed/</url>
-    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
-<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;pypi.org&#x2F;simple<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
-<!--more-->
-
-<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
-<ul>
-<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
-<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
-<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
-<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
-</ul>
-<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
-<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><pre class="line-numbers language-none"><code class="language-none">pip install -i 镜像源地址 包名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
-<pre class="line-numbers language-none"><code class="language-none">pip install -i https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F; django<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
-<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
-<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
-<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
-<pre class="line-numbers language-none"><code class="language-none">[global]
-timeout &#x3D; 60
-index-url &#x3D; https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple
-
-[install]
-trusted-host&#x3D;mirrors.aliyun.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
-<pre class="line-numbers language-none"><code class="language-none">You can set a custom path location for this config
-file using the environment variable PIP_CONFIG_FILE.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
-<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>资源加速</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>镜像</tag>
-        <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>资源加速系列之 Github</title>
     <url>/2020/03/18/AddGithubSpeed/</url>
     <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
@@ -152,144 +102,6 @@ INFO  Install dependencies<span aria-hidden="true" class="line-numbers-rows"><sp
       </tags>
   </entry>
   <entry>
-    <title>简单备份文件并发送到指定邮箱</title>
-    <url>/2017/08/10/BackupToEmail/</url>
-    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
-<span id="more"></span>
-
-<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"># -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
-import os
-import datetime
-import logging
-import logging.config
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.header import Header
-from email.mime.application import MIMEApplication
-import smtplib
-
-name &#x3D; datetime.datetime.now().strftime(&quot;%Y%m%d%H%M%S&quot;)
-base_path &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;temp&#39;
-zip_path &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;backup&#x2F;&#123;&#125;.tar.bz2&#39;.format(name)
-
-
-def set_logging():
-    &quot;&quot;&quot;&quot;&quot;&quot;
-
-    log_dir, log_file &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#39;, &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#x2F;backup.log&#39;
-
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-
-    if not os.path.exists(log_file):
-        open(log_file, &#39;w&#39;)
-
-    DEFAULT_LOGGING &#x3D; &#123;
-        &#39;version&#39;: 1,
-        &#39;disable_existing_loggers&#39;: False,
-        &#39;formatters&#39;: &#123;
-            &#39;formatone&#39;: &#123;
-                &#39;format&#39;: &#39;[%(asctime)s] %(levelname)s : %(message)s&#39;,
-            &#125;
-        &#125;,
-        &#39;handlers&#39;: &#123;
-            &#39;file&#39;: &#123;
-                &#39;level&#39;: &#39;DEBUG&#39;,
-                &#39;filename&#39;: &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#x2F;backup.log&#39;,
-                &#39;formatter&#39;: &#39;formatone&#39;,
-                &#39;class&#39;: &#39;logging.handlers.RotatingFileHandler&#39;,
-                &#39;maxBytes&#39;: 100 * 1024 * 1024,
-                &#39;backupCount&#39;: 10,
-            &#125;,
-        &#125;,
-        &#39;loggers&#39;: &#123;
-            &#39;backup&#39;: &#123;
-                &#39;handlers&#39;: [&#39;file&#39;],
-                &#39;level&#39;: &#39;INFO&#39;,
-            &#125;,
-        &#125;
-    &#125;
-
-    logging.config.dictConfig(DEFAULT_LOGGING)
-
-
-def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
-
-
-def sendmail():
-    &quot;&quot;&quot;send mail&quot;&quot;&quot;
-    set_logging()
-    zip_files()
-
-    logger &#x3D; logging.getLogger(&#39;backup&#39;)
-
-    mail_from, password &#x3D; &#39;xxxxxxx@aliyun.com&#39;, &#39;xxxxxxx&#39;
-    mail_to &#x3D; &#39;xxxxx@qq.com&#39;
-    smtp_server &#x3D; &#39;smtp.aliyun.com&#39;
-
-    msgRoot &#x3D; MIMEMultipart(&#39;related&#39;)
-    msgRoot[&#39;Subject&#39;] &#x3D; &#39;send backup files &#123;&#125;&#39;.format(name)
-    msgRoot[&#39;From&#39;] &#x3D; &#39;&#123;&#125;&lt;&#123;&#125;&gt;&#39;.format(Header(&#39;backup&#39;, &#39;utf-8&#39;), mail_from)
-    msgRoot[&#39;To&#39;] &#x3D; mail_to
-
-    msgText &#x3D; MIMEText(&#39;backup files&#39;, &#39;plain&#39;, &#39;utf-8&#39;)
-    msgRoot.attach(msgText)
-
-    zip_con &#x3D; MIMEApplication(open(zip_path,&#39;rb&#39;).read())
-    zip_con.add_header(&#39;Content-Disposition&#39;, &#39;attachment&#39;,
-                       filename&#x3D;&#39;&#123;&#125;.tar.bz2&#39;.format(name))
-    msgRoot.attach(zip_con)
-
-    try:
-        server &#x3D; smtplib.SMTP_SSL(smtp_server)
-        server.login(mail_from, password)
-        server.sendmail(mail_from, mail_to, msgRoot.as_string())
-        server.quit()
-        logger.info(&#39;send &#123;&#125; backup files success&#39;.format(name))
-    except Exception, e:
-        logger.error(&#39;send &#123;&#125; failed &#123;&#125;&#39;.format(name, e))
-        sendmail()
-
-
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    sendmail()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
-<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">00</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">03</span><span class="token punctuation">,</span><span class="token number">251</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414000001</span> backup files success
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">03</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">620</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414030001</span> backup files success
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">06</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">406</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414060001</span> backup files success
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">09</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">349</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414090001</span> backup files success
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">12</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">299</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414120001</span> backup files success
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">15</span><span class="token operator">:</span><span class="token number">01</span><span class="token operator">:</span><span class="token number">04</span><span class="token punctuation">,</span><span class="token number">696</span><span class="token punctuation">]</span> <span class="token constant">ERROR</span> <span class="token operator">:</span> send <span class="token number">20170414150001</span> failed <span class="token punctuation">[</span>Errno <span class="token number">110</span><span class="token punctuation">]</span> Connection timed out
-<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">15</span><span class="token operator">:</span><span class="token number">01</span><span class="token operator">:</span><span class="token number">05</span><span class="token punctuation">,</span><span class="token number">401</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414150001</span> backup files success
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">0 *&#x2F;3 * * *  python &#x2F;root&#x2F;xxxxx&#x2F;backup.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>资源加速系列之 pyenv</title>
     <url>/2016/10/22/AddPyenvSpeed/</url>
     <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
@@ -350,13 +162,63 @@ Installed Python-3.6.7 to &#x2F;Users&#x2F;kycool&#x2F;.pyenv&#x2F;versions&#x2F
 <p>可以，后续就可以这样玩了，省时省力。</p>
 ]]></content>
       <categories>
-        <category>后端</category>
         <category>资源加速</category>
+        <category>后端</category>
         <category>Python</category>
       </categories>
       <tags>
-        <tag>镜像</tag>
         <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源加速系列之 pip</title>
+    <url>/2015/09/01/AddPipSpeed/</url>
+    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
+<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;pypi.org&#x2F;simple<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
+<!--more-->
+
+<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
+<ul>
+<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
+<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
+<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
+<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
+</ul>
+<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
+<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><pre class="line-numbers language-none"><code class="language-none">pip install -i 镜像源地址 包名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
+<pre class="line-numbers language-none"><code class="language-none">pip install -i https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F; django<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
+<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
+<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
+<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
+<pre class="line-numbers language-none"><code class="language-none">[global]
+timeout &#x3D; 60
+index-url &#x3D; https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple
+
+[install]
+trusted-host&#x3D;mirrors.aliyun.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
+<pre class="line-numbers language-none"><code class="language-none">You can set a custom path location for this config
+file using the environment variable PIP_CONFIG_FILE.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
+<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
       </tags>
   </entry>
   <entry>
@@ -505,6 +367,201 @@ asyncRequest().then(initialValues &#x3D;&gt; form.setFieldsValue(&#123; initialV
       </tags>
   </entry>
   <entry>
+    <title>简单备份文件并发送到指定邮箱</title>
+    <url>/2017/08/10/BackupToEmail/</url>
+    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
+<span id="more"></span>
+
+<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"># -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, unicode_literals
+
+import os
+import datetime
+import logging
+import logging.config
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.header import Header
+from email.mime.application import MIMEApplication
+import smtplib
+
+name &#x3D; datetime.datetime.now().strftime(&quot;%Y%m%d%H%M%S&quot;)
+base_path &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;temp&#39;
+zip_path &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;backup&#x2F;&#123;&#125;.tar.bz2&#39;.format(name)
+
+
+def set_logging():
+    &quot;&quot;&quot;&quot;&quot;&quot;
+
+    log_dir, log_file &#x3D; &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#39;, &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#x2F;backup.log&#39;
+
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+
+    if not os.path.exists(log_file):
+        open(log_file, &#39;w&#39;)
+
+    DEFAULT_LOGGING &#x3D; &#123;
+        &#39;version&#39;: 1,
+        &#39;disable_existing_loggers&#39;: False,
+        &#39;formatters&#39;: &#123;
+            &#39;formatone&#39;: &#123;
+                &#39;format&#39;: &#39;[%(asctime)s] %(levelname)s : %(message)s&#39;,
+            &#125;
+        &#125;,
+        &#39;handlers&#39;: &#123;
+            &#39;file&#39;: &#123;
+                &#39;level&#39;: &#39;DEBUG&#39;,
+                &#39;filename&#39;: &#39;&#x2F;root&#x2F;xxxx&#x2F;logs&#x2F;backup.log&#39;,
+                &#39;formatter&#39;: &#39;formatone&#39;,
+                &#39;class&#39;: &#39;logging.handlers.RotatingFileHandler&#39;,
+                &#39;maxBytes&#39;: 100 * 1024 * 1024,
+                &#39;backupCount&#39;: 10,
+            &#125;,
+        &#125;,
+        &#39;loggers&#39;: &#123;
+            &#39;backup&#39;: &#123;
+                &#39;handlers&#39;: [&#39;file&#39;],
+                &#39;level&#39;: &#39;INFO&#39;,
+            &#125;,
+        &#125;
+    &#125;
+
+    logging.config.dictConfig(DEFAULT_LOGGING)
+
+
+def zip_files():
+    &quot;&quot;&quot;zip files&quot;&quot;&quot;
+    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
+
+
+def sendmail():
+    &quot;&quot;&quot;send mail&quot;&quot;&quot;
+    set_logging()
+    zip_files()
+
+    logger &#x3D; logging.getLogger(&#39;backup&#39;)
+
+    mail_from, password &#x3D; &#39;xxxxxxx@aliyun.com&#39;, &#39;xxxxxxx&#39;
+    mail_to &#x3D; &#39;xxxxx@qq.com&#39;
+    smtp_server &#x3D; &#39;smtp.aliyun.com&#39;
+
+    msgRoot &#x3D; MIMEMultipart(&#39;related&#39;)
+    msgRoot[&#39;Subject&#39;] &#x3D; &#39;send backup files &#123;&#125;&#39;.format(name)
+    msgRoot[&#39;From&#39;] &#x3D; &#39;&#123;&#125;&lt;&#123;&#125;&gt;&#39;.format(Header(&#39;backup&#39;, &#39;utf-8&#39;), mail_from)
+    msgRoot[&#39;To&#39;] &#x3D; mail_to
+
+    msgText &#x3D; MIMEText(&#39;backup files&#39;, &#39;plain&#39;, &#39;utf-8&#39;)
+    msgRoot.attach(msgText)
+
+    zip_con &#x3D; MIMEApplication(open(zip_path,&#39;rb&#39;).read())
+    zip_con.add_header(&#39;Content-Disposition&#39;, &#39;attachment&#39;,
+                       filename&#x3D;&#39;&#123;&#125;.tar.bz2&#39;.format(name))
+    msgRoot.attach(zip_con)
+
+    try:
+        server &#x3D; smtplib.SMTP_SSL(smtp_server)
+        server.login(mail_from, password)
+        server.sendmail(mail_from, mail_to, msgRoot.as_string())
+        server.quit()
+        logger.info(&#39;send &#123;&#125; backup files success&#39;.format(name))
+    except Exception, e:
+        logger.error(&#39;send &#123;&#125; failed &#123;&#125;&#39;.format(name, e))
+        sendmail()
+
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    sendmail()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def zip_files():
+    &quot;&quot;&quot;zip files&quot;&quot;&quot;
+    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
+<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">00</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">03</span><span class="token punctuation">,</span><span class="token number">251</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414000001</span> backup files success
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">03</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">620</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414030001</span> backup files success
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">06</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">406</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414060001</span> backup files success
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">09</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">349</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414090001</span> backup files success
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">12</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">02</span><span class="token punctuation">,</span><span class="token number">299</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414120001</span> backup files success
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">15</span><span class="token operator">:</span><span class="token number">01</span><span class="token operator">:</span><span class="token number">04</span><span class="token punctuation">,</span><span class="token number">696</span><span class="token punctuation">]</span> <span class="token constant">ERROR</span> <span class="token operator">:</span> send <span class="token number">20170414150001</span> failed <span class="token punctuation">[</span>Errno <span class="token number">110</span><span class="token punctuation">]</span> Connection timed out
+<span class="token punctuation">[</span><span class="token number">2017</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">14</span> <span class="token number">15</span><span class="token operator">:</span><span class="token number">01</span><span class="token operator">:</span><span class="token number">05</span><span class="token punctuation">,</span><span class="token number">401</span><span class="token punctuation">]</span> <span class="token constant">INFO</span> <span class="token operator">:</span> send <span class="token number">20170414150001</span> backup files success
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">0 *&#x2F;3 * * *  python &#x2F;root&#x2F;xxxxx&#x2F;backup.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django | 通用的开发包</title>
+    <url>/2015/07/10/DjangoUsedPackages/</url>
+    <content><![CDATA[<p>更新时间：2019-12-20 22:05:03</p>
+<p>基于 <code>Django</code> 项目，通用的第三方开发工具包，这里只列出了通用的开发包，也包含了部分业务包，其他常见的涉及到具体的业务包，不再一一列出。</p>
+<h4 id="1-DjangoRestFramework"><a href="#1-DjangoRestFramework" class="headerlink" title="1 DjangoRestFramework"></a>1 DjangoRestFramework</h4><p><a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></p>
+<p>开发 <code>Restful</code> 接口的主力工具</p>
+<h4 id="2-django-cors-headers"><a href="#2-django-cors-headers" class="headerlink" title="2 django-cors-headers"></a>2 django-cors-headers</h4><p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
+<p>解决前后端分离接口请求跨域</p>
+<h4 id="3-django-extensions"><a href="#3-django-extensions" class="headerlink" title="3 django-extensions"></a>3 django-extensions</h4><p><a href="https://github.com/django-extensions/django-extensions">https://github.com/django-extensions/django-extensions</a></p>
+<p><code>Django</code> 扩展增强工具</p>
+<h4 id="4-ipython"><a href="#4-ipython" class="headerlink" title="4 ipython"></a>4 ipython</h4><p><a href="https://ipython.org/">https://ipython.org/</a></p>
+<p>强大的交互式 <code>shell</code>，测试调试非常顺手，当然不仅仅限于 <code>Django</code> 开发</p>
+<h4 id="5-django-environ"><a href="#5-django-environ" class="headerlink" title="5 django-environ"></a>5 django-environ</h4><p><a href="https://github.com/joke2k/django-environ">https://github.com/joke2k/django-environ</a></p>
+<p>区分各种环境的配置利器</p>
+<h4 id="6-celery"><a href="#6-celery" class="headerlink" title="6 celery"></a>6 celery</h4><p><a href="https://github.com/celery/celery">https://github.com/celery/celery</a></p>
+<p>分布式的任务队列分发器</p>
+<h4 id="7-wechatpy"><a href="#7-wechatpy" class="headerlink" title="7 wechatpy"></a>7 wechatpy</h4><p><a href="https://github.com/wechatpy/wechatpy">https://github.com/wechatpy/wechatpy</a></p>
+<p>微信开发必备的 SDK</p>
+<h4 id="8-gunicorn"><a href="#8-gunicorn" class="headerlink" title="8 gunicorn"></a>8 gunicorn</h4><p><a href="https://gunicorn.org/">https://gunicorn.org/</a></p>
+<p><code>Python WSGI HTTP Server</code></p>
+<h4 id="9-factory-boy"><a href="#9-factory-boy" class="headerlink" title="9 factory-boy"></a>9 factory-boy</h4><p><a href="https://github.com/FactoryBoy/factory_boy">https://github.com/FactoryBoy/factory_boy</a></p>
+<p>测试数据生成工具</p>
+<h4 id="10-parameterized"><a href="#10-parameterized" class="headerlink" title="10 parameterized"></a>10 parameterized</h4><p><a href="https://github.com/wolever/parameterized">https://github.com/wolever/parameterized</a></p>
+<p>为测试用例提供参数化的，重复性支持</p>
+<h4 id="11-pytest"><a href="#11-pytest" class="headerlink" title="11 pytest"></a>11 pytest</h4><p><a href="https://docs.pytest.org/en/latest/">https://docs.pytest.org/en/latest/</a></p>
+<p>强大的第三方测试框架，丰富的插件集，活跃的社区</p>
+<p>当然还有 <code>nose</code> 和 它的继任者 <code>nose2</code>，不过相比较而言，还是更加青睐于 <code>pytest</code></p>
+<p><code>nose</code>：<a href="https://nose.readthedocs.io/en/latest/">https://nose.readthedocs.io/en/latest/</a><br><code>nose2</code>：<a href="https://github.com/nose-devs/nose2">https://github.com/nose-devs/nose2</a></p>
+<p>不过 <code>nose</code> 已经不再更新，进入了维护阶段，如果使用建议使用 <code>nose2</code></p>
+<h4 id="12-raven"><a href="#12-raven" class="headerlink" title="12 raven"></a>12 raven</h4><p><a href="https://raven.readthedocs.io/en/feature-federated-docs/">https://raven.readthedocs.io/en/feature-federated-docs/</a></p>
+<p>这个一般都是结合 <code>Sentry</code> 使用</p>
+<h4 id="13-mysqlclient"><a href="#13-mysqlclient" class="headerlink" title="13 mysqlclient"></a>13 mysqlclient</h4><p><a href="https://github.com/PyMySQL/mysqlclient-python">https://github.com/PyMySQL/mysqlclient-python</a></p>
+<p>因为我使用 <code>Mysql</code> 较多</p>
+<h4 id="14-django-silk"><a href="#14-django-silk" class="headerlink" title="14 django-silk"></a>14 django-silk</h4><p><a href="https://github.com/jazzband/django-silk">https://github.com/jazzband/django-silk</a></p>
+<p>简单的性能监控工具</p>
+<h4 id="15-django-debug-toolbar"><a href="#15-django-debug-toolbar" class="headerlink" title="15 django-debug-toolbar"></a>15 django-debug-toolbar</h4><p><a href="https://github.com/jazzband/django-debug-toolbar">https://github.com/jazzband/django-debug-toolbar</a></p>
+<p><code>debug</code> 工具</p>
+<h4 id="16-django-reversion"><a href="#16-django-reversion" class="headerlink" title="16 django-reversion"></a>16 django-reversion</h4><p><a href="https://github.com/etianen/django-reversion">https://github.com/etianen/django-reversion</a></p>
+<p>模型版本控制</p>
+<h4 id="17-whitenoise"><a href="#17-whitenoise" class="headerlink" title="17 whitenoise"></a>17 whitenoise</h4><p><a href="https://github.com/evansd/whitenoise">https://github.com/evansd/whitenoise</a></p>
+<p>静态资源管理，通常是用来管理 <code>django admin</code> 和其他第三方包的静态资源。</p>
+<h4 id="18-django-sql-explorer"><a href="#18-django-sql-explorer" class="headerlink" title="18 django-sql-explorer"></a>18 django-sql-explorer</h4><p><a href="https://github.com/groveco/django-sql-explorer">https://github.com/groveco/django-sql-explorer</a></p>
+<p><code>SQL</code> 运行查询辅助工具</p>
+<h4 id="19-django-import-export"><a href="#19-django-import-export" class="headerlink" title="19 django-import-export"></a>19 django-import-export</h4><p><a href="https://github.com/django-import-export/django-import-export">https://github.com/django-import-export/django-import-export</a></p>
+<p>数据导入导出</p>
+<h4 id="20-django-compressor"><a href="#20-django-compressor" class="headerlink" title="20 django-compressor"></a>20 django-compressor</h4><p><a href="https://django-compressor.readthedocs.io/en/stable/">https://django-compressor.readthedocs.io/en/stable/</a></p>
+<p>合并静态资源，减少网络请求，一般使用在 <code>django admin</code> 中。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django | Mysql 返回不合法的日期时间对象</title>
     <url>/2018/05/10/DjangoMysqlReturnInvalidDate/</url>
     <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
@@ -568,63 +625,6 @@ Execution time: 0.000591s [Database: default]
       <tags>
         <tag>Django</tag>
         <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Django | 通用的开发包</title>
-    <url>/2015/07/10/DjangoUsedPackages/</url>
-    <content><![CDATA[<p>更新时间：2019-12-20 22:05:03</p>
-<p>基于 <code>Django</code> 项目，通用的第三方开发工具包，这里只列出了通用的开发包，也包含了部分业务包，其他常见的涉及到具体的业务包，不再一一列出。</p>
-<h4 id="1-DjangoRestFramework"><a href="#1-DjangoRestFramework" class="headerlink" title="1 DjangoRestFramework"></a>1 DjangoRestFramework</h4><p><a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></p>
-<p>开发 <code>Restful</code> 接口的主力工具</p>
-<h4 id="2-django-cors-headers"><a href="#2-django-cors-headers" class="headerlink" title="2 django-cors-headers"></a>2 django-cors-headers</h4><p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
-<p>解决前后端分离接口请求跨域</p>
-<h4 id="3-django-extensions"><a href="#3-django-extensions" class="headerlink" title="3 django-extensions"></a>3 django-extensions</h4><p><a href="https://github.com/django-extensions/django-extensions">https://github.com/django-extensions/django-extensions</a></p>
-<p><code>Django</code> 扩展增强工具</p>
-<h4 id="4-ipython"><a href="#4-ipython" class="headerlink" title="4 ipython"></a>4 ipython</h4><p><a href="https://ipython.org/">https://ipython.org/</a></p>
-<p>强大的交互式 <code>shell</code>，测试调试非常顺手，当然不仅仅限于 <code>Django</code> 开发</p>
-<h4 id="5-django-environ"><a href="#5-django-environ" class="headerlink" title="5 django-environ"></a>5 django-environ</h4><p><a href="https://github.com/joke2k/django-environ">https://github.com/joke2k/django-environ</a></p>
-<p>区分各种环境的配置利器</p>
-<h4 id="6-celery"><a href="#6-celery" class="headerlink" title="6 celery"></a>6 celery</h4><p><a href="https://github.com/celery/celery">https://github.com/celery/celery</a></p>
-<p>分布式的任务队列分发器</p>
-<h4 id="7-wechatpy"><a href="#7-wechatpy" class="headerlink" title="7 wechatpy"></a>7 wechatpy</h4><p><a href="https://github.com/wechatpy/wechatpy">https://github.com/wechatpy/wechatpy</a></p>
-<p>微信开发必备的 SDK</p>
-<h4 id="8-gunicorn"><a href="#8-gunicorn" class="headerlink" title="8 gunicorn"></a>8 gunicorn</h4><p><a href="https://gunicorn.org/">https://gunicorn.org/</a></p>
-<p><code>Python WSGI HTTP Server</code></p>
-<h4 id="9-factory-boy"><a href="#9-factory-boy" class="headerlink" title="9 factory-boy"></a>9 factory-boy</h4><p><a href="https://github.com/FactoryBoy/factory_boy">https://github.com/FactoryBoy/factory_boy</a></p>
-<p>测试数据生成工具</p>
-<h4 id="10-parameterized"><a href="#10-parameterized" class="headerlink" title="10 parameterized"></a>10 parameterized</h4><p><a href="https://github.com/wolever/parameterized">https://github.com/wolever/parameterized</a></p>
-<p>为测试用例提供参数化的，重复性支持</p>
-<h4 id="11-pytest"><a href="#11-pytest" class="headerlink" title="11 pytest"></a>11 pytest</h4><p><a href="https://docs.pytest.org/en/latest/">https://docs.pytest.org/en/latest/</a></p>
-<p>强大的第三方测试框架，丰富的插件集，活跃的社区</p>
-<p>当然还有 <code>nose</code> 和 它的继任者 <code>nose2</code>，不过相比较而言，还是更加青睐于 <code>pytest</code></p>
-<p><code>nose</code>：<a href="https://nose.readthedocs.io/en/latest/">https://nose.readthedocs.io/en/latest/</a><br><code>nose2</code>：<a href="https://github.com/nose-devs/nose2">https://github.com/nose-devs/nose2</a></p>
-<p>不过 <code>nose</code> 已经不再更新，进入了维护阶段，如果使用建议使用 <code>nose2</code></p>
-<h4 id="12-raven"><a href="#12-raven" class="headerlink" title="12 raven"></a>12 raven</h4><p><a href="https://raven.readthedocs.io/en/feature-federated-docs/">https://raven.readthedocs.io/en/feature-federated-docs/</a></p>
-<p>这个一般都是结合 <code>Sentry</code> 使用</p>
-<h4 id="13-mysqlclient"><a href="#13-mysqlclient" class="headerlink" title="13 mysqlclient"></a>13 mysqlclient</h4><p><a href="https://github.com/PyMySQL/mysqlclient-python">https://github.com/PyMySQL/mysqlclient-python</a></p>
-<p>因为我使用 <code>Mysql</code> 较多</p>
-<h4 id="14-django-silk"><a href="#14-django-silk" class="headerlink" title="14 django-silk"></a>14 django-silk</h4><p><a href="https://github.com/jazzband/django-silk">https://github.com/jazzband/django-silk</a></p>
-<p>简单的性能监控工具</p>
-<h4 id="15-django-debug-toolbar"><a href="#15-django-debug-toolbar" class="headerlink" title="15 django-debug-toolbar"></a>15 django-debug-toolbar</h4><p><a href="https://github.com/jazzband/django-debug-toolbar">https://github.com/jazzband/django-debug-toolbar</a></p>
-<p><code>debug</code> 工具</p>
-<h4 id="16-django-reversion"><a href="#16-django-reversion" class="headerlink" title="16 django-reversion"></a>16 django-reversion</h4><p><a href="https://github.com/etianen/django-reversion">https://github.com/etianen/django-reversion</a></p>
-<p>模型版本控制</p>
-<h4 id="17-whitenoise"><a href="#17-whitenoise" class="headerlink" title="17 whitenoise"></a>17 whitenoise</h4><p><a href="https://github.com/evansd/whitenoise">https://github.com/evansd/whitenoise</a></p>
-<p>静态资源管理，通常是用来管理 <code>django admin</code> 和其他第三方包的静态资源。</p>
-<h4 id="18-django-sql-explorer"><a href="#18-django-sql-explorer" class="headerlink" title="18 django-sql-explorer"></a>18 django-sql-explorer</h4><p><a href="https://github.com/groveco/django-sql-explorer">https://github.com/groveco/django-sql-explorer</a></p>
-<p><code>SQL</code> 运行查询辅助工具</p>
-<h4 id="19-django-import-export"><a href="#19-django-import-export" class="headerlink" title="19 django-import-export"></a>19 django-import-export</h4><p><a href="https://github.com/django-import-export/django-import-export">https://github.com/django-import-export/django-import-export</a></p>
-<p>数据导入导出</p>
-<h4 id="20-django-compressor"><a href="#20-django-compressor" class="headerlink" title="20 django-compressor"></a>20 django-compressor</h4><p><a href="https://django-compressor.readthedocs.io/en/stable/">https://django-compressor.readthedocs.io/en/stable/</a></p>
-<p>合并静态资源，减少网络请求，一般使用在 <code>django admin</code> 中。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Django</tag>
       </tags>
   </entry>
   <entry>
