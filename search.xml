@@ -134,6 +134,46 @@
       </tags>
   </entry>
   <entry>
+    <title>Antd：Form 的 InitialValues 重置</title>
+    <url>/posts/59046/</url>
+    <content><![CDATA[<p>描述：编辑页面中 <code>Form</code> 的 <code>InitialValues</code> 的重置</p>
+<span id="more"></span>
+
+<h3 id="1-场景描述"><a href="#1-场景描述" class="headerlink" title="1 场景描述"></a>1 场景描述</h3><p>管理后台的通用场景，列表页面，然后点击新建或者更新，这里说的是更新的场景，异步请求，重新渲染表单。</p>
+<p>管理后台使用 <code>antd-pro</code> 搭建，<code>antd</code> 使用了 <code>4.x</code> 版本，注意这个版本对 <code>Form</code> 做了些调整。</p>
+<p>点击更新进入表单页面，我设置了 <code>state</code> 的初始值</p>
+<figure class="highlight pf"><table><tr><td class="code"><pre><span class="line"><span class="keyword">state</span> = &#123;</span><br><span class="line">  initialValues: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后异步请求，请求到结果后，需要重置 <code>initialValues</code>，但是根据 <code>antd</code> 的文档</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">initialValue</span> 表单默认值，只有初始化以及重置时生效</span><br></pre></td></tr></table></figure>
+
+<p>所以异步请求后如果重新 <code>setState(&#123; initialValues &#125;)</code>，这样是无效的，你会看到对应的表单中没有数据，都是空的。只能重置，这种问题怎么解决掉</p>
+<h3 id="2-重置-initialValues"><a href="#2-重置-initialValues" class="headerlink" title="2 重置 initialValues"></a>2 重置 initialValues</h3><p><strong>2.1 如果是函数式组件，官方推荐使用 <code>Form.useForm</code> 创建表单数据域进行控制</strong></p>
+<p>使用用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [form] = Form.useForm();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line">asyncRequest().then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> form.setFieldsValue(&#123; initialValues &#125;));</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.2 如果是在 class component 下，你也可以通过 ref 获取数据域</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  formRef = React.createRef();</span><br><span class="line"></span><br><span class="line">  UNSAFE_componentWillMount = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line">    asyncRequest().then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.formRef.current.setFieldsValue(&#123; initialValues &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于 <code>UNSAFE_componentWillMount</code> 声明周期函数，有些声明周期函数在未来版本中会被移除或者重命名，这个可以浏览 <a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></p>
+<h3 id="3-完整的参考示例"><a href="#3-完整的参考示例" class="headerlink" title="3 完整的参考示例"></a>3 完整的参考示例</h3><p>这里我使用了类组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Form, Input, Button &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> FairyUploader <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/Uploader&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> FairyRichTextEditor <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/RichTextEditor&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;@/utils/store&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateUpdateForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    create: <span class="literal">true</span>,</span><br><span class="line">    initialValues: &#123;&#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  formRef = React.createRef();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="function"><span class="title">UNSAFE_componentWillMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; id &#125; = <span class="built_in">this</span>.props.match.params;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数据详情</span></span><br><span class="line">    <span class="keyword">if</span> (id) &#123;</span><br><span class="line">      <span class="built_in">this</span>.setState(&#123; <span class="attr">create</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">      store</span><br><span class="line">        .dispatch(&#123;</span><br><span class="line">          type: <span class="string">&quot;product/retrieve&quot;</span>,</span><br><span class="line">          payload: &#123; id &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">this</span>.formRef.current.setFieldsValue(initialValues);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;Success:&quot;</span>, values);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  onFinishFailed = <span class="function">(<span class="params">errorInfo</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;Failed:&quot;</span>, errorInfo);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; initialValues, create &#125; = <span class="built_in">this</span>.state;</span><br><span class="line">    <span class="keyword">const</span> formProps = &#123;</span><br><span class="line">      name: <span class="string">&quot;basic&quot;</span>,</span><br><span class="line">      onFinish: <span class="built_in">this</span>.onFinish,</span><br><span class="line">      onFinishFailed: <span class="built_in">this</span>.onFinishFailed,</span><br><span class="line">      initialValues,</span><br><span class="line">      ref: <span class="built_in">this</span>.formRef,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Form &#123;...formProps&#125;&gt;</span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;姓名&quot;</span></span><br><span class="line">          name=<span class="string">&quot;name&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请填写姓名&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;Input /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;职业&quot;</span></span><br><span class="line">          name=<span class="string">&quot;position&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入职业&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;Input /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;头像&quot;</span></span><br><span class="line">          name=<span class="string">&quot;avatar&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请上传头像&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;FairyUploader /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;描述&quot;</span></span><br><span class="line">          name=<span class="string">&quot;description&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入描述&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;FairyRichTextEditor /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item&gt;</span><br><span class="line">          &lt;Button type=<span class="string">&quot;primary&quot;</span> htmlType=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">            &#123;create ? <span class="string">&quot;保存&quot;</span> : <span class="string">&quot;更新&quot;</span>&#125;</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line">      &lt;/Form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h3><ul>
+<li><code>antd</code> 对于各种使用场景还是给出了详细的说明和例子参考的，这个很赞。</li>
+<li>使用 <code>React</code> 的各种警告，这个需要认真根据官方的引导进行调整。</li>
+<li>根据上面的参考示例可以想到对于这种通用的更新创建表单，完全可以使用通用的 <code>HOC</code>，根据不同的配置渲染出不同的页面，这样一个高阶组件可以解决掉通用的创建更新表单。同样，对于列表页面也是如此，其实说白了，管理后台可以根据配置生成出来。对于一些需要自定义的业务，可以让高阶组件支持继承和钩子的重置来解决，如果实在解决不了的业务，可以单独写页面也是可以的。对于这个，我会专门写一篇文章来陈述下。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>redux</tag>
+        <tag>Antd</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django | Mysql 返回不合法的日期时间对象</title>
     <url>/posts/26483/</url>
     <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
@@ -172,46 +212,6 @@
       <tags>
         <tag>Django</tag>
         <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Antd：Form 的 InitialValues 重置</title>
-    <url>/posts/59046/</url>
-    <content><![CDATA[<p>描述：编辑页面中 <code>Form</code> 的 <code>InitialValues</code> 的重置</p>
-<span id="more"></span>
-
-<h3 id="1-场景描述"><a href="#1-场景描述" class="headerlink" title="1 场景描述"></a>1 场景描述</h3><p>管理后台的通用场景，列表页面，然后点击新建或者更新，这里说的是更新的场景，异步请求，重新渲染表单。</p>
-<p>管理后台使用 <code>antd-pro</code> 搭建，<code>antd</code> 使用了 <code>4.x</code> 版本，注意这个版本对 <code>Form</code> 做了些调整。</p>
-<p>点击更新进入表单页面，我设置了 <code>state</code> 的初始值</p>
-<figure class="highlight pf"><table><tr><td class="code"><pre><span class="line"><span class="keyword">state</span> = &#123;</span><br><span class="line">  initialValues: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>然后异步请求，请求到结果后，需要重置 <code>initialValues</code>，但是根据 <code>antd</code> 的文档</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">initialValue</span> 表单默认值，只有初始化以及重置时生效</span><br></pre></td></tr></table></figure>
-
-<p>所以异步请求后如果重新 <code>setState(&#123; initialValues &#125;)</code>，这样是无效的，你会看到对应的表单中没有数据，都是空的。只能重置，这种问题怎么解决掉</p>
-<h3 id="2-重置-initialValues"><a href="#2-重置-initialValues" class="headerlink" title="2 重置 initialValues"></a>2 重置 initialValues</h3><p><strong>2.1 如果是函数式组件，官方推荐使用 <code>Form.useForm</code> 创建表单数据域进行控制</strong></p>
-<p>使用用法如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [form] = Form.useForm();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line">asyncRequest().then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> form.setFieldsValue(&#123; initialValues &#125;));</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.2 如果是在 class component 下，你也可以通过 ref 获取数据域</strong></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  formRef = React.createRef();</span><br><span class="line"></span><br><span class="line">  UNSAFE_componentWillMount = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line">    asyncRequest().then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.formRef.current.setFieldsValue(&#123; initialValues &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于 <code>UNSAFE_componentWillMount</code> 声明周期函数，有些声明周期函数在未来版本中会被移除或者重命名，这个可以浏览 <a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></p>
-<h3 id="3-完整的参考示例"><a href="#3-完整的参考示例" class="headerlink" title="3 完整的参考示例"></a>3 完整的参考示例</h3><p>这里我使用了类组件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Form, Input, Button &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> FairyUploader <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/Uploader&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> FairyRichTextEditor <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/RichTextEditor&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;@/utils/store&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateUpdateForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    create: <span class="literal">true</span>,</span><br><span class="line">    initialValues: &#123;&#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  formRef = React.createRef();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="function"><span class="title">UNSAFE_componentWillMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; id &#125; = <span class="built_in">this</span>.props.match.params;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数据详情</span></span><br><span class="line">    <span class="keyword">if</span> (id) &#123;</span><br><span class="line">      <span class="built_in">this</span>.setState(&#123; <span class="attr">create</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">      store</span><br><span class="line">        .dispatch(&#123;</span><br><span class="line">          type: <span class="string">&quot;product/retrieve&quot;</span>,</span><br><span class="line">          payload: &#123; id &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">this</span>.formRef.current.setFieldsValue(initialValues);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;Success:&quot;</span>, values);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  onFinishFailed = <span class="function">(<span class="params">errorInfo</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;Failed:&quot;</span>, errorInfo);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; initialValues, create &#125; = <span class="built_in">this</span>.state;</span><br><span class="line">    <span class="keyword">const</span> formProps = &#123;</span><br><span class="line">      name: <span class="string">&quot;basic&quot;</span>,</span><br><span class="line">      onFinish: <span class="built_in">this</span>.onFinish,</span><br><span class="line">      onFinishFailed: <span class="built_in">this</span>.onFinishFailed,</span><br><span class="line">      initialValues,</span><br><span class="line">      ref: <span class="built_in">this</span>.formRef,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Form &#123;...formProps&#125;&gt;</span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;姓名&quot;</span></span><br><span class="line">          name=<span class="string">&quot;name&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请填写姓名&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;Input /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;职业&quot;</span></span><br><span class="line">          name=<span class="string">&quot;position&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入职业&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;Input /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;头像&quot;</span></span><br><span class="line">          name=<span class="string">&quot;avatar&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请上传头像&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;FairyUploader /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item</span><br><span class="line">          label=<span class="string">&quot;描述&quot;</span></span><br><span class="line">          name=<span class="string">&quot;description&quot;</span></span><br><span class="line">          rules=&#123;[&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入描述&quot;</span> &#125;]&#125;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;FairyRichTextEditor /&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Form.Item&gt;</span><br><span class="line">          &lt;Button type=<span class="string">&quot;primary&quot;</span> htmlType=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">            &#123;create ? <span class="string">&quot;保存&quot;</span> : <span class="string">&quot;更新&quot;</span>&#125;</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Form.Item&gt;</span><br><span class="line">      &lt;/Form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h3><ul>
-<li><code>antd</code> 对于各种使用场景还是给出了详细的说明和例子参考的，这个很赞。</li>
-<li>使用 <code>React</code> 的各种警告，这个需要认真根据官方的引导进行调整。</li>
-<li>根据上面的参考示例可以想到对于这种通用的更新创建表单，完全可以使用通用的 <code>HOC</code>，根据不同的配置渲染出不同的页面，这样一个高阶组件可以解决掉通用的创建更新表单。同样，对于列表页面也是如此，其实说白了，管理后台可以根据配置生成出来。对于一些需要自定义的业务，可以让高阶组件支持继承和钩子的重置来解决，如果实在解决不了的业务，可以单独写页面也是可以的。对于这个，我会专门写一篇文章来陈述下。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>redux</tag>
-        <tag>Antd</tag>
       </tags>
   </entry>
   <entry>
@@ -415,6 +415,37 @@
       </tags>
   </entry>
   <entry>
+    <title>本地开发使用 https</title>
+    <url>/posts/32953/</url>
+    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
+<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
+<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
+<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
+
+<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
+
+<p>添加 nginx 配置文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
+<p><img src="/images/mkcert.png" alt="mkcert.png"></p>
+]]></content>
+      <categories>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>https</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端 | 重构 gulpfile.js</title>
     <url>/posts/18305/</url>
     <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>前端任务打包工具选用的是 <code>gulp</code>, 当时选用 <code>gulp</code> 也是偶然，在使用 <code>grunt</code> 初期，翻阅 <code>dailyjs.com</code> 时发现一片文章着重介绍了 <code>gulp</code>, 甚至还预言是 <code>grunt</code> 的劲敌，好奇心驱使，确实发现，<code>gulp</code> 的流的概念更人性化，看着当时写的 <code>grunt</code> 配置文件，不忍直视<span id="more"></span></p>
@@ -472,37 +503,6 @@
       </categories>
       <tags>
         <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>本地开发使用 https</title>
-    <url>/posts/32953/</url>
-    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
-<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
-<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
-<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
-
-<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
-
-<p>添加 nginx 配置文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
-<p><img src="/images/mkcert.png" alt="mkcert.png"></p>
-]]></content>
-      <categories>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>https</tag>
       </tags>
   </entry>
   <entry>
