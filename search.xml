@@ -1,50 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>资源加速系列之 pip</title>
-    <url>/posts/26327/</url>
-    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
-<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">https:</span>//pypi<span class="meta">.org</span>/simple</span><br></pre></td></tr></table></figure>
-
-<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
-<!--more-->
-
-<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
-<ul>
-<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
-<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
-<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
-<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
-</ul>
-<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
-<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -i 镜像源地址 包名称</span><br></pre></td></tr></table></figure>
-
-<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install -i https:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/pypi/</span>simple/ django</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
-<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
-<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
-<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">timeout = <span class="number">60</span></span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-
-<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">You can <span class="built_in">set</span> <span class="keyword">a</span> custom path location <span class="keyword">for</span> this config</span><br><span class="line"><span class="built_in">file</span> <span class="keyword">using</span> <span class="keyword">the</span> environment <span class="built_in">variable</span> PIP_CONFIG_FILE.</span><br></pre></td></tr></table></figure>
-
-<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
-<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>资源加速</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>镜像</tag>
-        <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>资源加速系列之 Github</title>
     <url>/posts/19128/</url>
     <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
@@ -98,6 +54,50 @@
       </tags>
   </entry>
   <entry>
+    <title>资源加速系列之 pip</title>
+    <url>/posts/26327/</url>
+    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">https:</span>//pypi<span class="meta">.org</span>/simple</span><br></pre></td></tr></table></figure>
+
+<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
+<!--more-->
+
+<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
+<ul>
+<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
+<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
+<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
+<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
+</ul>
+<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
+<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -i 镜像源地址 包名称</span><br></pre></td></tr></table></figure>
+
+<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install -i https:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/pypi/</span>simple/ django</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
+<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
+<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
+<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">timeout = <span class="number">60</span></span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">You can <span class="built_in">set</span> <span class="keyword">a</span> custom path location <span class="keyword">for</span> this config</span><br><span class="line"><span class="built_in">file</span> <span class="keyword">using</span> <span class="keyword">the</span> environment <span class="built_in">variable</span> PIP_CONFIG_FILE.</span><br></pre></td></tr></table></figure>
+
+<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
+<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源加速系列之 pyenv</title>
     <url>/posts/22631/</url>
     <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
@@ -124,13 +124,41 @@
 <p>可以，后续就可以这样玩了，省时省力。</p>
 ]]></content>
       <categories>
-        <category>后端</category>
         <category>资源加速</category>
+        <category>后端</category>
         <category>Python</category>
       </categories>
       <tags>
-        <tag>镜像</tag>
         <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单备份文件并发送到指定邮箱</title>
+    <url>/posts/13676/</url>
+    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
+<span id="more"></span>
+
+<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">from</span> email.mime.application <span class="keyword">import</span> MIMEApplication</span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"></span><br><span class="line">name = datetime.datetime.now().strftime(<span class="string">&quot;%Y%m%d%H%M%S&quot;</span>)</span><br><span class="line">base_path = <span class="string">&#x27;/root/xxxx/temp&#x27;</span></span><br><span class="line">zip_path = <span class="string">&#x27;/root/xxxx/backup/&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_logging</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    log_dir, log_file = <span class="string">&#x27;/root/xxxx/logs&#x27;</span>, <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_dir):</span><br><span class="line">        os.mkdir(log_dir)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_file):</span><br><span class="line">        <span class="built_in">open</span>(log_file, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    DEFAULT_LOGGING = &#123;</span><br><span class="line">        <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">        <span class="string">&#x27;formatters&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;formatone&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;format&#x27;</span>: <span class="string">&#x27;[%(asctime)s] %(levelname)s : %(message)s&#x27;</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;file&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;filename&#x27;</span>: <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;formatone&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.handlers.RotatingFileHandler&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;maxBytes&#x27;</span>: <span class="number">100</span> * <span class="number">1024</span> * <span class="number">1024</span>,</span><br><span class="line">                <span class="string">&#x27;backupCount&#x27;</span>: <span class="number">10</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;backup&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;file&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;INFO&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logging.config.dictConfig(DEFAULT_LOGGING)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zip_files</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sendmail</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;send mail&quot;&quot;&quot;</span></span><br><span class="line">    set_logging()</span><br><span class="line">    zip_files()</span><br><span class="line"></span><br><span class="line">    logger = logging.getLogger(<span class="string">&#x27;backup&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    mail_from, password = <span class="string">&#x27;xxxxxxx@aliyun.com&#x27;</span>, <span class="string">&#x27;xxxxxxx&#x27;</span></span><br><span class="line">    mail_to = <span class="string">&#x27;xxxxx@qq.com&#x27;</span></span><br><span class="line">    smtp_server = <span class="string">&#x27;smtp.aliyun.com&#x27;</span></span><br><span class="line"></span><br><span class="line">    msgRoot = MIMEMultipart(<span class="string">&#x27;related&#x27;</span>)</span><br><span class="line">    msgRoot[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;send backup files &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line">    msgRoot[<span class="string">&#x27;From&#x27;</span>] = <span class="string">&#x27;&#123;&#125;&lt;&#123;&#125;&gt;&#x27;</span>.<span class="built_in">format</span>(Header(<span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>), mail_from)</span><br><span class="line">    msgRoot[<span class="string">&#x27;To&#x27;</span>] = mail_to</span><br><span class="line"></span><br><span class="line">    msgText = MIMEText(<span class="string">&#x27;backup files&#x27;</span>, <span class="string">&#x27;plain&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    msgRoot.attach(msgText)</span><br><span class="line"></span><br><span class="line">    zip_con = MIMEApplication(<span class="built_in">open</span>(zip_path,<span class="string">&#x27;rb&#x27;</span>).read())</span><br><span class="line">    zip_con.add_header(<span class="string">&#x27;Content-Disposition&#x27;</span>, <span class="string">&#x27;attachment&#x27;</span>,</span><br><span class="line">                       filename=<span class="string">&#x27;&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    msgRoot.attach(zip_con)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP_SSL(smtp_server)</span><br><span class="line">        server.login(mail_from, password)</span><br><span class="line">        server.sendmail(mail_from, mail_to, msgRoot.as_string())</span><br><span class="line">        server.quit()</span><br><span class="line">        logger.info(<span class="string">&#x27;send &#123;&#125; backup files success&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        logger.error(<span class="string">&#x27;send &#123;&#125; failed &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name, e))</span><br><span class="line">        sendmail()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    sendmail()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zip_files</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
+<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span>,<span class="number">251</span>] INFO : send <span class="number">20170414000001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">03</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">620</span>] INFO : send <span class="number">20170414030001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">06</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">406</span>] INFO : send <span class="number">20170414060001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">09</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">349</span>] INFO : send <span class="number">20170414090001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">12</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">299</span>] INFO : send <span class="number">20170414120001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="number">696</span>] ERROR : send <span class="number">20170414150001</span> failed [Errno <span class="number">110</span>] Connection timed out</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">05</span>,<span class="number">401</span>] INFO : send <span class="number">20170414150001</span> backup files success</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">0 */3 * * *  python /root/xxxxx/backup.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -174,6 +202,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Debian | Media change please insert the disc labeled</title>
+    <url>/posts/20380/</url>
+    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错</p>
+<span id="more"></span>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"></span><br><span class="line">media change: please insert the disc labeled</span><br><span class="line">Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter</span><br></pre></td></tr></table></figure>
+
+<p>查看下 <code>/etc/apt/sources.list</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line">deb cdrom:[Debian GNU/Linux <span class="number">10.9</span><span class="number">.0</span> _Buster_ - Official amd64 DVD Binary-<span class="number">1</span> <span class="number">20210327</span>-<span class="number">10</span>:<span class="number">39</span>]/ buster contrib main</span><br><span class="line"></span><br><span class="line">deb http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line">deb-src http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br></pre></td></tr></table></figure>
+
+<p>果断把包含 <code>deb cdrom</code> 这行给注释掉，然后又重新把 <code>apt</code> 源设置成清华源，修改后的文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django | Mysql 返回不合法的日期时间对象</title>
     <url>/posts/26483/</url>
     <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
@@ -212,34 +263,6 @@
       <tags>
         <tag>Django</tag>
         <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单备份文件并发送到指定邮箱</title>
-    <url>/posts/13676/</url>
-    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
-<span id="more"></span>
-
-<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">from</span> email.mime.application <span class="keyword">import</span> MIMEApplication</span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"></span><br><span class="line">name = datetime.datetime.now().strftime(<span class="string">&quot;%Y%m%d%H%M%S&quot;</span>)</span><br><span class="line">base_path = <span class="string">&#x27;/root/xxxx/temp&#x27;</span></span><br><span class="line">zip_path = <span class="string">&#x27;/root/xxxx/backup/&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_logging</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    log_dir, log_file = <span class="string">&#x27;/root/xxxx/logs&#x27;</span>, <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_dir):</span><br><span class="line">        os.mkdir(log_dir)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_file):</span><br><span class="line">        <span class="built_in">open</span>(log_file, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    DEFAULT_LOGGING = &#123;</span><br><span class="line">        <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">        <span class="string">&#x27;formatters&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;formatone&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;format&#x27;</span>: <span class="string">&#x27;[%(asctime)s] %(levelname)s : %(message)s&#x27;</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;file&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;filename&#x27;</span>: <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;formatone&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.handlers.RotatingFileHandler&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;maxBytes&#x27;</span>: <span class="number">100</span> * <span class="number">1024</span> * <span class="number">1024</span>,</span><br><span class="line">                <span class="string">&#x27;backupCount&#x27;</span>: <span class="number">10</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;backup&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;file&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;INFO&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logging.config.dictConfig(DEFAULT_LOGGING)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zip_files</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sendmail</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;send mail&quot;&quot;&quot;</span></span><br><span class="line">    set_logging()</span><br><span class="line">    zip_files()</span><br><span class="line"></span><br><span class="line">    logger = logging.getLogger(<span class="string">&#x27;backup&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    mail_from, password = <span class="string">&#x27;xxxxxxx@aliyun.com&#x27;</span>, <span class="string">&#x27;xxxxxxx&#x27;</span></span><br><span class="line">    mail_to = <span class="string">&#x27;xxxxx@qq.com&#x27;</span></span><br><span class="line">    smtp_server = <span class="string">&#x27;smtp.aliyun.com&#x27;</span></span><br><span class="line"></span><br><span class="line">    msgRoot = MIMEMultipart(<span class="string">&#x27;related&#x27;</span>)</span><br><span class="line">    msgRoot[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;send backup files &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line">    msgRoot[<span class="string">&#x27;From&#x27;</span>] = <span class="string">&#x27;&#123;&#125;&lt;&#123;&#125;&gt;&#x27;</span>.<span class="built_in">format</span>(Header(<span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>), mail_from)</span><br><span class="line">    msgRoot[<span class="string">&#x27;To&#x27;</span>] = mail_to</span><br><span class="line"></span><br><span class="line">    msgText = MIMEText(<span class="string">&#x27;backup files&#x27;</span>, <span class="string">&#x27;plain&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    msgRoot.attach(msgText)</span><br><span class="line"></span><br><span class="line">    zip_con = MIMEApplication(<span class="built_in">open</span>(zip_path,<span class="string">&#x27;rb&#x27;</span>).read())</span><br><span class="line">    zip_con.add_header(<span class="string">&#x27;Content-Disposition&#x27;</span>, <span class="string">&#x27;attachment&#x27;</span>,</span><br><span class="line">                       filename=<span class="string">&#x27;&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    msgRoot.attach(zip_con)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP_SSL(smtp_server)</span><br><span class="line">        server.login(mail_from, password)</span><br><span class="line">        server.sendmail(mail_from, mail_to, msgRoot.as_string())</span><br><span class="line">        server.quit()</span><br><span class="line">        logger.info(<span class="string">&#x27;send &#123;&#125; backup files success&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        logger.error(<span class="string">&#x27;send &#123;&#125; failed &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name, e))</span><br><span class="line">        sendmail()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    sendmail()</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zip_files</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
-<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span>,<span class="number">251</span>] INFO : send <span class="number">20170414000001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">03</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">620</span>] INFO : send <span class="number">20170414030001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">06</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">406</span>] INFO : send <span class="number">20170414060001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">09</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">349</span>] INFO : send <span class="number">20170414090001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">12</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">299</span>] INFO : send <span class="number">20170414120001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="number">696</span>] ERROR : send <span class="number">20170414150001</span> failed [Errno <span class="number">110</span>] Connection timed out</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">05</span>,<span class="number">401</span>] INFO : send <span class="number">20170414150001</span> backup files success</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">0 */3 * * *  python /root/xxxxx/backup.py</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -415,37 +438,6 @@
       </tags>
   </entry>
   <entry>
-    <title>本地开发使用 https</title>
-    <url>/posts/32953/</url>
-    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
-<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
-<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
-<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
-
-<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
-
-<p>添加 nginx 配置文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
-<p><img src="/images/mkcert.png" alt="mkcert.png"></p>
-]]></content>
-      <categories>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>https</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端 | 重构 gulpfile.js</title>
     <url>/posts/18305/</url>
     <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>前端任务打包工具选用的是 <code>gulp</code>, 当时选用 <code>gulp</code> 也是偶然，在使用 <code>grunt</code> 初期，翻阅 <code>dailyjs.com</code> 时发现一片文章着重介绍了 <code>gulp</code>, 甚至还预言是 <code>grunt</code> 的劲敌，好奇心驱使，确实发现，<code>gulp</code> 的流的概念更人性化，看着当时写的 <code>grunt</code> 配置文件，不忍直视<span id="more"></span></p>
@@ -503,6 +495,37 @@
       </categories>
       <tags>
         <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>本地开发使用 https</title>
+    <url>/posts/32953/</url>
+    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
+<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
+<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
+<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
+
+<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
+
+<p>添加 nginx 配置文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
+<p><img src="/images/mkcert.png" alt="mkcert.png"></p>
+]]></content>
+      <categories>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>https</tag>
       </tags>
   </entry>
   <entry>
