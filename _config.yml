@@ -13,9 +13,9 @@
 
 title: 剑二十一
 subtitle: "独步天下·无与为偶"
-description: "独步天下·无与为偶"
-keywords: "生活，思考，代码, JAVA, Django, Docker, Python, React, Antd"
-author: "独步天下·无与为偶"
+# description: "独步天下·无与为偶"
+keywords: "生活，思考，代码, Java, Python, Docker, React, Antd"
+author: "剑二十一"
 language: zh-CN
 timezone: "Asia/Shanghai"
 
@@ -56,12 +56,12 @@ relative_link: false
 future: true
 
 highlight:
-  enable: false
+  enable: true
   line_number: true
   auto_detect: true
   tab_replace: ''
   wrap: true
-  hljs: false
+  hljs: true
 
 prismjs:
   enable: false
