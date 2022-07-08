@@ -1,126 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>资源加速系列之 pip</title>
-    <url>/posts/26327/</url>
-    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
-<pre><code>https://pypi.org/simple
-</code></pre>
-<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
-<!--more-->
-
-<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
-<ul>
-<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
-<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
-<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
-<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
-</ul>
-<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
-<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><pre><code>pip install -i 镜像源地址 包名称
-</code></pre>
-<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
-<pre><code>pip install -i https://mirrors.aliyun.com/pypi/simple/ django
-</code></pre>
-<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
-<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
-<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
-<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
-<pre><code class="python">[global]
-timeout = 60
-index-url = https://mirrors.aliyun.com/pypi/simple
-
-[install]
-trusted-host=mirrors.aliyun.com
-</code></pre>
-<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
-<pre><code>You can set a custom path location for this config
-file using the environment variable PIP_CONFIG_FILE.
-</code></pre>
-<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
-<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>资源加速</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>镜像</tag>
-        <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 pyenv</title>
-    <url>/posts/22631/</url>
-    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
-<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
-<pre><code>https://npm.taobao.org/mirrors/python/
-</code></pre>
-<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
-<p>例如安装 3.6.7 版本，命令行如下</p>
-<pre><code>v=3.6.7;wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
-</code></pre>
-<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
-<pre><code class="bash">#!/bin/bash
-
-function pyenvInstallPython()
-&#123;
-    echo $1
-    v=$1
-    wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
-&#125;
-
-pyenvInstallPython $*
-</code></pre>
-<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
-<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
-<pre><code>pyversion 版本号
-</code></pre>
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
-<pre><code class="shell">3.6.7
---2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz
-正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225
-正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。
-已发出 HTTP 请求，正在等待回应... 302 Found
-位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]
---2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz
-正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...
-正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。
-已发出 HTTP 请求，正在等待回应... 200 OK
-长度：17178476 (16M) [application/x-xz]
-正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”
-
-Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s
-
-2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])
-
-python-build: use openssl@1.1 from homebrew
-python-build: use readline from homebrew
-Installing Python-3.6.7...
-python-build: use readline from homebrew
-python-build: use zlib from xcode sdk
-Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7
-</code></pre>
-<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
-<pre><code>$ pyenv versions
-* system (set by /Users/kycool/.pyenv/version)
-  3.6.0
-  3.6.7
-</code></pre>
-<p>可以，后续就可以这样玩了，省时省力。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>资源加速</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>镜像</tag>
-        <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>资源加速系列之 Github</title>
     <url>/posts/19128/</url>
     <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
@@ -143,73 +23,25 @@ Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7
 <li><code>https.proxy</code>  用于  <code>https://</code>  协议</li>
 </ul>
 <p>全局设置 git 的配置</p>
-<pre><code># 这里是针对 http 和 https 协议的
-git config --global http.proxy &#39;socks5://127.0.0.1:1086&#39;
-git config --global https.proxy &#39;socks5://127.0.0.1:1086&#39;
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"># 这里是针对 http 和 https 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> http<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> https<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line"></span><br><span class="line"># 这里是针对 git 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> core<span class="variable">.gitproxy</span> <span class="string">&quot;git-proxy&quot;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> socks<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br></pre></td></tr></table></figure>
 
-# 这里是针对 git 协议的
-git config --global core.gitproxy &quot;git-proxy&quot;
-git config --global socks.proxy &#39;socks5://127.0.0.1:1086&#39;
-</code></pre>
 <p>设置完后, 看下 git 的全局配置 <code>git config --global --list</code></p>
-<pre><code class="python">user.name=xxxx
-user.email=xxxxx@gmail.com
-core.excludesfile=/Users/kycool/.gitignore_global
-core.gitproxy=git-proxy
-difftool.sourcetree.cmd=opendiff &quot;$LOCAL&quot; &quot;$REMOTE&quot;
-difftool.sourcetree.path=
-mergetool.sourcetree.cmd=/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh &quot;$LOCAL&quot; &quot;$REMOTE&quot; -ancestor &quot;$BASE&quot; -merge &quot;$MERGED&quot;
-mergetool.sourcetree.trustexitcode=true
-commit.template=/Users/kycool/.stCommitMsg
-http.proxy=socks5://127.0.0.1:1086
-https.proxy=socks5://127.0.0.1:1086
-socks.proxy=socks5://127.0.0.1:1086
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">user.name=xxxx</span><br><span class="line">user.email=xxxxx@gmail.com</span><br><span class="line">core.excludesfile=/Users/kycool/.gitignore_global</span><br><span class="line">core.gitproxy=git-proxy</span><br><span class="line">difftool.sourcetree.cmd=opendiff <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span></span><br><span class="line">difftool.sourcetree.path=</span><br><span class="line">mergetool.sourcetree.cmd=/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span> -ancestor <span class="string">&quot;$BASE&quot;</span> -merge <span class="string">&quot;$MERGED&quot;</span></span><br><span class="line">mergetool.sourcetree.trustexitcode=true</span><br><span class="line">commit.template=/Users/kycool/.stCommitMsg</span><br><span class="line">http.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">https.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">socks.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br></pre></td></tr></table></figure>
+
 <p>如果后面想删掉这些配置，则可以执行以下命令</p>
-<pre><code class="python">git config --global --unset 键
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">git config --<span class="keyword">global</span> --unset 键</span><br></pre></td></tr></table></figure>
+
 <p>添加 ssh 配置，在 <code>.ssh/config</code> 文件中添加</p>
-<pre><code class="python">Host github.com
-HostName github.com
-User git
-port 22
-UseKeychain yes
-IdentityFile /Users/kycool/.ssh/id_rsa
-ProxyCommand nc -v -x 127.0.0.1:1086 %h %p
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">port <span class="number">22</span></span><br><span class="line">UseKeychain yes</span><br><span class="line">IdentityFile /Users/kycool/.ssh/id_rsa</span><br><span class="line">ProxyCommand nc -v -x <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span> %h %p</span><br></pre></td></tr></table></figure>
+
 <p>好了，到享受的时候了，我测试了 git 协议和 https 协议</p>
 <h3 id="3-克隆测试"><a href="#3-克隆测试" class="headerlink" title="3 克隆测试"></a>3 克隆测试</h3><p><strong>git 协议</strong>: clone antd-pro</p>
-<pre><code class="python">$ git clone git@github.com:ant-design/ant-design-pro.git
-Cloning into &#39;ant-design-pro&#39;...
-remote: Enumerating objects: 31, done.
-remote: Counting objects: 100% (31/31), done.
-remote: Compressing objects: 100% (29/29), done.
-remote: Total 18085 (delta 9), reused 14 (delta 2), pack-reused 18054
-Receiving objects: 100% (18085/18085), 6.02 MiB | 299.00 KiB/s, done.
-Resolving deltas: 100% (12239/12239), done.
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:ant-design/ant-design-pro.git</span><br><span class="line">Cloning into <span class="string">&#x27;ant-design-pro&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">31</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">31</span>/<span class="number">31</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">29</span>/<span class="number">29</span>), done.</span><br><span class="line">remote: Total <span class="number">18085</span> (delta <span class="number">9</span>), reused <span class="number">14</span> (delta <span class="number">2</span>), pack-reused <span class="number">18054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">18085</span>/<span class="number">18085</span>), <span class="number">6.02</span> MiB | <span class="number">299.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">12239</span>/<span class="number">12239</span>), done.</span><br></pre></td></tr></table></figure>
+
 <p>从来没有见过的速度，几乎是秒杀</p>
 <p><strong>https 协议</strong>: hexo init mm</p>
-<pre><code class="python">$ hexo init mm
-INFO  Cloning hexo-starter https://github.com/hexojs/hexo-starter.git
-Cloning into &#39;/Users/kycool/Documents/test/mm&#39;...
-remote: Enumerating objects: 30, done.
-remote: Counting objects: 100% (30/30), done.
-remote: Compressing objects: 100% (24/24), done.
-remote: Total 161 (delta 12), reused 12 (delta 4), pack-reused 131
-Receiving objects: 100% (161/161), 31.79 KiB | 206.00 KiB/s, done.
-Resolving deltas: 100% (74/74), done.
-Submodule &#39;themes/landscape&#39; (https://github.com/hexojs/hexo-theme-landscape.git) registered for path &#39;themes/landscape&#39;
-Cloning into &#39;/Users/kycool/Documents/test/mm/themes/landscape&#39;...
-remote: Enumerating objects: 9, done.
-remote: Counting objects: 100% (9/9), done.
-remote: Compressing objects: 100% (9/9), done.
-remote: Total 1063 (delta 1), reused 1 (delta 0), pack-reused 1054
-Receiving objects: 100% (1063/1063), 3.22 MiB | 217.00 KiB/s, done.
-Resolving deltas: 100% (582/582), done.
-Submodule path &#39;themes/landscape&#39;: checked out &#39;73a23c51f8487cfcd7c6deec96ccc7543960d350&#39;
-INFO  Install dependencies
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ hexo init mm</span><br><span class="line">INFO  Cloning hexo-starter https://github.com/hexojs/hexo-starter.git</span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">30</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">30</span>/<span class="number">30</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">24</span>/<span class="number">24</span>), done.</span><br><span class="line">remote: Total <span class="number">161</span> (delta <span class="number">12</span>), reused <span class="number">12</span> (delta <span class="number">4</span>), pack-reused <span class="number">131</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">161</span>/<span class="number">161</span>), <span class="number">31.79</span> KiB | <span class="number">206.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">74</span>/<span class="number">74</span>), done.</span><br><span class="line">Submodule <span class="string">&#x27;themes/landscape&#x27;</span> (https://github.com/hexojs/hexo-theme-landscape.git) registered <span class="keyword">for</span> path <span class="string">&#x27;themes/landscape&#x27;</span></span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm/themes/landscape&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">9</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Total <span class="number">1063</span> (delta <span class="number">1</span>), reused <span class="number">1</span> (delta <span class="number">0</span>), pack-reused <span class="number">1054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">1063</span>/<span class="number">1063</span>), <span class="number">3.22</span> MiB | <span class="number">217.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">582</span>/<span class="number">582</span>), done.</span><br><span class="line">Submodule path <span class="string">&#x27;themes/landscape&#x27;</span>: checked out <span class="string">&#x27;73a23c51f8487cfcd7c6deec96ccc7543960d350&#x27;</span></span><br><span class="line">INFO  Install dependencies</span><br></pre></td></tr></table></figure>
+
 <p>速度和上面一个几乎不相上下。</p>
 <p>测试的速度是不断变化的，我观察有瞬间跑到 600 KiB&#x2F;s，我估摸着如果代理服务器的带宽牛逼的话，那速度想都不敢想。</p>
 <h3 id="4-不足的地方"><a href="#4-不足的地方" class="headerlink" title="4 不足的地方"></a>4 不足的地方</h3><p>这里面的哪一种方法都是有些不足的，梯子偶尔也会抽风，因为是我买的别人家的服务，这种保障不能主观控制，抽风就回到解放前了。</p>
@@ -222,6 +54,86 @@ INFO  Install dependencies
       </tags>
   </entry>
   <entry>
+    <title>资源加速系列之 pip</title>
+    <url>/posts/26327/</url>
+    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">https:</span>//pypi<span class="meta">.org</span>/simple</span><br></pre></td></tr></table></figure>
+
+<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
+<!--more-->
+
+<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
+<ul>
+<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
+<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
+<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
+<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
+</ul>
+<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
+<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -i 镜像源地址 包名称</span><br></pre></td></tr></table></figure>
+
+<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install -i https:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/pypi/</span>simple/ django</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
+<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
+<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
+<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">timeout = <span class="number">60</span></span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">You can <span class="built_in">set</span> <span class="keyword">a</span> custom path location <span class="keyword">for</span> this config</span><br><span class="line"><span class="built_in">file</span> <span class="keyword">using</span> <span class="keyword">the</span> environment <span class="built_in">variable</span> PIP_CONFIG_FILE.</span><br></pre></td></tr></table></figure>
+
+<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
+<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源加速系列之 pyenv</title>
+    <url>/posts/22631/</url>
+    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
+<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python/</span><br></pre></td></tr></table></figure>
+
+<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
+<p>例如安装 3.6.7 版本，命令行如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">v=<span class="number">3.6</span>.<span class="number">7</span>;wget https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python<span class="regexp">/$v/</span>Python-<span class="variable">$v</span>.tar.xz -P ~<span class="regexp">/.pyenv/</span>cache/;pyenv install <span class="variable">$v</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">pyenvInstallPython</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">    v=<span class="variable">$1</span></span><br><span class="line">    wget https://npm.taobao.org/mirrors/python/<span class="variable">$v</span>/Python-<span class="variable">$v</span>.tar.xz -P ~/.pyenv/cache/;pyenv install <span class="variable">$v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pyenvInstallPython $*</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
+<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pyversion</span> 版本号</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">3.6.7</span><br><span class="line">--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225</span><br><span class="line">正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 302 Found</span><br><span class="line">位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]</span><br><span class="line">--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...</span><br><span class="line">正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 200 OK</span><br><span class="line">长度：17178476 (16M) [application/x-xz]</span><br><span class="line">正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”</span><br><span class="line"></span><br><span class="line">Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s</span><br><span class="line"></span><br><span class="line">2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])</span><br><span class="line"></span><br><span class="line">python-build: use openssl@1.1 from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-3.6.7...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">python-build: use zlib from xcode sdk</span><br><span class="line">Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7</span><br></pre></td></tr></table></figure>
+
+<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (set by <span class="regexp">/Users/</span>kycool<span class="regexp">/.pyenv/</span>version)</span><br><span class="line">  <span class="number">3.6</span>.<span class="number">0</span></span><br><span class="line">  <span class="number">3.6</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>可以，后续就可以这样玩了，省时省力。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Antd：Form 的 InitialValues 重置</title>
     <url>/posts/59046/</url>
     <content><![CDATA[<p>描述：编辑页面中 <code>Form</code> 的 <code>InitialValues</code> 的重置</p>
@@ -230,128 +142,23 @@ INFO  Install dependencies
 <h3 id="1-场景描述"><a href="#1-场景描述" class="headerlink" title="1 场景描述"></a>1 场景描述</h3><p>管理后台的通用场景，列表页面，然后点击新建或者更新，这里说的是更新的场景，异步请求，重新渲染表单。</p>
 <p>管理后台使用 <code>antd-pro</code> 搭建，<code>antd</code> 使用了 <code>4.x</code> 版本，注意这个版本对 <code>Form</code> 做了些调整。</p>
 <p>点击更新进入表单页面，我设置了 <code>state</code> 的初始值</p>
-<pre><code>  state = &#123;
-    initialValues: &#123;&#125;,
-  &#125;;
-</code></pre>
+<figure class="highlight pf"><table><tr><td class="code"><pre><span class="line"><span class="keyword">state</span> = &#123;</span><br><span class="line">  initialValues: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <p>然后异步请求，请求到结果后，需要重置 <code>initialValues</code>，但是根据 <code>antd</code> 的文档</p>
-<pre><code>initialValue 表单默认值，只有初始化以及重置时生效
-</code></pre>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">initialValue</span> 表单默认值，只有初始化以及重置时生效</span><br></pre></td></tr></table></figure>
+
 <p>所以异步请求后如果重新 <code>setState(&#123; initialValues &#125;)</code>，这样是无效的，你会看到对应的表单中没有数据，都是空的。只能重置，这种问题怎么解决掉</p>
 <h3 id="2-重置-initialValues"><a href="#2-重置-initialValues" class="headerlink" title="2 重置 initialValues"></a>2 重置 initialValues</h3><p><strong>2.1 如果是函数式组件，官方推荐使用 <code>Form.useForm</code> 创建表单数据域进行控制</strong></p>
 <p>使用用法如下：</p>
-<pre><code class="javascript">const [form] = Form.useForm();
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [form] = <span class="title class_">Form</span>.<span class="title function_">useForm</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line"><span class="title function_">asyncRequest</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> form.<span class="title function_">setFieldsValue</span>(&#123; initialValues &#125;));</span><br></pre></td></tr></table></figure>
 
-// 在异步请求中重置表单初始值
-asyncRequest().then((initialValues) =&gt; form.setFieldsValue(&#123; initialValues &#125;));
-</code></pre>
 <p><strong>2.2 如果是在 class component 下，你也可以通过 ref 获取数据域</strong></p>
-<pre><code class="javascript">class Demo extends React.Component &#123;
-  formRef = React.createRef();
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  formRef = <span class="title class_">React</span>.<span class="title function_">createRef</span>();</span><br><span class="line"></span><br><span class="line">  UNSAFE_componentWillMount = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 在异步请求中重置表单初始值</span></span><br><span class="line">    <span class="title function_">asyncRequest</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">formRef</span>.<span class="property">current</span>.<span class="title function_">setFieldsValue</span>(&#123; initialValues &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  UNSAFE_componentWillMount = () =&gt; &#123;
-    // 在异步请求中重置表单初始值
-    asyncRequest().then((initialValues) =&gt; &#123;
-      this.formRef.current.setFieldsValue(&#123; initialValues &#125;);
-    &#125;);
-  &#125;;
-&#125;
-</code></pre>
 <p>对于 <code>UNSAFE_componentWillMount</code> 声明周期函数，有些声明周期函数在未来版本中会被移除或者重命名，这个可以浏览 <a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></p>
 <h3 id="3-完整的参考示例"><a href="#3-完整的参考示例" class="headerlink" title="3 完整的参考示例"></a>3 完整的参考示例</h3><p>这里我使用了类组件</p>
-<pre><code class="javascript">import React from &quot;react&quot;;
-import &#123; Form, Input, Button &#125; from &quot;antd&quot;;
-import FairyUploader from &quot;@/fairy/components/Uploader&quot;;
-import FairyRichTextEditor from &quot;@/fairy/components/RichTextEditor&quot;;
-import store from &quot;@/utils/store&quot;;
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Form</span>, <span class="title class_">Input</span>, <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">FairyUploader</span> <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/Uploader&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">FairyRichTextEditor</span> <span class="keyword">from</span> <span class="string">&quot;@/fairy/components/RichTextEditor&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;@/utils/store&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">CreateUpdateForm</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    <span class="attr">create</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">initialValues</span>: &#123;&#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  formRef = <span class="title class_">React</span>.<span class="title function_">createRef</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">UNSAFE_componentWillMount</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; id &#125; = <span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">match</span>.<span class="property">params</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数据详情</span></span><br><span class="line">    <span class="keyword">if</span> (id) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123; <span class="attr">create</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">      store</span><br><span class="line">        .<span class="title function_">dispatch</span>(&#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&quot;product/retrieve&quot;</span>,</span><br><span class="line">          <span class="attr">payload</span>: &#123; id &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params">initialValues</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">formRef</span>.<span class="property">current</span>.<span class="title function_">setFieldsValue</span>(initialValues);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onFinish = <span class="function">(<span class="params">values</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Success:&quot;</span>, values);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  onFinishFailed = <span class="function">(<span class="params">errorInfo</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Failed:&quot;</span>, errorInfo);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; initialValues, create &#125; = <span class="variable language_">this</span>.<span class="property">state</span>;</span><br><span class="line">    <span class="keyword">const</span> formProps = &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&quot;basic&quot;</span>,</span><br><span class="line">      <span class="attr">onFinish</span>: <span class="variable language_">this</span>.<span class="property">onFinish</span>,</span><br><span class="line">      <span class="attr">onFinishFailed</span>: <span class="variable language_">this</span>.<span class="property">onFinishFailed</span>,</span><br><span class="line">      initialValues,</span><br><span class="line">      <span class="attr">ref</span>: <span class="variable language_">this</span>.<span class="property">formRef</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">Form</span> &#123;<span class="attr">...formProps</span>&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">name</span>=<span class="string">&quot;name&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">rules</span>=<span class="string">&#123;[&#123;</span> <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &quot;请填写姓名&quot; &#125;]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Input</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">label</span>=<span class="string">&quot;职业&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">name</span>=<span class="string">&quot;position&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">rules</span>=<span class="string">&#123;[&#123;</span> <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &quot;请输入职业&quot; &#125;]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Input</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">label</span>=<span class="string">&quot;头像&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">name</span>=<span class="string">&quot;avatar&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">rules</span>=<span class="string">&#123;[&#123;</span> <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &quot;请上传头像&quot; &#125;]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">FairyUploader</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Form.Item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">label</span>=<span class="string">&quot;描述&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">rules</span>=<span class="string">&#123;[&#123;</span> <span class="attr">required:</span> <span class="attr">true</span>, <span class="attr">message:</span> &quot;请输入描述&quot; &#125;]&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">FairyRichTextEditor</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">htmlType</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            &#123;create ? &quot;保存&quot; : &quot;更新&quot;&#125;</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Form</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-export default class CreateUpdateForm extends React.Component &#123;
-  state = &#123;
-    create: true,
-    initialValues: &#123;&#125;,
-  &#125;;
-
-  formRef = React.createRef();
-
-  async UNSAFE_componentWillMount() &#123;
-    const &#123; id &#125; = this.props.match.params;
-
-    // 获取数据详情
-    if (id) &#123;
-      this.setState(&#123; create: false &#125;);
-      store
-        .dispatch(&#123;
-          type: &quot;product/retrieve&quot;,
-          payload: &#123; id &#125;,
-        &#125;)
-        .then((initialValues) =&gt; &#123;
-          this.formRef.current.setFieldsValue(initialValues);
-        &#125;);
-    &#125;
-  &#125;
-
-  onFinish = (values) =&gt; &#123;
-    console.log(&quot;Success:&quot;, values);
-  &#125;;
-
-  onFinishFailed = (errorInfo) =&gt; &#123;
-    console.log(&quot;Failed:&quot;, errorInfo);
-  &#125;;
-
-  render() &#123;
-    const &#123; initialValues, create &#125; = this.state;
-    const formProps = &#123;
-      name: &quot;basic&quot;,
-      onFinish: this.onFinish,
-      onFinishFailed: this.onFinishFailed,
-      initialValues,
-      ref: this.formRef,
-    &#125;;
-
-    return (
-      &lt;Form &#123;...formProps&#125;&gt;
-        &lt;Form.Item
-          label=&quot;姓名&quot;
-          name=&quot;name&quot;
-          rules=&#123;[&#123; required: true, message: &quot;请填写姓名&quot; &#125;]&#125;
-        &gt;
-          &lt;Input /&gt;
-        &lt;/Form.Item&gt;
-
-        &lt;Form.Item
-          label=&quot;职业&quot;
-          name=&quot;position&quot;
-          rules=&#123;[&#123; required: true, message: &quot;请输入职业&quot; &#125;]&#125;
-        &gt;
-          &lt;Input /&gt;
-        &lt;/Form.Item&gt;
-
-        &lt;Form.Item
-          label=&quot;头像&quot;
-          name=&quot;avatar&quot;
-          rules=&#123;[&#123; required: true, message: &quot;请上传头像&quot; &#125;]&#125;
-        &gt;
-          &lt;FairyUploader /&gt;
-        &lt;/Form.Item&gt;
-
-        &lt;Form.Item
-          label=&quot;描述&quot;
-          name=&quot;description&quot;
-          rules=&#123;[&#123; required: true, message: &quot;请输入描述&quot; &#125;]&#125;
-        &gt;
-          &lt;FairyRichTextEditor /&gt;
-        &lt;/Form.Item&gt;
-
-        &lt;Form.Item&gt;
-          &lt;Button type=&quot;primary&quot; htmlType=&quot;submit&quot;&gt;
-            &#123;create ? &quot;保存&quot; : &quot;更新&quot;&#125;
-          &lt;/Button&gt;
-        &lt;/Form.Item&gt;
-      &lt;/Form&gt;
-    );
-  &#125;
-&#125;
-</code></pre>
 <h3 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h3><ul>
 <li><code>antd</code> 对于各种使用场景还是给出了详细的说明和例子参考的，这个很赞。</li>
 <li>使用 <code>React</code> 的各种警告，这个需要认真根据官方的引导进行调整。</li>
@@ -372,127 +179,18 @@ export default class CreateUpdateForm extends React.Component &#123;
     <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
 <span id="more"></span>
 
-<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><pre><code class="python"># -*- coding: utf-8 -*-
+<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">from</span> email.mime.application <span class="keyword">import</span> MIMEApplication</span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"></span><br><span class="line">name = datetime.datetime.now().strftime(<span class="string">&quot;%Y%m%d%H%M%S&quot;</span>)</span><br><span class="line">base_path = <span class="string">&#x27;/root/xxxx/temp&#x27;</span></span><br><span class="line">zip_path = <span class="string">&#x27;/root/xxxx/backup/&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_logging</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    log_dir, log_file = <span class="string">&#x27;/root/xxxx/logs&#x27;</span>, <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_dir):</span><br><span class="line">        os.mkdir(log_dir)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_file):</span><br><span class="line">        <span class="built_in">open</span>(log_file, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    DEFAULT_LOGGING = &#123;</span><br><span class="line">        <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">        <span class="string">&#x27;formatters&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;formatone&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;format&#x27;</span>: <span class="string">&#x27;[%(asctime)s] %(levelname)s : %(message)s&#x27;</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;file&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;filename&#x27;</span>: <span class="string">&#x27;/root/xxxx/logs/backup.log&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;formatone&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.handlers.RotatingFileHandler&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;maxBytes&#x27;</span>: <span class="number">100</span> * <span class="number">1024</span> * <span class="number">1024</span>,</span><br><span class="line">                <span class="string">&#x27;backupCount&#x27;</span>: <span class="number">10</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;backup&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;file&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;INFO&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logging.config.dictConfig(DEFAULT_LOGGING)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">zip_files</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sendmail</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;send mail&quot;&quot;&quot;</span></span><br><span class="line">    set_logging()</span><br><span class="line">    zip_files()</span><br><span class="line"></span><br><span class="line">    logger = logging.getLogger(<span class="string">&#x27;backup&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    mail_from, password = <span class="string">&#x27;xxxxxxx@aliyun.com&#x27;</span>, <span class="string">&#x27;xxxxxxx&#x27;</span></span><br><span class="line">    mail_to = <span class="string">&#x27;xxxxx@qq.com&#x27;</span></span><br><span class="line">    smtp_server = <span class="string">&#x27;smtp.aliyun.com&#x27;</span></span><br><span class="line"></span><br><span class="line">    msgRoot = MIMEMultipart(<span class="string">&#x27;related&#x27;</span>)</span><br><span class="line">    msgRoot[<span class="string">&#x27;Subject&#x27;</span>] = <span class="string">&#x27;send backup files &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name)</span><br><span class="line">    msgRoot[<span class="string">&#x27;From&#x27;</span>] = <span class="string">&#x27;&#123;&#125;&lt;&#123;&#125;&gt;&#x27;</span>.<span class="built_in">format</span>(Header(<span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>), mail_from)</span><br><span class="line">    msgRoot[<span class="string">&#x27;To&#x27;</span>] = mail_to</span><br><span class="line"></span><br><span class="line">    msgText = MIMEText(<span class="string">&#x27;backup files&#x27;</span>, <span class="string">&#x27;plain&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    msgRoot.attach(msgText)</span><br><span class="line"></span><br><span class="line">    zip_con = MIMEApplication(<span class="built_in">open</span>(zip_path,<span class="string">&#x27;rb&#x27;</span>).read())</span><br><span class="line">    zip_con.add_header(<span class="string">&#x27;Content-Disposition&#x27;</span>, <span class="string">&#x27;attachment&#x27;</span>,</span><br><span class="line">                       filename=<span class="string">&#x27;&#123;&#125;.tar.bz2&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    msgRoot.attach(zip_con)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP_SSL(smtp_server)</span><br><span class="line">        server.login(mail_from, password)</span><br><span class="line">        server.sendmail(mail_from, mail_to, msgRoot.as_string())</span><br><span class="line">        server.quit()</span><br><span class="line">        logger.info(<span class="string">&#x27;send &#123;&#125; backup files success&#x27;</span>.<span class="built_in">format</span>(name))</span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        logger.error(<span class="string">&#x27;send &#123;&#125; failed &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name, e))</span><br><span class="line">        sendmail()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    sendmail()</span><br></pre></td></tr></table></figure>
 
-from __future__ import absolute_import, unicode_literals
-
-import os
-import datetime
-import logging
-import logging.config
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.header import Header
-from email.mime.application import MIMEApplication
-import smtplib
-
-name = datetime.datetime.now().strftime(&quot;%Y%m%d%H%M%S&quot;)
-base_path = &#39;/root/xxxx/temp&#39;
-zip_path = &#39;/root/xxxx/backup/&#123;&#125;.tar.bz2&#39;.format(name)
-
-
-def set_logging():
-    &quot;&quot;&quot;&quot;&quot;&quot;
-
-    log_dir, log_file = &#39;/root/xxxx/logs&#39;, &#39;/root/xxxx/logs/backup.log&#39;
-
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-
-    if not os.path.exists(log_file):
-        open(log_file, &#39;w&#39;)
-
-    DEFAULT_LOGGING = &#123;
-        &#39;version&#39;: 1,
-        &#39;disable_existing_loggers&#39;: False,
-        &#39;formatters&#39;: &#123;
-            &#39;formatone&#39;: &#123;
-                &#39;format&#39;: &#39;[%(asctime)s] %(levelname)s : %(message)s&#39;,
-            &#125;
-        &#125;,
-        &#39;handlers&#39;: &#123;
-            &#39;file&#39;: &#123;
-                &#39;level&#39;: &#39;DEBUG&#39;,
-                &#39;filename&#39;: &#39;/root/xxxx/logs/backup.log&#39;,
-                &#39;formatter&#39;: &#39;formatone&#39;,
-                &#39;class&#39;: &#39;logging.handlers.RotatingFileHandler&#39;,
-                &#39;maxBytes&#39;: 100 * 1024 * 1024,
-                &#39;backupCount&#39;: 10,
-            &#125;,
-        &#125;,
-        &#39;loggers&#39;: &#123;
-            &#39;backup&#39;: &#123;
-                &#39;handlers&#39;: [&#39;file&#39;],
-                &#39;level&#39;: &#39;INFO&#39;,
-            &#125;,
-        &#125;
-    &#125;
-
-    logging.config.dictConfig(DEFAULT_LOGGING)
-
-
-def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
-
-
-def sendmail():
-    &quot;&quot;&quot;send mail&quot;&quot;&quot;
-    set_logging()
-    zip_files()
-
-    logger = logging.getLogger(&#39;backup&#39;)
-
-    mail_from, password = &#39;xxxxxxx@aliyun.com&#39;, &#39;xxxxxxx&#39;
-    mail_to = &#39;xxxxx@qq.com&#39;
-    smtp_server = &#39;smtp.aliyun.com&#39;
-
-    msgRoot = MIMEMultipart(&#39;related&#39;)
-    msgRoot[&#39;Subject&#39;] = &#39;send backup files &#123;&#125;&#39;.format(name)
-    msgRoot[&#39;From&#39;] = &#39;&#123;&#125;&lt;&#123;&#125;&gt;&#39;.format(Header(&#39;backup&#39;, &#39;utf-8&#39;), mail_from)
-    msgRoot[&#39;To&#39;] = mail_to
-
-    msgText = MIMEText(&#39;backup files&#39;, &#39;plain&#39;, &#39;utf-8&#39;)
-    msgRoot.attach(msgText)
-
-    zip_con = MIMEApplication(open(zip_path,&#39;rb&#39;).read())
-    zip_con.add_header(&#39;Content-Disposition&#39;, &#39;attachment&#39;,
-                       filename=&#39;&#123;&#125;.tar.bz2&#39;.format(name))
-    msgRoot.attach(zip_con)
-
-    try:
-        server = smtplib.SMTP_SSL(smtp_server)
-        server.login(mail_from, password)
-        server.sendmail(mail_from, mail_to, msgRoot.as_string())
-        server.quit()
-        logger.info(&#39;send &#123;&#125; backup files success&#39;.format(name))
-    except Exception, e:
-        logger.error(&#39;send &#123;&#125; failed &#123;&#125;&#39;.format(name, e))
-        sendmail()
-
-
-if __name__ == &#39;__main__&#39;:
-    sendmail()
-</code></pre>
 <h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
-<pre><code class="python">def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">zip_files</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;zip files&quot;&quot;&quot;</span></span><br><span class="line">    os.system(<span class="string">&#x27;tar -cjf &#123;&#125; -C &#123;&#125; data&#x27;</span>.<span class="built_in">format</span>(zip_path, base_path))</span><br></pre></td></tr></table></figure>
+
 <h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
 <h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
-<pre><code class="javascript">[2017-04-14 00:00:03,251] INFO : send 20170414000001 backup files success
-[2017-04-14 03:00:02,620] INFO : send 20170414030001 backup files success
-[2017-04-14 06:00:02,406] INFO : send 20170414060001 backup files success
-[2017-04-14 09:00:02,349] INFO : send 20170414090001 backup files success
-[2017-04-14 12:00:02,299] INFO : send 20170414120001 backup files success
-[2017-04-14 15:01:04,696] ERROR : send 20170414150001 failed [Errno 110] Connection timed out
-[2017-04-14 15:01:05,401] INFO : send 20170414150001 backup files success
-</code></pre>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span>,<span class="number">251</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414000001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">03</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">620</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414030001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">06</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">406</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414060001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">09</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">349</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414090001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">12</span>:<span class="number">00</span>:<span class="number">02</span>,<span class="number">299</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414120001</span> backup files success</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="number">696</span>] <span class="variable constant_">ERROR</span> : send <span class="number">20170414150001</span> failed [<span class="title class_">Errno</span> <span class="number">110</span>] <span class="title class_">Connection</span> timed out</span><br><span class="line">[<span class="number">2017</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">15</span>:<span class="number">01</span>:<span class="number">05</span>,<span class="number">401</span>] <span class="variable constant_">INFO</span> : send <span class="number">20170414150001</span> backup files success</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
-<pre><code class="shell">0 */3 * * *  python /root/xxxxx/backup.py
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">0 */3 * * *  python /root/xxxxx/backup.py</span><br></pre></td></tr></table></figure>
+
 <h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
 ]]></content>
       <categories>
@@ -509,54 +207,14 @@ if __name__ == &#39;__main__&#39;:
     <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错</p>
 <span id="more"></span>
 
-<pre><code class="shell">Media change: please insert the disc labeled
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"></span><br><span class="line">media change: please insert the disc labeled</span><br><span class="line">Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter</span><br></pre></td></tr></table></figure>
 
-media change: please insert the disc labeled
-Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter
-</code></pre>
 <p>查看下 <code>/etc/apt/sources.list</code></p>
-<pre><code class="python"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line">deb cdrom:[Debian GNU/Linux <span class="number">10.9</span><span class="number">.0</span> _Buster_ - Official amd64 DVD Binary-<span class="number">1</span> <span class="number">20210327</span>-<span class="number">10</span>:<span class="number">39</span>]/ buster contrib main</span><br><span class="line"></span><br><span class="line">deb http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line">deb-src http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br></pre></td></tr></table></figure>
 
-deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-deb http://security.debian.org/debian-security buster/updates main contrib
-deb-src http://security.debian.org/debian-security buster/updates main contrib
-
-# buster-updates, previously known as &#39;volatile&#39;
-# A network mirror was not selected during install.  The following entries
-# are provided as examples, but you should amend them as appropriate
-# for your mirror of choice.
-#
-# deb http://deb.debian.org/debian/ buster-updates main contrib
-# deb-src http://deb.debian.org/debian/ buster-updates main contrib
-</code></pre>
 <p>果断把包含 <code>deb cdrom</code> 这行给注释掉，然后又重新把 <code>apt</code> 源设置成清华源，修改后的文件</p>
-<pre><code class="python">
-# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
 
-# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-# deb https://security.debian.org/debian-security buster/updates main contrib
-# deb-src http://security.debian.org/debian-security buster/updates main contrib
-
-# buster-updates, previously known as &#39;volatile&#39;
-# A network mirror was not selected during install.  The following entries
-# are provided as examples, but you should amend them as appropriate
-# for your mirror of choice.
-#
-# deb http://deb.debian.org/debian/ buster-updates main contrib
-# deb-src http://deb.debian.org/debian/ buster-updates main contrib
-
-# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
-</code></pre>
 <p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
 ]]></content>
       <categories>
@@ -564,6 +222,47 @@ deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django | Mysql 返回不合法的日期时间对象</title>
+    <url>/posts/26483/</url>
+    <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">38</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line"></span><br><span class="line">Out[<span class="number">38</span>]: SELECT DISTINCT</span><br><span class="line">CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br></pre></td></tr></table></figure>
+
+<p>然后报错</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: Database returned an invalid datetime value. Are time zone definitions <span class="keyword">for</span> your database installed?</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-解决问题"><a href="#2-解决问题" class="headerlink" title="2 解决问题"></a>2 解决问题</h3><p>实际情况，数据库中是有数据，目测月份提取失败；到 mysql 执行了下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| NULL                                                        |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>果然，结果返回令人诧异的 <code>NULL</code></p>
+<p>看了下 Django orm 的 datetimes 官方文档</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Note</span><br><span class="line">This function performs time zone conversions directly <span class="keyword">in</span> the database. As a consequence, your database must be able to interpret the value of tzinfo.tzname(<span class="literal">None</span>). This translates into the following requirements:</span><br><span class="line"></span><br><span class="line">SQLite: no requirements. Conversions are performed <span class="keyword">in</span> Python <span class="keyword">with</span> pytz (installed when you install Django).</span><br><span class="line">PostgreSQL: no requirements (see Time Zones).</span><br><span class="line">Oracle: no requirements (see Choosing a Time Zone File).</span><br><span class="line">MySQL: load the time zone tables <span class="keyword">with</span> mysql_tzinfo_to_sql.</span><br></pre></td></tr></table></figure>
+
+<p>即 mysql 需要使用 mysql_tzinfo_to_sql 载入时区表，接着跳到 <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html">https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html</a></p>
+<p>按照 mysql 官方的文档</p>
+<p><code>For the first invocation syntax, pass the zoneinfo directory path name to mysql_tzinfo_to_sql and send the output into the mysql program. For example:</code></p>
+<p>我需要按照以下命令执行</p>
+<blockquote>
+<p>mysql_tzinfo_to_sql &#x2F;usr&#x2F;share&#x2F;zoneinfo | mysql -u root mysql</p>
+</blockquote>
+<p>然后再次执行上面执行过的转换语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| <span class="number">2018</span>-05-<span class="number">10</span> <span class="number">20</span>:<span class="number">30</span>:<span class="number">00</span>                                         |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>yes，返回了正确的结果；</p>
+<p>在 shell 中 执行数据库查询语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">45</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line">Out[<span class="number">45</span>]: SELECT DISTINCT CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Execution time: <span class="number">0.000591</span>s [Database: default]</span><br><span class="line"></span><br><span class="line">&lt;QuerySet [datetime.datetime(<span class="number">2018</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, tzinfo=&lt;DstTzInfo <span class="string">&#x27;Asia/Shanghai&#x27;</span> CST+<span class="number">8</span>:<span class="number">00</span>:<span class="number">00</span> STD&gt;)]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>正常，so 问题解决，看来还得认真看文档呀</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
+        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -627,28 +326,8 @@ deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main
     <title>Django | 虚拟字段</title>
     <url>/posts/37001/</url>
     <content><![CDATA[<p>这次写写 Django 模型中的虚拟字段。这个虚拟字段很有意思，在某些场景下，反查可以让业务代码看起来很清晰，大部分时候都是结合 <code>prefetch_related</code> 和 <code>select_related</code> 来使用。<span id="more"></span></p>
-<h3 id="1-模型"><a href="#1-模型" class="headerlink" title="1 模型"></a>1 模型</h3><pre><code class="python">class Category(models.Model):
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name=&#39;category_user&#39;,
-        null=True,
-        default=None,
-    )
+<h3 id="1-模型"><a href="#1-模型" class="headerlink" title="1 模型"></a>1 模型</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Category</span>(models.Model):</span><br><span class="line">    user = models.ForeignKey(</span><br><span class="line">        to=settings.AUTH_USER_MODEL,</span><br><span class="line">        on_delete=models.CASCADE,</span><br><span class="line">        related_name=<span class="string">&#x27;category_user&#x27;</span>,</span><br><span class="line">        null=<span class="literal">True</span>,</span><br><span class="line">        default=<span class="literal">None</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Article</span>(models.Model):</span><br><span class="line">    user = models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)</span><br><span class="line">    category = models.ManyToManyField(Category)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Book</span>(models.Model):</span><br><span class="line">    article = models.OneToOneField(</span><br><span class="line">        Article, on_delete=models.CASCADE, related_name=<span class="string">&#x27;books&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tag</span>(models.Model):</span><br><span class="line">    article = models.ForeignKey(Article, on_delete=models.CASCADE)</span><br><span class="line">    users = models.ManyToManyField(User, related_name=<span class="string">&#x27;tag_users&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-class Article(models.Model):
-    user = models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category)
-
-class Book(models.Model):
-    article = models.OneToOneField(
-        Article, on_delete=models.CASCADE, related_name=&#39;books&#39;
-    )
-
-class Tag(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    users = models.ManyToManyField(User, related_name=&#39;tag_users&#39;)
-</code></pre>
 <p>这里写了分类模型和文章模型，里面包含了基本的三种关系：</p>
 <ul>
 <li>OneToOneField</li>
@@ -664,112 +343,50 @@ class Tag(models.Model):
 <blockquote>
 <p>如果没有指定 related_name，那么父模型（被引用模型）存在子模型小写名称的字段</p>
 </blockquote>
-<h4 id="2-1-OneToOneField-关系下的验证"><a href="#2-1-OneToOneField-关系下的验证" class="headerlink" title="2.1 OneToOneField 关系下的验证"></a>2.1 OneToOneField 关系下的验证</h4><h5 id="2-1-1-指定了-related-name"><a href="#2-1-1-指定了-related-name" class="headerlink" title="2.1.1 指定了 related_name"></a>2.1.1 指定了 related_name</h5><pre><code class="python">In [5]: Article._meta.get_field(&#39;books&#39;)
-Out[5]: &lt;OneToOneRel: mallshop.book&gt;
+<h4 id="2-1-OneToOneField-关系下的验证"><a href="#2-1-OneToOneField-关系下的验证" class="headerlink" title="2.1 OneToOneField 关系下的验证"></a>2.1 OneToOneField 关系下的验证</h4><h5 id="2-1-1-指定了-related-name"><a href="#2-1-1-指定了-related-name" class="headerlink" title="2.1.1 指定了 related_name"></a>2.1.1 指定了 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">5</span>]: Article._meta.get_field(<span class="string">&#x27;books&#x27;</span>)</span><br><span class="line">Out[<span class="number">5</span>]: &lt;OneToOneRel: mallshop.book&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: Article._meta.get_field(<span class="string">&#x27;books&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">7</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [7]: Article._meta.get_field(&#39;books&#39;).concrete
-Out[7]: False
-</code></pre>
 <p><code>Book</code> 模型引用了 <code>Article</code> 模型，同时指定了 <code>related_name</code>, 这时 <code>Article</code> 模型存在 <code>books</code> 的虚拟字段</p>
-<h5 id="2-1-2-没有指定-related-name"><a href="#2-1-2-没有指定-related-name" class="headerlink" title="2.1.2 没有指定 related_name"></a>2.1.2 没有指定 related_name</h5><pre><code class="python">In [8]: User._meta.get_field(&#39;article&#39;)
-Out[8]: &lt;OneToOneRel: mallshop.article&gt;
+<h5 id="2-1-2-没有指定-related-name"><a href="#2-1-2-没有指定-related-name" class="headerlink" title="2.1.2 没有指定 related_name"></a>2.1.2 没有指定 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">8</span>]: User._meta.get_field(<span class="string">&#x27;article&#x27;</span>)</span><br><span class="line">Out[<span class="number">8</span>]: &lt;OneToOneRel: mallshop.article&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: User._meta.get_field(<span class="string">&#x27;article&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">9</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [9]: User._meta.get_field(&#39;article&#39;).concrete
-Out[9]: False
-</code></pre>
 <p><code>Article</code> 模型引用了 <code>User</code> 模型，没有指定 <code>related_name</code>，这时 <code>User</code> 模型存在 <code>artilce</code> 虚拟字段</p>
-<h4 id="2-2-ForeignKey-关系下的验证"><a href="#2-2-ForeignKey-关系下的验证" class="headerlink" title="2.2 ForeignKey 关系下的验证"></a>2.2 ForeignKey 关系下的验证</h4><h5 id="2-2-1-指定了-related-name"><a href="#2-2-1-指定了-related-name" class="headerlink" title="2.2.1 指定了 related_name"></a>2.2.1 指定了 related_name</h5><pre><code class="python">In [10]: User._meta.get_field(&#39;category_user&#39;)
-Out[10]: &lt;ManyToOneRel: mallshop.category&gt;
+<h4 id="2-2-ForeignKey-关系下的验证"><a href="#2-2-ForeignKey-关系下的验证" class="headerlink" title="2.2 ForeignKey 关系下的验证"></a>2.2 ForeignKey 关系下的验证</h4><h5 id="2-2-1-指定了-related-name"><a href="#2-2-1-指定了-related-name" class="headerlink" title="2.2.1 指定了 related_name"></a>2.2.1 指定了 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">10</span>]: User._meta.get_field(<span class="string">&#x27;category_user&#x27;</span>)</span><br><span class="line">Out[<span class="number">10</span>]: &lt;ManyToOneRel: mallshop.category&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: User._meta.get_field(<span class="string">&#x27;category_user&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">11</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [11]: User._meta.get_field(&#39;category_user&#39;).concrete
-Out[11]: False
-</code></pre>
 <p><code>Category</code> 模型引用了 <code>User</code> 模型，同时指定了 <code>related_name</code>, 这时 <code>User</code> 模型存在 <code>category_user</code> 的虚拟字段</p>
-<h5 id="2-2-2-没有指定-related-name"><a href="#2-2-2-没有指定-related-name" class="headerlink" title="2.2.2 没有指定 related_name"></a>2.2.2 没有指定 related_name</h5><pre><code class="python">In [12]: Article._meta.get_field(&#39;tag&#39;)
-Out[12]: &lt;ManyToOneRel: mallshop.tag&gt;
+<h5 id="2-2-2-没有指定-related-name"><a href="#2-2-2-没有指定-related-name" class="headerlink" title="2.2.2 没有指定 related_name"></a>2.2.2 没有指定 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">12</span>]: Article._meta.get_field(<span class="string">&#x27;tag&#x27;</span>)</span><br><span class="line">Out[<span class="number">12</span>]: &lt;ManyToOneRel: mallshop.tag&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: Article._meta.get_field(<span class="string">&#x27;tag&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">13</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [13]: Article._meta.get_field(&#39;tag&#39;).concrete
-Out[13]: False
-</code></pre>
 <p><code>Tag</code> 模型引用了 <code>Article 模型</code>，没有指定 <code>related_name</code>，这时 <code>Article</code> 模型存在 <code>tag</code> 虚拟字段</p>
-<h4 id="2-3-ManyToManyField-关系下的验证"><a href="#2-3-ManyToManyField-关系下的验证" class="headerlink" title="2.3 ManyToManyField 关系下的验证"></a>2.3 ManyToManyField 关系下的验证</h4><h5 id="2-3-1-指定了-related-name"><a href="#2-3-1-指定了-related-name" class="headerlink" title="2.3.1 指定了 related_name"></a>2.3.1 指定了 related_name</h5><pre><code class="python">In [1]: User._meta.get_field(&#39;tag_users&#39;)
-Out[1]: &lt;ManyToManyRel: mallshop.tag&gt;
+<h4 id="2-3-ManyToManyField-关系下的验证"><a href="#2-3-ManyToManyField-关系下的验证" class="headerlink" title="2.3 ManyToManyField 关系下的验证"></a>2.3 ManyToManyField 关系下的验证</h4><h5 id="2-3-1-指定了-related-name"><a href="#2-3-1-指定了-related-name" class="headerlink" title="2.3.1 指定了 related_name"></a>2.3.1 指定了 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">1</span>]: User._meta.get_field(<span class="string">&#x27;tag_users&#x27;</span>)</span><br><span class="line">Out[<span class="number">1</span>]: &lt;ManyToManyRel: mallshop.tag&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: User._meta.get_field(<span class="string">&#x27;tag_users&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">2</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [2]: User._meta.get_field(&#39;tag_users&#39;).concrete
-Out[2]: False
-</code></pre>
 <p><code>Tag</code> 模型引用了 <code>User</code> 模型，同时指定了 <code>related_name</code> 为 <code>tag_users</code>, 这时 <code>User</code> 模型存在 <code>tag_users</code> 的虚拟字段</p>
-<h5 id="2-3-2-没有指定-related-name"><a href="#2-3-2-没有指定-related-name" class="headerlink" title="2.3.2 没有指定 related_name"></a>2.3.2 没有指定 related_name</h5><pre><code class="python">In [15]: Category._meta.get_field(&#39;article&#39;)
-Out[15]: &lt;ManyToManyRel: mallshop.article&gt;
+<h5 id="2-3-2-没有指定-related-name"><a href="#2-3-2-没有指定-related-name" class="headerlink" title="2.3.2 没有指定 related_name"></a>2.3.2 没有指定 related_name</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">15</span>]: Category._meta.get_field(<span class="string">&#x27;article&#x27;</span>)</span><br><span class="line">Out[<span class="number">15</span>]: &lt;ManyToManyRel: mallshop.article&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: Category._meta.get_field(<span class="string">&#x27;article&#x27;</span>).concrete</span><br><span class="line">Out[<span class="number">16</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-In [16]: Category._meta.get_field(&#39;article&#39;).concrete
-Out[16]: False
-</code></pre>
 <p><code>Article</code> 模型引用了 <code>Category</code> 模型，没有指定 <code>related_name</code>，这时 <code>Category</code> 模型存在 <code>article</code> 虚拟字段</p>
 <h3 id="3-模型实例访问虚拟字段"><a href="#3-模型实例访问虚拟字段" class="headerlink" title="3 模型实例访问虚拟字段"></a>3 模型实例访问虚拟字段</h3><p>如果在模型实例，访问虚拟字段时，这里需要注意以下规则：</p>
 <p><strong>规则 1：</strong></p>
 <blockquote>
 <p>如果是 OneToOneField 关系，访问模型实例的虚拟字段属性时，这时返回的是子模型的实例</p>
 </blockquote>
-<pre><code class="python">In [3]: user = User.objects.first()
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">3</span>]: user = User.objects.first()</span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: user.article</span><br><span class="line">Out[<span class="number">4</span>]: &lt;Article: Article <span class="built_in">object</span> (<span class="number">1</span>)&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">5</span>]: user.article.books</span><br><span class="line">Out[<span class="number">5</span>]: &lt;Book: Book <span class="built_in">object</span> (<span class="number">1</span>)&gt;</span><br></pre></td></tr></table></figure>
 
-In [4]: user.article
-Out[4]: &lt;Article: Article object (1)&gt;
-
-In [5]: user.article.books
-Out[5]: &lt;Book: Book object (1)&gt;
-</code></pre>
 <p><strong>规则 2：</strong></p>
 <blockquote>
 <p>如果是非 OneToOneField 关系，同时指定了 related_name，访问模型实例的虚拟字段属性时，这时返回的是 RelatedManager 实例</p>
 </blockquote>
-<pre><code class="python">In [9]: user.category_user
-Out[9]: &lt;django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.&lt;locals&gt;.RelatedManager at 0x107c10610&gt;
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">9</span>]: user.category_user</span><br><span class="line">Out[<span class="number">9</span>]: &lt;django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.&lt;<span class="built_in">locals</span>&gt;.RelatedManager at <span class="number">0x107c10610</span>&gt;</span><br></pre></td></tr></table></figure>
+
 <p><strong>规则 3：</strong></p>
 <blockquote>
 <p>如果是非 OneToOneField 关系，同时没有指定 related_name，访问模型实例的虚拟字段属性时，这个时候会抛出异常，如果想得到一个 RelatedManager 实例，则需要在虚拟字段后加上 _set 后，在进行访问</p>
 </blockquote>
-<pre><code class="python">In [6]: article = Article.objects.first()
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">6</span>]: article = Article.objects.first()</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: article.tag</span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">AttributeError                            Traceback (most recent call last)</span><br><span class="line">&lt;ipython-<span class="built_in">input</span>-<span class="number">7</span>-ad987724bf64&gt; <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">----&gt; <span class="number">1</span> article.tag</span><br><span class="line"></span><br><span class="line">AttributeError: <span class="string">&#x27;Article&#x27;</span> <span class="built_in">object</span> has no attribute <span class="string">&#x27;tag&#x27;</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: article.tag_set</span><br><span class="line">Out[<span class="number">8</span>]: &lt;django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.&lt;<span class="built_in">locals</span>&gt;.RelatedManager at <span class="number">0x108053220</span>&gt;</span><br></pre></td></tr></table></figure>
 
-In [7]: article.tag
----------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-&lt;ipython-input-7-ad987724bf64&gt; in &lt;module&gt;
-----&gt; 1 article.tag
-
-AttributeError: &#39;Article&#39; object has no attribute &#39;tag&#39;
-
-In [8]: article.tag_set
-Out[8]: &lt;django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.&lt;locals&gt;.RelatedManager at 0x108053220&gt;
-</code></pre>
 <h3 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h3><p>虚拟字段，注意在模型和模型实例下的使用方式。</p>
 <p>话说虚拟字段有啥用，可以反查，在我使用的场景中，最大的好处是可以基于 <code>DRF</code> 动态构建序列化类，例如想得到一篇文章，这个文章还要包含些作者信息，前端可以这样传</p>
-<pre><code class="json">&#123;
-  &quot;display_fields&quot;: [
-    &quot;id&quot;,
-    &quot;name&quot;,
-    &#123; &quot;user&quot;: [&quot;username&quot;, &quot;id&quot;] &#125;,
-    &#123; &quot;tag&quot;: [&quot;id&quot;, &quot;name&quot;] &#125;
-  ]
-&#125;
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;display_fields&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;id&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;username&quot;</span><span class="punctuation">,</span> <span class="string">&quot;id&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;id&quot;</span><span class="punctuation">,</span> <span class="string">&quot;name&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
 <p>返回的结果</p>
-<pre><code class="json">&#123;
-  &quot;id&quot;: 1,
-  &quot;name&quot;: &quot;ceshi1&quot;,
-  &quot;user&quot;: &#123;
-    &quot;username&quot;: &quot;吴小楠&quot;,
-    &quot;id&quot;: 2
-  &#125;,
-  &quot;tag&quot;: [
-    &#123;
-      &quot;id&quot;: 3,
-      &quot;name&quot;: &quot;tag1&quot;
-    &#125;
-  ]
-&#125;
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ceshi1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;吴小楠&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">2</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tag1&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
 <p>后端可以根据前端传递的获取字段列表进行校验，验证通过后根据获取的字段动态的生成对应的序列化类，嵌套的序列化类也只包含指定的字段，这样在服务端可以提升些接口性能。返回给前端，这个我是参考了 <code>graphql</code> 的模式，前端需要返回什么，就指定什么。</p>
 <p>如果使用 Django，虚拟字段的使用时避免不了的，深度挖掘虚拟字段的使用，会跟业务带来很大的便利性。</p>
 ]]></content>
@@ -779,72 +396,6 @@ Out[8]: &lt;django.db.models.fields.related_descriptors.create_reverse_many_to_o
       </categories>
       <tags>
         <tag>Django</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Django | Mysql 返回不合法的日期时间对象</title>
-    <url>/posts/26483/</url>
-    <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
-<pre><code class="python">In [38]: Device.objects.datetimes(&#39;latest_alarm_time&#39;, &#39;month&#39;)
-
-Out[38]: SELECT DISTINCT
-CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;), &#39;%Y-%m-01 00:00:00&#39;) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT 21
-</code></pre>
-<p>然后报错</p>
-<pre><code class="python">ValueError: Database returned an invalid datetime value. Are time zone definitions for your database installed?
-</code></pre>
-<h3 id="2-解决问题"><a href="#2-解决问题" class="headerlink" title="2 解决问题"></a>2 解决问题</h3><p>实际情况，数据库中是有数据，目测月份提取失败；到 mysql 执行了下</p>
-<pre><code class="python">mysql root@localhost:py365&gt; select convert_tz(&#39;2018-05-10 12:30:00&#39;, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;);
-+-------------------------------------------------------------+
-| convert_tz(&#39;2018-05-10 12:30:00&#39;, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;)   |
-|-------------------------------------------------------------|
-| NULL                                                        |
-+-------------------------------------------------------------+
-</code></pre>
-<p>果然，结果返回令人诧异的 <code>NULL</code></p>
-<p>看了下 Django orm 的 datetimes 官方文档</p>
-<pre><code class="python">Note
-This function performs time zone conversions directly in the database. As a consequence, your database must be able to interpret the value of tzinfo.tzname(None). This translates into the following requirements:
-
-SQLite: no requirements. Conversions are performed in Python with pytz (installed when you install Django).
-PostgreSQL: no requirements (see Time Zones).
-Oracle: no requirements (see Choosing a Time Zone File).
-MySQL: load the time zone tables with mysql_tzinfo_to_sql.
-</code></pre>
-<p>即 mysql 需要使用 mysql_tzinfo_to_sql 载入时区表，接着跳到 <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html">https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html</a></p>
-<p>按照 mysql 官方的文档</p>
-<p><code>For the first invocation syntax, pass the zoneinfo directory path name to mysql_tzinfo_to_sql and send the output into the mysql program. For example:</code></p>
-<p>我需要按照以下命令执行</p>
-<blockquote>
-<p>mysql_tzinfo_to_sql &#x2F;usr&#x2F;share&#x2F;zoneinfo | mysql -u root mysql</p>
-</blockquote>
-<p>然后再次执行上面执行过的转换语句</p>
-<pre><code class="python">mysql root@localhost:py365&gt; select convert_tz(&#39;2018-05-10 12:30:00&#39;, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;);
-+-------------------------------------------------------------+
-| convert_tz(&#39;2018-05-10 12:30:00&#39;, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;)   |
-|-------------------------------------------------------------|
-| 2018-05-10 20:30:00                                         |
-+-------------------------------------------------------------+
-</code></pre>
-<p>yes，返回了正确的结果；</p>
-<p>在 shell 中 执行数据库查询语句</p>
-<pre><code class="python">In [45]: Device.objects.datetimes(&#39;latest_alarm_time&#39;, &#39;month&#39;)
-Out[45]: SELECT DISTINCT CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, &#39;UTC&#39;, &#39;Asia/Shanghai&#39;), &#39;%Y-%m-01 00:00:00&#39;) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT 21
-
-
-Execution time: 0.000591s [Database: default]
-
-&lt;QuerySet [datetime.datetime(2018, 5, 1, 0, 0, tzinfo=&lt;DstTzInfo &#39;Asia/Shanghai&#39; CST+8:00:00 STD&gt;)]&gt;
-</code></pre>
-<p>正常，so 问题解决，看来还得认真看文档呀</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Django</tag>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -867,61 +418,14 @@ Execution time: 0.000591s [Database: default]
 <li>业务拆分，保持业务独立，清晰</li>
 </ul>
 <p>检测数据的 serializer:</p>
-<pre><code class="Python">class VerifyForm(serializers.Serializer):
-    &quot;&quot;&quot;验证认证用户输入数据&quot;&quot;&quot;
-    username = serializers.CharField(max_length=64, min_length=2)
-    id_number = serializers.CharField(max_length=18, min_length=15)
-    sms_code = serializers.CharField(max_length=6, min_length=6)
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifyForm</span>(serializers.Serializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;验证认证用户输入数据&quot;&quot;&quot;</span></span><br><span class="line">    username = serializers.CharField(max_length=<span class="number">64</span>, min_length=<span class="number">2</span>)</span><br><span class="line">    id_number = serializers.CharField(max_length=<span class="number">18</span>, min_length=<span class="number">15</span>)</span><br><span class="line">    sms_code = serializers.CharField(max_length=<span class="number">6</span>, min_length=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_username</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的用户名不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_id_number</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的身份证号码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_sms_code</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的短信验证码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, attrs</span>):</span><br><span class="line">        <span class="keyword">if</span> 外部服务(username, id_number) 不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, validated_data</span>):</span><br><span class="line">         持久化</span><br><span class="line">         <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
 
-    def validate_username(self, value):
-        if 检测输入的用户名不合法:
-            raise 异常
-        return value
-
-    def validate_id_number(self, value):
-        if 检测输入的身份证号码不合法:
-            raise 异常
-        return value
-
-    def validate_sms_code(self, value):
-        if 检测输入的短信验证码不合法:
-            raise 异常
-        return value
-
-    def validate(self, attrs):
-        if 外部服务(username, id_number) 不合法:
-            raise 异常
-        return attrs
-
-    def create(self, validated_data):
-         持久化
-         return instance
-</code></pre>
 <p>序列化对象的 serializer:</p>
-<pre><code class="python">class VerifySerializer(serializers.ModelSerializer):
-    &quot;&quot;&quot;序列化数据&quot;&quot;&quot;
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifySerializer</span>(serializers.ModelSerializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;序列化数据&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    你可以做点自己喜欢的事情，啊哈</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Meta</span>:</span><br><span class="line">        model = Verify</span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br></pre></td></tr></table></figure>
 
-    你可以做点自己喜欢的事情，啊哈
-
-    class Meta:
-        model = Verify
-        fields = &#39;__all__&#39;
-</code></pre>
 <h4 id="2-2-书写-views"><a href="#2-2-书写-views" class="headerlink" title="2.2 书写 views"></a>2.2 书写 views</h4><p>针对创建的业务，示例如下：</p>
-<pre><code class="python">def perform_create(self, serializer):
-    return serializer.save()
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">perform_create</span>(<span class="params">self, serializer</span>):</span><br><span class="line">    <span class="keyword">return</span> serializer.save()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, request, *args, **kwargs</span>):</span><br><span class="line">    serializer = VerifyForm(data=request.data, context=&#123;<span class="string">&#x27;request&#x27;</span>: request&#125;)</span><br><span class="line">    <span class="comment"># 检验数据</span></span><br><span class="line">    serializer.is_valid(raise_exception=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 持久化</span></span><br><span class="line">    instance = self.perform_create(serializer)</span><br><span class="line">    <span class="comment"># 序列化数据</span></span><br><span class="line">    serializer = self.get_serializer(instance)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
 
-def create(self, request, *args, **kwargs):
-    serializer = VerifyForm(data=request.data, context=&#123;&#39;request&#39;: request&#125;)
-    # 检验数据
-    serializer.is_valid(raise_exception=True)
-    # 持久化
-    instance = self.perform_create(serializer)
-    # 序列化数据
-    serializer = self.get_serializer(instance)
-
-    return Response(serializer.data)
-</code></pre>
 <h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>这种做法是我通常写接口业务的流程，验证检测归验证检测，序列化归序列化，两种类型互不干扰，当然对于简单的业务你可以全部放到同一个 serializer 中，这个根据自己的业务需求走，没有更好，只有合适。</p>
 ]]></content>
       <categories>
@@ -934,240 +438,27 @@ def create(self, request, *args, **kwargs):
       </tags>
   </entry>
   <entry>
-    <title>前端 | 重构 gulpfile.js</title>
-    <url>/posts/18305/</url>
-    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>前端任务打包工具选用的是 <code>gulp</code>, 当时选用 <code>gulp</code> 也是偶然，在使用 <code>grunt</code> 初期，翻阅 <code>dailyjs.com</code> 时发现一片文章着重介绍了 <code>gulp</code>, 甚至还预言是 <code>grunt</code> 的劲敌，好奇心驱使，确实发现，<code>gulp</code> 的流的概念更人性化，看着当时写的 <code>grunt</code> 配置文件，不忍直视<span id="more"></span></p>
-<p>由于项目的不断迭代，前端的任务也在不断的迭代，任务越来越多，没有优化前，全部的任务都在一个单独的 <code>gulpfile.js</code> 中，后来随着时间的推移，发现修改一个任务时，查询好麻烦，五百行左右的代码让人烦躁，代码结构和 <a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md</a> 如出一辙</p>
-<p>重构 <code>gulpfile.js</code> 必须要进行</p>
-<h3 id="2-重构迭代-1-拆分任务"><a href="#2-重构迭代-1-拆分任务" class="headerlink" title="2 重构迭代 1: 拆分任务"></a>2 重构迭代 1: 拆分任务</h3><p>最先是按照 <a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/split-tasks-across-multiple-files.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/split-tasks-across-multiple-files.md</a> 此文档中的架构进行迭代的</p>
-<h4 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h4><pre><code class="javascript">    gulpfile.js
-    tasks/
-    ├── xxxx.js
-    ├── xxxx.js
-    └── image.js
-</code></pre>
-<h4 id="image-js"><a href="#image-js" class="headerlink" title="image.js"></a>image.js</h4><pre><code class="javascript">var imagemin = require(&quot;gulp-imagemin&quot;);
-
-gulp.task(&quot;img&quot;, function () &#123;
-  return gulp
-    .src(&quot;./images/**/*.*&quot;)
-    .pipe(
-      imagemin(&#123;
-        optimizationLevel: 2,
-        progressive: true,
-      &#125;)
-    )
-    .pipe(gulp.dest(&quot;./imagemini&quot;));
-&#125;);
-</code></pre>
-<h4 id="gulpfile-js"><a href="#gulpfile-js" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><pre><code class="javascript">var requireDir = require(&quot;require-dir&quot;),
-  tasks = requireDir(&quot;./tasks&quot;);
-</code></pre>
-<p>这种文件架构让任务按照类型分成子任务放在单独的文件中，顿时感觉干净了很多，这时可以自由的添加子任务，而不用管 <code>gulpfile.js</code>, 此时子任务好比插件，需要就添加，没用就删除，相当方便</p>
-<h3 id="3-重构迭代-2-避免模块和插件重复依赖"><a href="#3-重构迭代-2-避免模块和插件重复依赖" class="headerlink" title="3 重构迭代 2: 避免模块和插件重复依赖"></a>3 重构迭代 2: 避免模块和插件重复依赖</h3><p>随着时间的推移，发现这种组织架构还是有些不方便，不方便在哪里呢，每一个任务文件中，我都要写 <code>var xxx = require(&#39;xxx&#39;)</code>, 如果你是用上面的架构，任务多的时候，估计也会抓狂，因为你会发现 <code>插件和模块依赖被重复的引入进来</code>，这样就提高了成本</p>
-<p>我不想在子任务文件中重复的引入 <code>插件或模块依赖</code>，有没有上面好方法，<code>stackoverflow</code> 是个好老师，老师告知：</p>
-<ul>
-<li>使用 <code>gulp-load-plugins</code> 插件<br>地址：<a href="https://www.npmjs.com/package/gulp-load-plugins">https://www.npmjs.com/package/gulp-load-plugins</a></li>
-<li>把子任务封装成模块</li>
-</ul>
-<h4 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h4><pre><code class="javascript">    gulpfile.js
-    tasks/
-    ├── xxxx.js
-    ├── xxxx.js
-    └── image.js
-</code></pre>
-<h4 id="gulpfile-js-1"><a href="#gulpfile-js-1" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><pre><code class="javascript">var gulp = require(&quot;gulp&quot;),
-  gulpLoadPlugins = require(&quot;gulp-load-plugins&quot;);
-// 这里请查看文档
-gulpLoadPlugins.imagemin = require(&quot;gulp-imagemin&quot;);
-
-require(&quot;./tasks/image&quot;)(gulp, gulpLoadPlugins);
-</code></pre>
-<h4 id="image-js-1"><a href="#image-js-1" class="headerlink" title="image.js"></a>image.js</h4><pre><code class="javascript">module.exports = function (gulp, Plugin) &#123;
-  gulp.task(&quot;img&quot;, function () &#123;
-    return gulp
-      .src(&quot;./images/**/*.*&quot;)
-      .pipe(
-        Plugin.imagemin(&#123;
-          optimizationLevel: 2,
-          progressive: true,
-        &#125;)
-      )
-      .pipe(gulp.dest(&quot;./imagemini&quot;));
-  &#125;);
-&#125;;
-</code></pre>
-<p>运行任务 一切正常，此时一个文件测试已经 ok</p>
-<p>但是 <code>./tasks</code> 下面是有很多的子任务，所以需要一个迭代加载，修改 <code>gulpfile.js</code> 如下</p>
-<pre><code class="javascript">var gulp = require(&quot;gulp&quot;),
-  gulpLoadPlugins = require(&quot;gulp-load-plugins&quot;),
-  // 这里获取子任务文件列表 使用了 fs 模块
-  gulpTaskList = require(&quot;fs&quot;).readdirSync(&quot;./tasks/&quot;);
-// 这里请查看文档
-gulpLoadPlugins.imagemin = require(&quot;gulp-imagemin&quot;);
-
-gulpTaskList.forEach(function (taskfile) &#123;
-  require(&quot;./tasks/&quot; + taskfile)(gulp, gulpLoadPlugins);
-&#125;);
-</code></pre>
-<p>这一次迭代避免了<code>重复依赖</code>的问题，但是你会发现，所有的依赖都声明在 <code>gulpTaskList</code> 命名空间下，如果你依赖很多插件或模块，<code>gulpfile.js</code> 也是相当长，鱼和熊掌不可兼得，在现在情况下，只能寻找最佳的解决方案</p>
-<h3 id="4-重构迭代-3-参数配置全局化"><a href="#4-重构迭代-3-参数配置全局化" class="headerlink" title="4 重构迭代 3: 参数配置全局化"></a>4 重构迭代 3: 参数配置全局化</h3><p>其实第二部迭代之后，就可以满足大部分需求，但还是有小伙伴抱怨，有些子任务有相同的参数，能不能抽取出来，放到一个单独的文件中，so 继续翻阅文档</p>
-<p>参考文档<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-external-config-file.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-external-config-file.md</a></p>
-<h4 id="代码结构-1"><a href="#代码结构-1" class="headerlink" title="代码结构"></a>代码结构</h4><pre><code class="javascript">    gulpfile.js
-    gulp
-    ├── config.json
-    ├── tasks/
-        ├── xxxx.js
-        ├── xxxx.js
-        └── image.js
-</code></pre>
-<p><code>注意：文件夹层次变了</code></p>
-<h4 id="config-json"><a href="#config-json" class="headerlink" title="config.json"></a>config.json</h4><pre><code class="javascript">    &#123;
-        &quot;pnglevel&quot;: 2
-    &#125;
-</code></pre>
-<h4 id="gulpfile-js-2"><a href="#gulpfile-js-2" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><pre><code class="javascript">    var gulp = require(&#39;gulp&#39;)
-      , config = require(&#39;./gulp/config.json&#39;);
-      , gulpLoadPlugins = require(&#39;gulp-load-plugins&#39;)
-      , gulpTaskList = require(&#39;fs&#39;).readdirSync(&#39;./gulp/tasks/&#39;)
-      ;
-
-    gulpLoadPlugins.imagemin = require(&#39;gulp-imagemin&#39;);
-
-    gulpTaskList.forEach(function(taskfile) &#123;
-        require(&#39;./gulp/tasks/&#39; + taskfile)(gulp, gulpLoadPlugins, config);
-    &#125;);
-</code></pre>
-<h4 id="image-js-2"><a href="#image-js-2" class="headerlink" title="image.js"></a>image.js</h4><pre><code class="javascript">module.exports = function (gulp, Plugin, config) &#123;
-  gulp.task(&quot;img&quot;, function () &#123;
-    return gulp
-      .src(&quot;./images/**/*.*&quot;)
-      .pipe(
-        Plugin.imagemin(&#123;
-          optimizationLevel: config.pnglevel,
-          progressive: true,
-        &#125;)
-      )
-      .pipe(gulp.dest(&quot;./imagemini&quot;));
-  &#125;);
-&#125;;
-</code></pre>
-<p>此次迭代结束后，我把子任务中通用的配置都写到 <code>./gulp/config.json</code> 中，全局配置</p>
-<h3 id="5-重构迭代-4-参数配置模块化"><a href="#5-重构迭代-4-参数配置模块化" class="headerlink" title="5 重构迭代 4: 参数配置模块化"></a>5 重构迭代 4: 参数配置模块化</h3><p>此次迭代紧跟迭代 3，<code>json</code> 不够完美，不想每次去写 <code>&quot;&quot;</code>, 这里我把配置文件封装成一个模块</p>
-<p>即迭代 3 中的 <code>config.json</code> 变成了 <code>config.js</code></p>
-<h4 id="config-js"><a href="#config-js" class="headerlink" title="config.js"></a>config.js</h4><pre><code class="javascript">module.exports = function () &#123;
-  var config = &#123;
-    pnglevel: 2,
-  &#125;;
-  return config;
-&#125;;
-</code></pre>
-<h4 id="gulpfile-js-加载"><a href="#gulpfile-js-加载" class="headerlink" title="gulpfile.js 加载"></a>gulpfile.js 加载</h4><pre><code class="javascript">var config = require(&quot;./gulp/gulp.config&quot;)();
-</code></pre>
-<p>其他不变，当封装成一个模块的时候，你就发现好处多多了，可以在模块中添加函数，你也可以把配置拆分，根据你的业务需要，自由调整</p>
-<h3 id="6-后记"><a href="#6-后记" class="headerlink" title="6 后记"></a>6 后记</h3><p>通过 4 步的迭代，整个代码组织架构就清晰多了，很感谢这么多热爱开源，乐于助人的朋友，谢谢</p>
-<p>注意： 子任务中注意文件夹的层次，子任务中的文件夹是以 <code>gulpfile.js</code> 为基准，因为 <code>gulpfile.js</code> 把子任务都包含进来了</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux 不同的发行版设置静态 IP</title>
     <url>/posts/29624/</url>
     <content><![CDATA[<p>近来在折腾本地服务器，为了方式每次重启 IP 地址的变化，所以要给机器设置静态 IP <span id="more"></span></p>
-<h2 id="一-不同发行版静态-IP-设置"><a href="#一-不同发行版静态-IP-设置" class="headerlink" title="一 不同发行版静态 IP 设置"></a>一 不同发行版静态 IP 设置</h2><h3 id="1-Centos-设置静态-IP"><a href="#1-Centos-设置静态-IP" class="headerlink" title="1 Centos 设置静态 IP"></a>1 Centos 设置静态 IP</h3><h4 id="修改网络配置"><a href="#修改网络配置" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><pre><code>vi /etc/sysconfig/network-scripts/ifcfg-eth192
-</code></pre>
+<h2 id="一-不同发行版静态-IP-设置"><a href="#一-不同发行版静态-IP-设置" class="headerlink" title="一 不同发行版静态 IP 设置"></a>一 不同发行版静态 IP 设置</h2><h3 id="1-Centos-设置静态-IP"><a href="#1-Centos-设置静态-IP" class="headerlink" title="1 Centos 设置静态 IP"></a>1 Centos 设置静态 IP</h3><h4 id="修改网络配置"><a href="#修改网络配置" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">vi <span class="regexp">/etc/</span>sysconfig<span class="regexp">/network-scripts/i</span>fcfg-eth192</span><br></pre></td></tr></table></figure>
+
 <p>修改后的内容如下</p>
-<pre><code>TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-# 这里可以使用 static 或者 no
-BOOTPROTO=none
-DEFROUTE=yes
-IPV4_FAILURE_FATAL=no
-IPV6INIT=yes
-IPV6_AUTOCONF=yes
-IPV6_DEFROUTE=yes
-IPV6_FAILURE_FATAL=no
-IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=ens192
-UUID=cd93f1df-d2d5-4c63-a64c-761e9ee23aae
-DEVICE=ens192
-# 开机启用此配置
-ONBOOT=yes
-# 静态 IP
-IPADDR=192.168.1.12
-# 默认网关
-GATEWAY=192.168.1.1
-</code></pre>
-<h4 id="重启网络服务"><a href="#重启网络服务" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><pre><code>systemctl restart network
-</code></pre>
-<h4 id="查看地址"><a href="#查看地址" class="headerlink" title="查看地址"></a>查看地址</h4><pre><code class="shell">[isproot@192 ~]$ ip addr
-1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host
-       valid_lft forever preferred_lft forever
-2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link/ether 00:0c:29:51:63:21 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.12/24 brd 192.168.1.255 scope global noprefixroute ens192
-       valid_lft forever preferred_lft forever
-    inet6 2408:8256:a80:313:6ba6:7ad0:edd0:defe/64 scope global noprefixroute dynamic
-       valid_lft 183241sec preferred_lft 96841sec
-    inet6 fe80::b6f3:1daa:4b7b:6994/64 scope link noprefixroute
-       valid_lft forever preferred_lft forever
-</code></pre>
-<h3 id="2-Debian-设置静态-IP"><a href="#2-Debian-设置静态-IP" class="headerlink" title="2 Debian 设置静态 IP"></a>2 Debian 设置静态 IP</h3><h4 id="修改网络配置-1"><a href="#修改网络配置-1" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><pre><code class="shell">vi /etc/network/interfaces
-</code></pre>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">TYPE</span>=Ethernet</span><br><span class="line"><span class="attr">PROXY_METHOD</span>=none</span><br><span class="line"><span class="attr">BROWSER_ONLY</span>=<span class="literal">no</span></span><br><span class="line"><span class="comment"># 这里可以使用 static 或者 no</span></span><br><span class="line"><span class="attr">BOOTPROTO</span>=none</span><br><span class="line"><span class="attr">DEFROUTE</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV4_FAILURE_FATAL</span>=<span class="literal">no</span></span><br><span class="line"><span class="attr">IPV6INIT</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_AUTOCONF</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_DEFROUTE</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_FAILURE_FATAL</span>=<span class="literal">no</span></span><br><span class="line"><span class="attr">IPV6_ADDR_GEN_MODE</span>=stable-privacy</span><br><span class="line"><span class="attr">NAME</span>=ens192</span><br><span class="line"><span class="attr">UUID</span>=cd93f1df-d2d5-<span class="number">4</span>c63-a64c-<span class="number">761</span>e9ee23aae</span><br><span class="line"><span class="attr">DEVICE</span>=ens192</span><br><span class="line"><span class="comment"># 开机启用此配置</span></span><br><span class="line"><span class="attr">ONBOOT</span>=<span class="literal">yes</span></span><br><span class="line"><span class="comment"># 静态 IP</span></span><br><span class="line"><span class="attr">IPADDR</span>=<span class="number">192.168</span>.<span class="number">1.12</span></span><br><span class="line"><span class="comment"># 默认网关</span></span><br><span class="line"><span class="attr">GATEWAY</span>=<span class="number">192.168</span>.<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="重启网络服务"><a href="#重启网络服务" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemctl restart network</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查看地址"><a href="#查看地址" class="headerlink" title="查看地址"></a>查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[isproot@192 ~]$ ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:51:63:21 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.12/24 brd 192.168.1.255 scope global noprefixroute ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a80:313:6ba6:7ad0:edd0:defe/64 scope global noprefixroute dynamic</span><br><span class="line">       valid_lft 183241sec preferred_lft 96841sec</span><br><span class="line">    inet6 fe80::b6f3:1daa:4b7b:6994/64 scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Debian-设置静态-IP"><a href="#2-Debian-设置静态-IP" class="headerlink" title="2 Debian 设置静态 IP"></a>2 Debian 设置静态 IP</h3><h4 id="修改网络配置-1"><a href="#修改网络配置-1" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
 <p>修改后的内容如下</p>
-<pre><code class="shell"># This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file describes the network interfaces available on your system</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">and how to activate them. For more information, see interfaces(5).</span></span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d/*</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The loopback network interface</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The primary network interface</span></span><br><span class="line">allow-hotplug ens192</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">iface ens192 inet dhcp</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置成静态 IP</span></span><br><span class="line">iface ens192 inet static</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 IP</span></span><br><span class="line">address 192.168.1.11</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置子网掩码</span></span><br><span class="line">netmask 255.255.255.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置网关</span></span><br><span class="line">gateway 192.168.1.1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 DNS 服务器，我这里设置成路由器的地址</span></span><br><span class="line">dns-nameservers 192.168.1.1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This is an autoconfigured IPv6 interface</span></span><br><span class="line">iface ens192 inet6 auto</span><br></pre></td></tr></table></figure>
 
-source /etc/network/interfaces.d/*
+<h4 id="重启网络服务-1"><a href="#重启网络服务-1" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">service networking restart</span></span><br></pre></td></tr></table></figure>
 
-# The loopback network interface
-auto lo
-iface lo inet loopback
+<h4 id="查看地址-1"><a href="#查看地址-1" class="headerlink" title="查看地址"></a>查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@debian:~# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:0a:14:07 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.11/24 brd 192.168.1.255 scope global ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a81:c14f:20c:29ff:fe0a:1407/64 scope global dynamic mngtmpaddr</span><br><span class="line">       valid_lft 206755sec preferred_lft 120355sec</span><br><span class="line">    inet6 fe80::20c:29ff:fe0a:1407/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
 
-# The primary network interface
-allow-hotplug ens192
-# iface ens192 inet dhcp
-# 设置成静态 IP
-iface ens192 inet static
-# 设置 IP
-address 192.168.1.11
-# 设置子网掩码
-netmask 255.255.255.0
-# 设置网关
-gateway 192.168.1.1
-# 设置 DNS 服务器，我这里设置成路由器的地址
-dns-nameservers 192.168.1.1
-# This is an autoconfigured IPv6 interface
-iface ens192 inet6 auto
-</code></pre>
-<h4 id="重启网络服务-1"><a href="#重启网络服务-1" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><pre><code>service networking restart
-</code></pre>
-<h4 id="查看地址-1"><a href="#查看地址-1" class="headerlink" title="查看地址"></a>查看地址</h4><pre><code class="shell">root@debian:~# ip addr
-1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host
-       valid_lft forever preferred_lft forever
-2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:0c:29:0a:14:07 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.11/24 brd 192.168.1.255 scope global ens192
-       valid_lft forever preferred_lft forever
-    inet6 2408:8256:a81:c14f:20c:29ff:fe0a:1407/64 scope global dynamic mngtmpaddr
-       valid_lft 206755sec preferred_lft 120355sec
-    inet6 fe80::20c:29ff:fe0a:1407/64 scope link
-       valid_lft forever preferred_lft forever
-</code></pre>
 <h2 id="二-小结"><a href="#二-小结" class="headerlink" title="二 小结"></a>二 小结</h2><p>从配置的过程来看，基本上都是配置文件的目录和配置项不同而已，其他基本上都差不多，毕竟原理都是一样的。</p>
 ]]></content>
       <categories>
@@ -1184,44 +475,20 @@ iface ens192 inet6 auto
 <p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
 <p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
 <p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><pre><code class="shell">brew install mkcert
-brew install nss # if you use Firefox
-</code></pre>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
-<pre><code class="shell">$ mkcert -install
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
 
-Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨
-The local CA is already installed in the system trust store! 👍
-</code></pre>
 <p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
-<pre><code class="shell">$ sudo mkcert kycooltest.cn &#39;*.kycooltest.cn&#39; localhost 127.0.0.1 ::1
-Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
 
-Created a new certificate valid for the following names 📜
- - &quot;kycooltest.cn&quot;
- - &quot;*.kycooltest.cn&quot;
- - &quot;localhost&quot;
- - &quot;127.0.0.1&quot;
- - &quot;::1&quot;
-
-Reminder: X.509 wildcards only go one level deep, so this won&#39;t match a.b.kycooltest.cn ℹ️
-
-The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅
-</code></pre>
 <h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
-<pre><code class="python">127.0.0.1 kycooltest.cn
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
+
 <p>添加 nginx 配置文件</p>
-<pre><code class="python">server &#123;
-    listen *:443 ssl;
-    server_name  kycooltest.cn;
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    root /var/www;
-
-    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+4.pem;
-    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+4-key.pem;
-&#125;
-</code></pre>
 <p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
 <p><img src="/images/mkcert.png" alt="mkcert.png"></p>
 ]]></content>
@@ -1250,28 +517,81 @@ The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./k
       </tags>
   </entry>
   <entry>
+    <title>前端 | 重构 gulpfile.js</title>
+    <url>/posts/18305/</url>
+    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>前端任务打包工具选用的是 <code>gulp</code>, 当时选用 <code>gulp</code> 也是偶然，在使用 <code>grunt</code> 初期，翻阅 <code>dailyjs.com</code> 时发现一片文章着重介绍了 <code>gulp</code>, 甚至还预言是 <code>grunt</code> 的劲敌，好奇心驱使，确实发现，<code>gulp</code> 的流的概念更人性化，看着当时写的 <code>grunt</code> 配置文件，不忍直视<span id="more"></span></p>
+<p>由于项目的不断迭代，前端的任务也在不断的迭代，任务越来越多，没有优化前，全部的任务都在一个单独的 <code>gulpfile.js</code> 中，后来随着时间的推移，发现修改一个任务时，查询好麻烦，五百行左右的代码让人烦躁，代码结构和 <a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md</a> 如出一辙</p>
+<p>重构 <code>gulpfile.js</code> 必须要进行</p>
+<h3 id="2-重构迭代-1-拆分任务"><a href="#2-重构迭代-1-拆分任务" class="headerlink" title="2 重构迭代 1: 拆分任务"></a>2 重构迭代 1: 拆分任务</h3><p>最先是按照 <a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/split-tasks-across-multiple-files.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/split-tasks-across-multiple-files.md</a> 此文档中的架构进行迭代的</p>
+<h4 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">gulpfile.<span class="property">js</span></span><br><span class="line">tasks/</span><br><span class="line">├── xxxx.<span class="property">js</span></span><br><span class="line">├── xxxx.<span class="property">js</span></span><br><span class="line">└── image.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="image-js"><a href="#image-js" class="headerlink" title="image.js"></a>image.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> imagemin = <span class="built_in">require</span>(<span class="string">&quot;gulp-imagemin&quot;</span>);</span><br><span class="line"></span><br><span class="line">gulp.<span class="title function_">task</span>(<span class="string">&quot;img&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .<span class="title function_">src</span>(<span class="string">&quot;./images/**/*.*&quot;</span>)</span><br><span class="line">    .<span class="title function_">pipe</span>(</span><br><span class="line">      <span class="title function_">imagemin</span>(&#123;</span><br><span class="line">        <span class="attr">optimizationLevel</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">progressive</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    )</span><br><span class="line">    .<span class="title function_">pipe</span>(gulp.<span class="title function_">dest</span>(<span class="string">&quot;./imagemini&quot;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="gulpfile-js"><a href="#gulpfile-js" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> requireDir = <span class="built_in">require</span>(<span class="string">&quot;require-dir&quot;</span>),</span><br><span class="line">  tasks = requireDir(<span class="string">&quot;./tasks&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这种文件架构让任务按照类型分成子任务放在单独的文件中，顿时感觉干净了很多，这时可以自由的添加子任务，而不用管 <code>gulpfile.js</code>, 此时子任务好比插件，需要就添加，没用就删除，相当方便</p>
+<h3 id="3-重构迭代-2-避免模块和插件重复依赖"><a href="#3-重构迭代-2-避免模块和插件重复依赖" class="headerlink" title="3 重构迭代 2: 避免模块和插件重复依赖"></a>3 重构迭代 2: 避免模块和插件重复依赖</h3><p>随着时间的推移，发现这种组织架构还是有些不方便，不方便在哪里呢，每一个任务文件中，我都要写 <code>var xxx = require(&#39;xxx&#39;)</code>, 如果你是用上面的架构，任务多的时候，估计也会抓狂，因为你会发现 <code>插件和模块依赖被重复的引入进来</code>，这样就提高了成本</p>
+<p>我不想在子任务文件中重复的引入 <code>插件或模块依赖</code>，有没有上面好方法，<code>stackoverflow</code> 是个好老师，老师告知：</p>
+<ul>
+<li>使用 <code>gulp-load-plugins</code> 插件<br>地址：<a href="https://www.npmjs.com/package/gulp-load-plugins">https://www.npmjs.com/package/gulp-load-plugins</a></li>
+<li>把子任务封装成模块</li>
+</ul>
+<h4 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">gulpfile.<span class="property">js</span></span><br><span class="line">tasks/</span><br><span class="line">├── xxxx.<span class="property">js</span></span><br><span class="line">├── xxxx.<span class="property">js</span></span><br><span class="line">└── image.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="gulpfile-js-1"><a href="#gulpfile-js-1" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&quot;gulp&quot;</span>),</span><br><span class="line">  gulpLoadPlugins = <span class="built_in">require</span>(<span class="string">&quot;gulp-load-plugins&quot;</span>);</span><br><span class="line"><span class="comment">// 这里请查看文档</span></span><br><span class="line">gulpLoadPlugins.<span class="property">imagemin</span> = <span class="built_in">require</span>(<span class="string">&quot;gulp-imagemin&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;./tasks/image&quot;</span>)(gulp, gulpLoadPlugins);</span><br></pre></td></tr></table></figure>
+
+<h4 id="image-js-1"><a href="#image-js-1" class="headerlink" title="image.js"></a>image.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params">gulp, Plugin</span>) &#123;</span><br><span class="line">  gulp.<span class="title function_">task</span>(<span class="string">&quot;img&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> gulp</span><br><span class="line">      .<span class="title function_">src</span>(<span class="string">&quot;./images/**/*.*&quot;</span>)</span><br><span class="line">      .<span class="title function_">pipe</span>(</span><br><span class="line">        <span class="title class_">Plugin</span>.<span class="title function_">imagemin</span>(&#123;</span><br><span class="line">          <span class="attr">optimizationLevel</span>: <span class="number">2</span>,</span><br><span class="line">          <span class="attr">progressive</span>: <span class="literal">true</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">      )</span><br><span class="line">      .<span class="title function_">pipe</span>(gulp.<span class="title function_">dest</span>(<span class="string">&quot;./imagemini&quot;</span>));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>运行任务 一切正常，此时一个文件测试已经 ok</p>
+<p>但是 <code>./tasks</code> 下面是有很多的子任务，所以需要一个迭代加载，修改 <code>gulpfile.js</code> 如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&quot;gulp&quot;</span>),</span><br><span class="line">  gulpLoadPlugins = <span class="built_in">require</span>(<span class="string">&quot;gulp-load-plugins&quot;</span>),</span><br><span class="line">  <span class="comment">// 这里获取子任务文件列表 使用了 fs 模块</span></span><br><span class="line">  gulpTaskList = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>).<span class="title function_">readdirSync</span>(<span class="string">&quot;./tasks/&quot;</span>);</span><br><span class="line"><span class="comment">// 这里请查看文档</span></span><br><span class="line">gulpLoadPlugins.<span class="property">imagemin</span> = <span class="built_in">require</span>(<span class="string">&quot;gulp-imagemin&quot;</span>);</span><br><span class="line"></span><br><span class="line">gulpTaskList.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">taskfile</span>) &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">&quot;./tasks/&quot;</span> + taskfile)(gulp, gulpLoadPlugins);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这一次迭代避免了<code>重复依赖</code>的问题，但是你会发现，所有的依赖都声明在 <code>gulpTaskList</code> 命名空间下，如果你依赖很多插件或模块，<code>gulpfile.js</code> 也是相当长，鱼和熊掌不可兼得，在现在情况下，只能寻找最佳的解决方案</p>
+<h3 id="4-重构迭代-3-参数配置全局化"><a href="#4-重构迭代-3-参数配置全局化" class="headerlink" title="4 重构迭代 3: 参数配置全局化"></a>4 重构迭代 3: 参数配置全局化</h3><p>其实第二部迭代之后，就可以满足大部分需求，但还是有小伙伴抱怨，有些子任务有相同的参数，能不能抽取出来，放到一个单独的文件中，so 继续翻阅文档</p>
+<p>参考文档<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-external-config-file.md">https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-external-config-file.md</a></p>
+<h4 id="代码结构-1"><a href="#代码结构-1" class="headerlink" title="代码结构"></a>代码结构</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">gulpfile.<span class="property">js</span></span><br><span class="line">gulp</span><br><span class="line">├── config.<span class="property">json</span></span><br><span class="line">├── tasks/</span><br><span class="line">    ├── xxxx.<span class="property">js</span></span><br><span class="line">    ├── xxxx.<span class="property">js</span></span><br><span class="line">    └── image.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+
+<p><code>注意：文件夹层次变了</code></p>
+<h4 id="config-json"><a href="#config-json" class="headerlink" title="config.json"></a>config.json</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;pnglevel&quot;</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="gulpfile-js-2"><a href="#gulpfile-js-2" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>)</span><br><span class="line">  , config = <span class="built_in">require</span>(<span class="string">&#x27;./gulp/config.json&#x27;</span>);</span><br><span class="line">  , gulpLoadPlugins = <span class="built_in">require</span>(<span class="string">&#x27;gulp-load-plugins&#x27;</span>)</span><br><span class="line">  , gulpTaskList = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>).<span class="title function_">readdirSync</span>(<span class="string">&#x27;./gulp/tasks/&#x27;</span>)</span><br><span class="line">  ;</span><br><span class="line"></span><br><span class="line">gulpLoadPlugins.<span class="property">imagemin</span> = <span class="built_in">require</span>(<span class="string">&#x27;gulp-imagemin&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulpTaskList.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">taskfile</span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;./gulp/tasks/&#x27;</span> + taskfile)(gulp, gulpLoadPlugins, config);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="image-js-2"><a href="#image-js-2" class="headerlink" title="image.js"></a>image.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params">gulp, Plugin, config</span>) &#123;</span><br><span class="line">  gulp.<span class="title function_">task</span>(<span class="string">&quot;img&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> gulp</span><br><span class="line">      .<span class="title function_">src</span>(<span class="string">&quot;./images/**/*.*&quot;</span>)</span><br><span class="line">      .<span class="title function_">pipe</span>(</span><br><span class="line">        <span class="title class_">Plugin</span>.<span class="title function_">imagemin</span>(&#123;</span><br><span class="line">          <span class="attr">optimizationLevel</span>: config.<span class="property">pnglevel</span>,</span><br><span class="line">          <span class="attr">progressive</span>: <span class="literal">true</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">      )</span><br><span class="line">      .<span class="title function_">pipe</span>(gulp.<span class="title function_">dest</span>(<span class="string">&quot;./imagemini&quot;</span>));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>此次迭代结束后，我把子任务中通用的配置都写到 <code>./gulp/config.json</code> 中，全局配置</p>
+<h3 id="5-重构迭代-4-参数配置模块化"><a href="#5-重构迭代-4-参数配置模块化" class="headerlink" title="5 重构迭代 4: 参数配置模块化"></a>5 重构迭代 4: 参数配置模块化</h3><p>此次迭代紧跟迭代 3，<code>json</code> 不够完美，不想每次去写 <code>&quot;&quot;</code>, 这里我把配置文件封装成一个模块</p>
+<p>即迭代 3 中的 <code>config.json</code> 变成了 <code>config.js</code></p>
+<h4 id="config-js"><a href="#config-js" class="headerlink" title="config.js"></a>config.js</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> config = &#123;</span><br><span class="line">    <span class="attr">pnglevel</span>: <span class="number">2</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="gulpfile-js-加载"><a href="#gulpfile-js-加载" class="headerlink" title="gulpfile.js 加载"></a>gulpfile.js 加载</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">&quot;./gulp/gulp.config&quot;</span>)();</span><br></pre></td></tr></table></figure>
+
+<p>其他不变，当封装成一个模块的时候，你就发现好处多多了，可以在模块中添加函数，你也可以把配置拆分，根据你的业务需要，自由调整</p>
+<h3 id="6-后记"><a href="#6-后记" class="headerlink" title="6 后记"></a>6 后记</h3><p>通过 4 步的迭代，整个代码组织架构就清晰多了，很感谢这么多热爱开源，乐于助人的朋友，谢谢</p>
+<p>注意： 子任务中注意文件夹的层次，子任务中的文件夹是以 <code>gulpfile.js</code> 为基准，因为 <code>gulpfile.js</code> 把子任务都包含进来了</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>微信小程序未找到入口 sitemap.json</title>
     <url>/posts/6541/</url>
     <content><![CDATA[<p><code>Error</code>: 未找到入口 <code>sitemap.json</code> 文件，或者文件读取失败，请检查后重新编译</p>
 <span id="more"></span>
 
 <h3 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1 问题描述"></a>1 问题描述</h3><p>今天在微信开发者工具中发现了一个错误，这个错误一直没有注意到。</p>
-<pre><code>`Error`: 未找到入口 `sitemap.json` 文件，或者文件读取失败，请检查后重新编译
-</code></pre>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">`Error`: 未找到入口 `sitemap.json` 文件，或者文件读取失败，请检查后重新编译</span><br></pre></td></tr></table></figure>
+
 <p>这个错误不会影响小程序的正常使用，查阅了文档（<a href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/sitemap.html%60">微信小程序 sitemap.json</a>），才知道这个文件是用来给微信小程序搜索建立索引用的，下面再仔细分析下这个功能。</p>
 <h3 id="2-解决方法"><a href="#2-解决方法" class="headerlink" title="2 解决方法"></a>2 解决方法</h3><p>第一步：我根据错误描述，在 app.jsx(我使用了 Taro) 同级目录下新建了一个 <code>sitemap.json</code> 文件，内容如下:</p>
-<pre><code class="json">&#123;
-  &quot;rules&quot;: [
-    &#123;
-      &quot;action&quot;: &quot;allow&quot;,
-      &quot;page&quot;: &quot;*&quot;
-    &#125;
-  ]
-&#125;
-</code></pre>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;action&quot;</span><span class="punctuation">:</span> <span class="string">&quot;allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;page&quot;</span><span class="punctuation">:</span> <span class="string">&quot;*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
 <p>第二步：接着在 <code>app.jsx</code> 中的 <code>config</code> 中添加</p>
-<pre><code>sitemapLocation: &#39;sitemap.json&#39;,
-</code></pre>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">sitemapLocation: <span class="symbol">&#x27;sitemap</span>.json&#x27;,</span><br></pre></td></tr></table></figure>
+
 <p>然后编译测试，发现还是出现同样的错误，然后发现 <code>dist</code> 文件夹下面没有 <code>sitemap.json</code> 文件，这个可能是 <code>Taro</code> 不支持的原因，但是 <code>Taro</code> 还是提供了一个 <code>copy</code> 的编译功能（<a href="https://nervjs.github.io/taro/docs/config-detail.html#copy">Taro 编译配置 copy</a>)，摘出来如下：</p>
 <blockquote>
 <p>copy</p>
@@ -1281,32 +601,15 @@ The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./k
 <p>用来指定需要拷贝的文件或者目录，数组类型，每一项都必须包含 <code>from</code> 、<code>to</code> 的配置，分别代表来源和需要拷贝到的目录，同时可以设置 <code>ignore</code> 配置来指定需要忽略的文件， <code>ignore</code> 是指定的 <code>glob</code> 类型字符串，或者 glob 字符串数组。</p>
 <p>值得注意的是，目前 <code>from</code> 必须指定存在的文件或者目录，暂不支持 <code>glob</code> 格式， <code>from</code> 和 <code>to</code> 直接置顶项目根目录下的文件目录，建议 <code>from</code> 以 <code>src</code> 目录开头，<code>to</code> 以 <code>dist</code> 目录开头。</p>
 <p>一般有如下的使用形式：</p>
-<pre><code>copy: &#123;
-    patterns: [
-        &#123; from: &#39;src/asset/tt/&#39;, to: &#39;dist/asset/tt/&#39;, ignore: &#39;*.js&#39; &#125;, // 指定需要 copy 的目录
-        &#123; from: &#39;src/asset/tt/sd.jpg&#39;, to: &#39;dist/asset/tt/sd.jpg&#39; &#125; // 指定需要 copy 的文件
-    ]
-&#125;,
-</code></pre>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">copy: &#123;</span><br><span class="line">    patterns: [</span><br><span class="line">        &#123; <span class="selector-tag">from</span>: <span class="string">&#x27;src/asset/tt/&#x27;</span>, to: <span class="string">&#x27;dist/asset/tt/&#x27;</span>, ignore: <span class="string">&#x27;*.js&#x27;</span> &#125;, // 指定需要 copy 的目录</span><br><span class="line">        &#123; <span class="selector-tag">from</span>: <span class="string">&#x27;src/asset/tt/sd.jpg&#x27;</span>, to: <span class="string">&#x27;dist/asset/tt/sd.jpg&#x27;</span> &#125; // 指定需要 copy 的文件</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
 <p><strong>copy.options</strong></p>
 <p>拷贝配置，目前可以指定全局的 <code>ignore</code>：</p>
-<pre><code>copy: &#123;
-    options: &#123;
-        ignore: [&#39;*.js&#39;, &#39;*.css&#39;] // 全局的 ignore
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">copy: &#123;</span><br><span class="line">    options: &#123;</span><br><span class="line">        ignore: [<span class="string">&#x27;*.js&#x27;</span>, <span class="string">&#x27;*.css&#x27;</span>] // 全局的 ignore</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>第三步：好了，看完文档后，直接修改 <code>Taro</code> 的配置文件，添加以下内容：</p>
-<pre><code>copy: &#123;
-    patterns: [
-        &#123;
-            from: &#39;src/sitemap.json&#39;,
-            to: &#39;dist/sitemap.json&#39;
-        &#125;
-    ],
-    options: &#123;&#125;
-&#125;,
-</code></pre>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">copy: &#123;</span><br><span class="line">    patterns: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="selector-tag">from</span>: <span class="string">&#x27;src/sitemap.json&#x27;</span>,</span><br><span class="line">            to: <span class="string">&#x27;dist/sitemap.json&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    options: &#123;&#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
 <p>再次编译测试，正常，查看 <code>dist</code> 文件夹也存在 <code>sitemap.json</code> 文件。</p>
 <h3 id="3-聊下-sitemap"><a href="#3-聊下-sitemap" class="headerlink" title="3 聊下 sitemap"></a>3 聊下 sitemap</h3><p>这个功能不错，增加小程序的曝光度，而且开发者还可以根据业务需要自定义被索引的页面，很实用。如果你不关心这些东西，就参考我的 <code>sitemap.json</code> 配置。</p>
 ]]></content>
@@ -1331,45 +634,21 @@ The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./k
 </ul>
 <h3 id="1-下载解锁项目"><a href="#1-下载解锁项目" class="headerlink" title="1 下载解锁项目"></a>1 下载解锁项目</h3><p>Github：<a href="https://github.com/nondanee/UnblockNeteaseMusic">https://github.com/nondanee/UnblockNeteaseMusic</a></p>
 <p>这里照着文档克隆，然后双击安装其中的 ca.crt 并设置信任。因为后面要跑服务，新建了 m.sh 并赋予可执行的权限，直接用 m.sh 代码如下</p>
-<pre><code class="shell">#!/bin/bash
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">pattern=&#x27;[(].*[)]&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意这里改成自己的目录地址</span></span><br><span class="line">path=~/Documents/githubpro/UnblockNeteaseMusic/app.js</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里是获取 music.163.com 的 IP 地址</span></span><br><span class="line">ip=`ping music.163.com -c 1 | grep -o $pattern`</span><br><span class="line">ip=$&#123;ip:1&#125;</span><br><span class="line">ip=$&#123;ip%?&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里的端口号自己可以调整</span></span><br><span class="line">sudo node app.js -p 63455:7777 -f $ip</span><br></pre></td></tr></table></figure>
 
-pattern=&#39;[(].*[)]&#39;
-# 注意这里改成自己的目录地址
-path=~/Documents/githubpro/UnblockNeteaseMusic/app.js
-
-# 这里是获取 music.163.com 的 IP 地址
-ip=`ping music.163.com -c 1 | grep -o $pattern`
-ip=$&#123;ip:1&#125;
-ip=$&#123;ip%?&#125;
-
-# 这里的端口号自己可以调整
-sudo node app.js -p 63455:7777 -f $ip
-</code></pre>
 <p>然后在包含 m.sh 的目录下执行 m.sh</p>
-<pre><code class="shell">$ ./m.sh
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./m.sh</span></span><br><span class="line"></span><br><span class="line">HTTP Server running @ http://0.0.0.0:63455</span><br><span class="line">HTTPS Server running @ http://0.0.0.0:7777</span><br></pre></td></tr></table></figure>
 
-HTTP Server running @ http://0.0.0.0:63455
-HTTPS Server running @ http://0.0.0.0:7777
-</code></pre>
 <p>注意：ping music.163.com 出来的 IP 地址有可能是变化的，so 如果歌听不了，重新运行服务即可。</p>
 <h3 id="2-代理设置"><a href="#2-代理设置" class="headerlink" title="2 代理设置"></a>2 代理设置</h3><p>因为网易云 mac 的客户端没有可以设置代理的地方，有些傲娇，那就使用 Proxifier 来解决吧。</p>
 <p>2.1 添加 Proxies，地址写 127.0.0.1 端口对应上面，为 63455<br>2.2 添加 Rules</p>
-<pre><code class="python">Applications 为 NeteaseMusic;com.apple.WebKit.Networking
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Applications 为 NeteaseMusic;com.apple.WebKit.Networking</span><br><span class="line"></span><br><span class="line">Target Hosts 为 *.music<span class="number">.163</span>.com;*.music<span class="number">.126</span>.net;*.netease.com;music<span class="number">.163</span>.com;interface.music<span class="number">.163</span>.com</span><br><span class="line"></span><br><span class="line">Action 为上面创建的，即 Proxy HTTPS <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">63455</span></span><br></pre></td></tr></table></figure>
 
-Target Hosts 为 *.music.163.com;*.music.126.net;*.netease.com;music.163.com;interface.music.163.com
-
-Action 为上面创建的，即 Proxy HTTPS 127.0.0.1:63455
-</code></pre>
 <p>2.3 DNS 配置<br>在 Resolve hostnames through proxy 前面打勾</p>
 <p>好了，代理配置好了。</p>
 <h3 id="3-重启网易云音乐"><a href="#3-重启网易云音乐" class="headerlink" title="3 重启网易云音乐"></a>3 重启网易云音乐</h3><p>搜索 JAY 的歌，之前置灰的歌可以播放了，例如听以父之名，日志如下：</p>
-<pre><code class="shell">TUNNEL &gt; localhost:63455
-MITM &gt; music.163.com
-MITM &gt; music.163.com
-[1400394244] 以父之名 (Live)
-http://sz.sycdn.kuwo.cn/cadd34fd7d42d643db5257b182f07ad5/5f57a6b9/resource/n1/69/17/1415834243.mp3
-MITM &gt; music.163.com
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">TUNNEL &gt; localhost:63455</span><br><span class="line">MITM &gt; music.163.com</span><br><span class="line">MITM &gt; music.163.com</span><br><span class="line">[1400394244] 以父之名 (Live)</span><br><span class="line">http://sz.sycdn.kuwo.cn/cadd34fd7d42d643db5257b182f07ad5/5f57a6b9/resource/n1/69/17/1415834243.mp3</span><br><span class="line">MITM &gt; music.163.com</span><br></pre></td></tr></table></figure>
+
 <p>使用这种方式听歌呢，因为要跑服务和代理，so 最好还是用脚本打开网易云音乐，省事。</p>
 ]]></content>
       <categories>
