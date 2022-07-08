@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>资源加速系列之 pip</title>
+    <url>/posts/26327/</url>
+    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
+<pre><code>https://pypi.org/simple
+</code></pre>
+<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
+<!--more-->
+
+<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
+<ul>
+<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
+<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
+<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
+<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
+</ul>
+<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
+<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><pre><code>pip install -i 镜像源地址 包名称
+</code></pre>
+<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
+<pre><code>pip install -i https://mirrors.aliyun.com/pypi/simple/ django
+</code></pre>
+<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
+<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
+<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
+<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
+<pre><code class="python">[global]
+timeout = 60
+index-url = https://mirrors.aliyun.com/pypi/simple
+
+[install]
+trusted-host=mirrors.aliyun.com
+</code></pre>
+<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
+<pre><code>You can set a custom path location for this config
+file using the environment variable PIP_CONFIG_FILE.
+</code></pre>
+<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
+<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>资源加速</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>镜像</tag>
+        <tag>加速</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源加速系列之 pyenv</title>
+    <url>/posts/22631/</url>
+    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
+<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
+<pre><code>https://npm.taobao.org/mirrors/python/
+</code></pre>
+<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
+<p>例如安装 3.6.7 版本，命令行如下</p>
+<pre><code>v=3.6.7;wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
+</code></pre>
+<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
+<pre><code class="bash">#!/bin/bash
+
+function pyenvInstallPython()
+&#123;
+    echo $1
+    v=$1
+    wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
+&#125;
+
+pyenvInstallPython $*
+</code></pre>
+<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
+<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
+<pre><code>pyversion 版本号
+</code></pre>
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
+<pre><code class="shell">3.6.7
+--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz
+正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225
+正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。
+已发出 HTTP 请求，正在等待回应... 302 Found
+位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]
+--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz
+正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...
+正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。
+已发出 HTTP 请求，正在等待回应... 200 OK
+长度：17178476 (16M) [application/x-xz]
+正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”
+
+Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s
+
+2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])
+
+python-build: use openssl@1.1 from homebrew
+python-build: use readline from homebrew
+Installing Python-3.6.7...
+python-build: use readline from homebrew
+python-build: use zlib from xcode sdk
+Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7
+</code></pre>
+<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
+<pre><code>$ pyenv versions
+* system (set by /Users/kycool/.pyenv/version)
+  3.6.0
+  3.6.7
+</code></pre>
+<p>可以，后续就可以这样玩了，省时省力。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>资源加速</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>镜像</tag>
+        <tag>加速</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源加速系列之 Github</title>
     <url>/posts/19128/</url>
     <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
@@ -99,326 +219,6 @@ INFO  Install dependencies
       </categories>
       <tags>
         <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 pip</title>
-    <url>/posts/26327/</url>
-    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
-<pre><code>https://pypi.org/simple
-</code></pre>
-<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
-<!--more-->
-
-<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
-<ul>
-<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
-<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
-<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
-<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
-</ul>
-<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
-<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><pre><code>pip install -i 镜像源地址 包名称
-</code></pre>
-<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
-<pre><code>pip install -i https://mirrors.aliyun.com/pypi/simple/ django
-</code></pre>
-<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
-<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
-<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
-<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
-<pre><code class="python">[global]
-timeout = 60
-index-url = https://mirrors.aliyun.com/pypi/simple
-
-[install]
-trusted-host=mirrors.aliyun.com
-</code></pre>
-<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
-<pre><code>You can set a custom path location for this config
-file using the environment variable PIP_CONFIG_FILE.
-</code></pre>
-<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
-<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
-]]></content>
-      <categories>
-        <category>资源加速</category>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>加速</tag>
-        <tag>镜像</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单备份文件并发送到指定邮箱</title>
-    <url>/posts/13676/</url>
-    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
-<span id="more"></span>
-
-<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><pre><code class="python"># -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-
-import os
-import datetime
-import logging
-import logging.config
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.header import Header
-from email.mime.application import MIMEApplication
-import smtplib
-
-name = datetime.datetime.now().strftime(&quot;%Y%m%d%H%M%S&quot;)
-base_path = &#39;/root/xxxx/temp&#39;
-zip_path = &#39;/root/xxxx/backup/&#123;&#125;.tar.bz2&#39;.format(name)
-
-
-def set_logging():
-    &quot;&quot;&quot;&quot;&quot;&quot;
-
-    log_dir, log_file = &#39;/root/xxxx/logs&#39;, &#39;/root/xxxx/logs/backup.log&#39;
-
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-
-    if not os.path.exists(log_file):
-        open(log_file, &#39;w&#39;)
-
-    DEFAULT_LOGGING = &#123;
-        &#39;version&#39;: 1,
-        &#39;disable_existing_loggers&#39;: False,
-        &#39;formatters&#39;: &#123;
-            &#39;formatone&#39;: &#123;
-                &#39;format&#39;: &#39;[%(asctime)s] %(levelname)s : %(message)s&#39;,
-            &#125;
-        &#125;,
-        &#39;handlers&#39;: &#123;
-            &#39;file&#39;: &#123;
-                &#39;level&#39;: &#39;DEBUG&#39;,
-                &#39;filename&#39;: &#39;/root/xxxx/logs/backup.log&#39;,
-                &#39;formatter&#39;: &#39;formatone&#39;,
-                &#39;class&#39;: &#39;logging.handlers.RotatingFileHandler&#39;,
-                &#39;maxBytes&#39;: 100 * 1024 * 1024,
-                &#39;backupCount&#39;: 10,
-            &#125;,
-        &#125;,
-        &#39;loggers&#39;: &#123;
-            &#39;backup&#39;: &#123;
-                &#39;handlers&#39;: [&#39;file&#39;],
-                &#39;level&#39;: &#39;INFO&#39;,
-            &#125;,
-        &#125;
-    &#125;
-
-    logging.config.dictConfig(DEFAULT_LOGGING)
-
-
-def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
-
-
-def sendmail():
-    &quot;&quot;&quot;send mail&quot;&quot;&quot;
-    set_logging()
-    zip_files()
-
-    logger = logging.getLogger(&#39;backup&#39;)
-
-    mail_from, password = &#39;xxxxxxx@aliyun.com&#39;, &#39;xxxxxxx&#39;
-    mail_to = &#39;xxxxx@qq.com&#39;
-    smtp_server = &#39;smtp.aliyun.com&#39;
-
-    msgRoot = MIMEMultipart(&#39;related&#39;)
-    msgRoot[&#39;Subject&#39;] = &#39;send backup files &#123;&#125;&#39;.format(name)
-    msgRoot[&#39;From&#39;] = &#39;&#123;&#125;&lt;&#123;&#125;&gt;&#39;.format(Header(&#39;backup&#39;, &#39;utf-8&#39;), mail_from)
-    msgRoot[&#39;To&#39;] = mail_to
-
-    msgText = MIMEText(&#39;backup files&#39;, &#39;plain&#39;, &#39;utf-8&#39;)
-    msgRoot.attach(msgText)
-
-    zip_con = MIMEApplication(open(zip_path,&#39;rb&#39;).read())
-    zip_con.add_header(&#39;Content-Disposition&#39;, &#39;attachment&#39;,
-                       filename=&#39;&#123;&#125;.tar.bz2&#39;.format(name))
-    msgRoot.attach(zip_con)
-
-    try:
-        server = smtplib.SMTP_SSL(smtp_server)
-        server.login(mail_from, password)
-        server.sendmail(mail_from, mail_to, msgRoot.as_string())
-        server.quit()
-        logger.info(&#39;send &#123;&#125; backup files success&#39;.format(name))
-    except Exception, e:
-        logger.error(&#39;send &#123;&#125; failed &#123;&#125;&#39;.format(name, e))
-        sendmail()
-
-
-if __name__ == &#39;__main__&#39;:
-    sendmail()
-</code></pre>
-<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
-<pre><code class="python">def zip_files():
-    &quot;&quot;&quot;zip files&quot;&quot;&quot;
-    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
-</code></pre>
-<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
-<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
-<pre><code class="javascript">[2017-04-14 00:00:03,251] INFO : send 20170414000001 backup files success
-[2017-04-14 03:00:02,620] INFO : send 20170414030001 backup files success
-[2017-04-14 06:00:02,406] INFO : send 20170414060001 backup files success
-[2017-04-14 09:00:02,349] INFO : send 20170414090001 backup files success
-[2017-04-14 12:00:02,299] INFO : send 20170414120001 backup files success
-[2017-04-14 15:01:04,696] ERROR : send 20170414150001 failed [Errno 110] Connection timed out
-[2017-04-14 15:01:05,401] INFO : send 20170414150001 backup files success
-</code></pre>
-<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
-<pre><code class="shell">0 */3 * * *  python /root/xxxxx/backup.py
-</code></pre>
-<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 pyenv</title>
-    <url>/posts/22631/</url>
-    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
-<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
-<pre><code>https://npm.taobao.org/mirrors/python/
-</code></pre>
-<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
-<p>例如安装 3.6.7 版本，命令行如下</p>
-<pre><code>v=3.6.7;wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
-</code></pre>
-<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
-<pre><code class="bash">#!/bin/bash
-
-function pyenvInstallPython()
-&#123;
-    echo $1
-    v=$1
-    wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/;pyenv install $v
-&#125;
-
-pyenvInstallPython $*
-</code></pre>
-<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
-<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
-<pre><code>pyversion 版本号
-</code></pre>
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
-<pre><code class="shell">3.6.7
---2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz
-正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225
-正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。
-已发出 HTTP 请求，正在等待回应... 302 Found
-位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]
---2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz
-正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...
-正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。
-已发出 HTTP 请求，正在等待回应... 200 OK
-长度：17178476 (16M) [application/x-xz]
-正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”
-
-Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s
-
-2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])
-
-python-build: use openssl@1.1 from homebrew
-python-build: use readline from homebrew
-Installing Python-3.6.7...
-python-build: use readline from homebrew
-python-build: use zlib from xcode sdk
-Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7
-</code></pre>
-<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
-<pre><code>$ pyenv versions
-* system (set by /Users/kycool/.pyenv/version)
-  3.6.0
-  3.6.7
-</code></pre>
-<p>可以，后续就可以这样玩了，省时省力。</p>
-]]></content>
-      <categories>
-        <category>资源加速</category>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>加速</tag>
-        <tag>镜像</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Debian | Media change please insert the disc labeled</title>
-    <url>/posts/20380/</url>
-    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错</p>
-<span id="more"></span>
-
-<pre><code class="shell">Media change: please insert the disc labeled
-
-media change: please insert the disc labeled
-Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter
-</code></pre>
-<p>查看下 <code>/etc/apt/sources.list</code></p>
-<pre><code class="python"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-deb http://security.debian.org/debian-security buster/updates main contrib
-deb-src http://security.debian.org/debian-security buster/updates main contrib
-
-# buster-updates, previously known as &#39;volatile&#39;
-# A network mirror was not selected during install.  The following entries
-# are provided as examples, but you should amend them as appropriate
-# for your mirror of choice.
-#
-# deb http://deb.debian.org/debian/ buster-updates main contrib
-# deb-src http://deb.debian.org/debian/ buster-updates main contrib
-</code></pre>
-<p>果断把包含 <code>deb cdrom</code> 这行给注释掉，然后又重新把 <code>apt</code> 源设置成清华源，修改后的文件</p>
-<pre><code class="python">
-# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
-
-# deb https://security.debian.org/debian-security buster/updates main contrib
-# deb-src http://security.debian.org/debian-security buster/updates main contrib
-
-# buster-updates, previously known as &#39;volatile&#39;
-# A network mirror was not selected during install.  The following entries
-# are provided as examples, but you should amend them as appropriate
-# for your mirror of choice.
-#
-# deb http://deb.debian.org/debian/ buster-updates main contrib
-# deb-src http://deb.debian.org/debian/ buster-updates main contrib
-
-# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
-</code></pre>
-<p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
       </tags>
   </entry>
   <entry>
@@ -564,6 +364,263 @@ export default class CreateUpdateForm extends React.Component &#123;
       <tags>
         <tag>redux</tag>
         <tag>Antd</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单备份文件并发送到指定邮箱</title>
+    <url>/posts/13676/</url>
+    <content><![CDATA[<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>一哥们发了个诉求，总觉得自己的服务器不安全，想搞个定时备份文件并发送到自己的邮箱</p>
+<span id="more"></span>
+
+<h3 id="2-实现代码如下"><a href="#2-实现代码如下" class="headerlink" title="2 实现代码如下"></a>2 实现代码如下</h3><pre><code class="python"># -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, unicode_literals
+
+import os
+import datetime
+import logging
+import logging.config
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.header import Header
+from email.mime.application import MIMEApplication
+import smtplib
+
+name = datetime.datetime.now().strftime(&quot;%Y%m%d%H%M%S&quot;)
+base_path = &#39;/root/xxxx/temp&#39;
+zip_path = &#39;/root/xxxx/backup/&#123;&#125;.tar.bz2&#39;.format(name)
+
+
+def set_logging():
+    &quot;&quot;&quot;&quot;&quot;&quot;
+
+    log_dir, log_file = &#39;/root/xxxx/logs&#39;, &#39;/root/xxxx/logs/backup.log&#39;
+
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+
+    if not os.path.exists(log_file):
+        open(log_file, &#39;w&#39;)
+
+    DEFAULT_LOGGING = &#123;
+        &#39;version&#39;: 1,
+        &#39;disable_existing_loggers&#39;: False,
+        &#39;formatters&#39;: &#123;
+            &#39;formatone&#39;: &#123;
+                &#39;format&#39;: &#39;[%(asctime)s] %(levelname)s : %(message)s&#39;,
+            &#125;
+        &#125;,
+        &#39;handlers&#39;: &#123;
+            &#39;file&#39;: &#123;
+                &#39;level&#39;: &#39;DEBUG&#39;,
+                &#39;filename&#39;: &#39;/root/xxxx/logs/backup.log&#39;,
+                &#39;formatter&#39;: &#39;formatone&#39;,
+                &#39;class&#39;: &#39;logging.handlers.RotatingFileHandler&#39;,
+                &#39;maxBytes&#39;: 100 * 1024 * 1024,
+                &#39;backupCount&#39;: 10,
+            &#125;,
+        &#125;,
+        &#39;loggers&#39;: &#123;
+            &#39;backup&#39;: &#123;
+                &#39;handlers&#39;: [&#39;file&#39;],
+                &#39;level&#39;: &#39;INFO&#39;,
+            &#125;,
+        &#125;
+    &#125;
+
+    logging.config.dictConfig(DEFAULT_LOGGING)
+
+
+def zip_files():
+    &quot;&quot;&quot;zip files&quot;&quot;&quot;
+    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
+
+
+def sendmail():
+    &quot;&quot;&quot;send mail&quot;&quot;&quot;
+    set_logging()
+    zip_files()
+
+    logger = logging.getLogger(&#39;backup&#39;)
+
+    mail_from, password = &#39;xxxxxxx@aliyun.com&#39;, &#39;xxxxxxx&#39;
+    mail_to = &#39;xxxxx@qq.com&#39;
+    smtp_server = &#39;smtp.aliyun.com&#39;
+
+    msgRoot = MIMEMultipart(&#39;related&#39;)
+    msgRoot[&#39;Subject&#39;] = &#39;send backup files &#123;&#125;&#39;.format(name)
+    msgRoot[&#39;From&#39;] = &#39;&#123;&#125;&lt;&#123;&#125;&gt;&#39;.format(Header(&#39;backup&#39;, &#39;utf-8&#39;), mail_from)
+    msgRoot[&#39;To&#39;] = mail_to
+
+    msgText = MIMEText(&#39;backup files&#39;, &#39;plain&#39;, &#39;utf-8&#39;)
+    msgRoot.attach(msgText)
+
+    zip_con = MIMEApplication(open(zip_path,&#39;rb&#39;).read())
+    zip_con.add_header(&#39;Content-Disposition&#39;, &#39;attachment&#39;,
+                       filename=&#39;&#123;&#125;.tar.bz2&#39;.format(name))
+    msgRoot.attach(zip_con)
+
+    try:
+        server = smtplib.SMTP_SSL(smtp_server)
+        server.login(mail_from, password)
+        server.sendmail(mail_from, mail_to, msgRoot.as_string())
+        server.quit()
+        logger.info(&#39;send &#123;&#125; backup files success&#39;.format(name))
+    except Exception, e:
+        logger.error(&#39;send &#123;&#125; failed &#123;&#125;&#39;.format(name, e))
+        sendmail()
+
+
+if __name__ == &#39;__main__&#39;:
+    sendmail()
+</code></pre>
+<h3 id="3-简单说明"><a href="#3-简单说明" class="headerlink" title="3 简单说明"></a>3 简单说明</h3><h4 id="3-1-打包文件"><a href="#3-1-打包文件" class="headerlink" title="3.1 打包文件"></a>3.1 打包文件</h4><p>这个实现比较初级，直接用 <code>shell</code> 命令进行打包</p>
+<pre><code class="python">def zip_files():
+    &quot;&quot;&quot;zip files&quot;&quot;&quot;
+    os.system(&#39;tar -cjf &#123;&#125; -C &#123;&#125; data&#39;.format(zip_path, base_path))
+</code></pre>
+<h4 id="3-2-发送邮件"><a href="#3-2-发送邮件" class="headerlink" title="3.2 发送邮件"></a>3.2 发送邮件</h4><p>这个就不说了，现成的模块直接拿来用</p>
+<h4 id="3-3-日志记录"><a href="#3-3-日志记录" class="headerlink" title="3.3 日志记录"></a>3.3 日志记录</h4><p>加上日志，可以很清楚的让我知道发送情况如下，示例如下：</p>
+<pre><code class="javascript">[2017-04-14 00:00:03,251] INFO : send 20170414000001 backup files success
+[2017-04-14 03:00:02,620] INFO : send 20170414030001 backup files success
+[2017-04-14 06:00:02,406] INFO : send 20170414060001 backup files success
+[2017-04-14 09:00:02,349] INFO : send 20170414090001 backup files success
+[2017-04-14 12:00:02,299] INFO : send 20170414120001 backup files success
+[2017-04-14 15:01:04,696] ERROR : send 20170414150001 failed [Errno 110] Connection timed out
+[2017-04-14 15:01:05,401] INFO : send 20170414150001 backup files success
+</code></pre>
+<h4 id="3-4-定时处理"><a href="#3-4-定时处理" class="headerlink" title="3.4 定时处理"></a>3.4 定时处理</h4><p>定时这个处理，直接使用 <code>crontab</code> 命令，创建个 <code>backup_cron</code> 文件，写入</p>
+<pre><code class="shell">0 */3 * * *  python /root/xxxxx/backup.py
+</code></pre>
+<h3 id="4-简单小结"><a href="#4-简单小结" class="headerlink" title="4 简单小结"></a>4 简单小结</h3><p>业务比较简单，实现也比较简单，没啥可说的</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Debian | Media change please insert the disc labeled</title>
+    <url>/posts/20380/</url>
+    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错</p>
+<span id="more"></span>
+
+<pre><code class="shell">Media change: please insert the disc labeled
+
+media change: please insert the disc labeled
+Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter
+</code></pre>
+<p>查看下 <code>/etc/apt/sources.list</code></p>
+<pre><code class="python"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+
+deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+
+deb http://security.debian.org/debian-security buster/updates main contrib
+deb-src http://security.debian.org/debian-security buster/updates main contrib
+
+# buster-updates, previously known as &#39;volatile&#39;
+# A network mirror was not selected during install.  The following entries
+# are provided as examples, but you should amend them as appropriate
+# for your mirror of choice.
+#
+# deb http://deb.debian.org/debian/ buster-updates main contrib
+# deb-src http://deb.debian.org/debian/ buster-updates main contrib
+</code></pre>
+<p>果断把包含 <code>deb cdrom</code> 这行给注释掉，然后又重新把 <code>apt</code> 源设置成清华源，修改后的文件</p>
+<pre><code class="python">
+# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+
+# deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main
+
+# deb https://security.debian.org/debian-security buster/updates main contrib
+# deb-src http://security.debian.org/debian-security buster/updates main contrib
+
+# buster-updates, previously known as &#39;volatile&#39;
+# A network mirror was not selected during install.  The following entries
+# are provided as examples, but you should amend them as appropriate
+# for your mirror of choice.
+#
+# deb http://deb.debian.org/debian/ buster-updates main contrib
+# deb-src http://deb.debian.org/debian/ buster-updates main contrib
+
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
+</code></pre>
+<p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django | 通用的开发包</title>
+    <url>/posts/51719/</url>
+    <content><![CDATA[<p>更新时间：2019-12-20 22:05:03</p>
+<p>基于 <code>Django</code> 项目，通用的第三方开发工具包，这里只列出了通用的开发包，也包含了部分业务包，其他常见的涉及到具体的业务包，不再一一列出。</p>
+<h4 id="1-DjangoRestFramework"><a href="#1-DjangoRestFramework" class="headerlink" title="1 DjangoRestFramework"></a>1 DjangoRestFramework</h4><p><a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></p>
+<p>开发 <code>Restful</code> 接口的主力工具</p>
+<h4 id="2-django-cors-headers"><a href="#2-django-cors-headers" class="headerlink" title="2 django-cors-headers"></a>2 django-cors-headers</h4><p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
+<p>解决前后端分离接口请求跨域</p>
+<h4 id="3-django-extensions"><a href="#3-django-extensions" class="headerlink" title="3 django-extensions"></a>3 django-extensions</h4><p><a href="https://github.com/django-extensions/django-extensions">https://github.com/django-extensions/django-extensions</a></p>
+<p><code>Django</code> 扩展增强工具</p>
+<h4 id="4-ipython"><a href="#4-ipython" class="headerlink" title="4 ipython"></a>4 ipython</h4><p><a href="https://ipython.org/">https://ipython.org/</a></p>
+<p>强大的交互式 <code>shell</code>，测试调试非常顺手，当然不仅仅限于 <code>Django</code> 开发</p>
+<h4 id="5-django-environ"><a href="#5-django-environ" class="headerlink" title="5 django-environ"></a>5 django-environ</h4><p><a href="https://github.com/joke2k/django-environ">https://github.com/joke2k/django-environ</a></p>
+<p>区分各种环境的配置利器</p>
+<h4 id="6-celery"><a href="#6-celery" class="headerlink" title="6 celery"></a>6 celery</h4><p><a href="https://github.com/celery/celery">https://github.com/celery/celery</a></p>
+<p>分布式的任务队列分发器</p>
+<h4 id="7-wechatpy"><a href="#7-wechatpy" class="headerlink" title="7 wechatpy"></a>7 wechatpy</h4><p><a href="https://github.com/wechatpy/wechatpy">https://github.com/wechatpy/wechatpy</a></p>
+<p>微信开发必备的 SDK</p>
+<h4 id="8-gunicorn"><a href="#8-gunicorn" class="headerlink" title="8 gunicorn"></a>8 gunicorn</h4><p><a href="https://gunicorn.org/">https://gunicorn.org/</a></p>
+<p><code>Python WSGI HTTP Server</code></p>
+<h4 id="9-factory-boy"><a href="#9-factory-boy" class="headerlink" title="9 factory-boy"></a>9 factory-boy</h4><p><a href="https://github.com/FactoryBoy/factory_boy">https://github.com/FactoryBoy/factory_boy</a></p>
+<p>测试数据生成工具</p>
+<h4 id="10-parameterized"><a href="#10-parameterized" class="headerlink" title="10 parameterized"></a>10 parameterized</h4><p><a href="https://github.com/wolever/parameterized">https://github.com/wolever/parameterized</a></p>
+<p>为测试用例提供参数化的，重复性支持</p>
+<h4 id="11-pytest"><a href="#11-pytest" class="headerlink" title="11 pytest"></a>11 pytest</h4><p><a href="https://docs.pytest.org/en/latest/">https://docs.pytest.org/en/latest/</a></p>
+<p>强大的第三方测试框架，丰富的插件集，活跃的社区</p>
+<p>当然还有 <code>nose</code> 和 它的继任者 <code>nose2</code>，不过相比较而言，还是更加青睐于 <code>pytest</code></p>
+<p><code>nose</code>：<a href="https://nose.readthedocs.io/en/latest/">https://nose.readthedocs.io/en/latest/</a><br><code>nose2</code>：<a href="https://github.com/nose-devs/nose2">https://github.com/nose-devs/nose2</a></p>
+<p>不过 <code>nose</code> 已经不再更新，进入了维护阶段，如果使用建议使用 <code>nose2</code></p>
+<h4 id="12-raven"><a href="#12-raven" class="headerlink" title="12 raven"></a>12 raven</h4><p><a href="https://raven.readthedocs.io/en/feature-federated-docs/">https://raven.readthedocs.io/en/feature-federated-docs/</a></p>
+<p>这个一般都是结合 <code>Sentry</code> 使用</p>
+<h4 id="13-mysqlclient"><a href="#13-mysqlclient" class="headerlink" title="13 mysqlclient"></a>13 mysqlclient</h4><p><a href="https://github.com/PyMySQL/mysqlclient-python">https://github.com/PyMySQL/mysqlclient-python</a></p>
+<p>因为我使用 <code>Mysql</code> 较多</p>
+<h4 id="14-django-silk"><a href="#14-django-silk" class="headerlink" title="14 django-silk"></a>14 django-silk</h4><p><a href="https://github.com/jazzband/django-silk">https://github.com/jazzband/django-silk</a></p>
+<p>简单的性能监控工具</p>
+<h4 id="15-django-debug-toolbar"><a href="#15-django-debug-toolbar" class="headerlink" title="15 django-debug-toolbar"></a>15 django-debug-toolbar</h4><p><a href="https://github.com/jazzband/django-debug-toolbar">https://github.com/jazzband/django-debug-toolbar</a></p>
+<p><code>debug</code> 工具</p>
+<h4 id="16-django-reversion"><a href="#16-django-reversion" class="headerlink" title="16 django-reversion"></a>16 django-reversion</h4><p><a href="https://github.com/etianen/django-reversion">https://github.com/etianen/django-reversion</a></p>
+<p>模型版本控制</p>
+<h4 id="17-whitenoise"><a href="#17-whitenoise" class="headerlink" title="17 whitenoise"></a>17 whitenoise</h4><p><a href="https://github.com/evansd/whitenoise">https://github.com/evansd/whitenoise</a></p>
+<p>静态资源管理，通常是用来管理 <code>django admin</code> 和其他第三方包的静态资源。</p>
+<h4 id="18-django-sql-explorer"><a href="#18-django-sql-explorer" class="headerlink" title="18 django-sql-explorer"></a>18 django-sql-explorer</h4><p><a href="https://github.com/groveco/django-sql-explorer">https://github.com/groveco/django-sql-explorer</a></p>
+<p><code>SQL</code> 运行查询辅助工具</p>
+<h4 id="19-django-import-export"><a href="#19-django-import-export" class="headerlink" title="19 django-import-export"></a>19 django-import-export</h4><p><a href="https://github.com/django-import-export/django-import-export">https://github.com/django-import-export/django-import-export</a></p>
+<p>数据导入导出</p>
+<h4 id="20-django-compressor"><a href="#20-django-compressor" class="headerlink" title="20 django-compressor"></a>20 django-compressor</h4><p><a href="https://django-compressor.readthedocs.io/en/stable/">https://django-compressor.readthedocs.io/en/stable/</a></p>
+<p>合并静态资源，减少网络请求，一般使用在 <code>django admin</code> 中。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
       </tags>
   </entry>
   <entry>
@@ -874,63 +931,6 @@ def create(self, request, *args, **kwargs):
       <tags>
         <tag>Django</tag>
         <tag>Django-Rest-Framework</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Django | 通用的开发包</title>
-    <url>/posts/51719/</url>
-    <content><![CDATA[<p>更新时间：2019-12-20 22:05:03</p>
-<p>基于 <code>Django</code> 项目，通用的第三方开发工具包，这里只列出了通用的开发包，也包含了部分业务包，其他常见的涉及到具体的业务包，不再一一列出。</p>
-<h4 id="1-DjangoRestFramework"><a href="#1-DjangoRestFramework" class="headerlink" title="1 DjangoRestFramework"></a>1 DjangoRestFramework</h4><p><a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></p>
-<p>开发 <code>Restful</code> 接口的主力工具</p>
-<h4 id="2-django-cors-headers"><a href="#2-django-cors-headers" class="headerlink" title="2 django-cors-headers"></a>2 django-cors-headers</h4><p><a href="https://github.com/adamchainz/django-cors-headers">https://github.com/adamchainz/django-cors-headers</a></p>
-<p>解决前后端分离接口请求跨域</p>
-<h4 id="3-django-extensions"><a href="#3-django-extensions" class="headerlink" title="3 django-extensions"></a>3 django-extensions</h4><p><a href="https://github.com/django-extensions/django-extensions">https://github.com/django-extensions/django-extensions</a></p>
-<p><code>Django</code> 扩展增强工具</p>
-<h4 id="4-ipython"><a href="#4-ipython" class="headerlink" title="4 ipython"></a>4 ipython</h4><p><a href="https://ipython.org/">https://ipython.org/</a></p>
-<p>强大的交互式 <code>shell</code>，测试调试非常顺手，当然不仅仅限于 <code>Django</code> 开发</p>
-<h4 id="5-django-environ"><a href="#5-django-environ" class="headerlink" title="5 django-environ"></a>5 django-environ</h4><p><a href="https://github.com/joke2k/django-environ">https://github.com/joke2k/django-environ</a></p>
-<p>区分各种环境的配置利器</p>
-<h4 id="6-celery"><a href="#6-celery" class="headerlink" title="6 celery"></a>6 celery</h4><p><a href="https://github.com/celery/celery">https://github.com/celery/celery</a></p>
-<p>分布式的任务队列分发器</p>
-<h4 id="7-wechatpy"><a href="#7-wechatpy" class="headerlink" title="7 wechatpy"></a>7 wechatpy</h4><p><a href="https://github.com/wechatpy/wechatpy">https://github.com/wechatpy/wechatpy</a></p>
-<p>微信开发必备的 SDK</p>
-<h4 id="8-gunicorn"><a href="#8-gunicorn" class="headerlink" title="8 gunicorn"></a>8 gunicorn</h4><p><a href="https://gunicorn.org/">https://gunicorn.org/</a></p>
-<p><code>Python WSGI HTTP Server</code></p>
-<h4 id="9-factory-boy"><a href="#9-factory-boy" class="headerlink" title="9 factory-boy"></a>9 factory-boy</h4><p><a href="https://github.com/FactoryBoy/factory_boy">https://github.com/FactoryBoy/factory_boy</a></p>
-<p>测试数据生成工具</p>
-<h4 id="10-parameterized"><a href="#10-parameterized" class="headerlink" title="10 parameterized"></a>10 parameterized</h4><p><a href="https://github.com/wolever/parameterized">https://github.com/wolever/parameterized</a></p>
-<p>为测试用例提供参数化的，重复性支持</p>
-<h4 id="11-pytest"><a href="#11-pytest" class="headerlink" title="11 pytest"></a>11 pytest</h4><p><a href="https://docs.pytest.org/en/latest/">https://docs.pytest.org/en/latest/</a></p>
-<p>强大的第三方测试框架，丰富的插件集，活跃的社区</p>
-<p>当然还有 <code>nose</code> 和 它的继任者 <code>nose2</code>，不过相比较而言，还是更加青睐于 <code>pytest</code></p>
-<p><code>nose</code>：<a href="https://nose.readthedocs.io/en/latest/">https://nose.readthedocs.io/en/latest/</a><br><code>nose2</code>：<a href="https://github.com/nose-devs/nose2">https://github.com/nose-devs/nose2</a></p>
-<p>不过 <code>nose</code> 已经不再更新，进入了维护阶段，如果使用建议使用 <code>nose2</code></p>
-<h4 id="12-raven"><a href="#12-raven" class="headerlink" title="12 raven"></a>12 raven</h4><p><a href="https://raven.readthedocs.io/en/feature-federated-docs/">https://raven.readthedocs.io/en/feature-federated-docs/</a></p>
-<p>这个一般都是结合 <code>Sentry</code> 使用</p>
-<h4 id="13-mysqlclient"><a href="#13-mysqlclient" class="headerlink" title="13 mysqlclient"></a>13 mysqlclient</h4><p><a href="https://github.com/PyMySQL/mysqlclient-python">https://github.com/PyMySQL/mysqlclient-python</a></p>
-<p>因为我使用 <code>Mysql</code> 较多</p>
-<h4 id="14-django-silk"><a href="#14-django-silk" class="headerlink" title="14 django-silk"></a>14 django-silk</h4><p><a href="https://github.com/jazzband/django-silk">https://github.com/jazzband/django-silk</a></p>
-<p>简单的性能监控工具</p>
-<h4 id="15-django-debug-toolbar"><a href="#15-django-debug-toolbar" class="headerlink" title="15 django-debug-toolbar"></a>15 django-debug-toolbar</h4><p><a href="https://github.com/jazzband/django-debug-toolbar">https://github.com/jazzband/django-debug-toolbar</a></p>
-<p><code>debug</code> 工具</p>
-<h4 id="16-django-reversion"><a href="#16-django-reversion" class="headerlink" title="16 django-reversion"></a>16 django-reversion</h4><p><a href="https://github.com/etianen/django-reversion">https://github.com/etianen/django-reversion</a></p>
-<p>模型版本控制</p>
-<h4 id="17-whitenoise"><a href="#17-whitenoise" class="headerlink" title="17 whitenoise"></a>17 whitenoise</h4><p><a href="https://github.com/evansd/whitenoise">https://github.com/evansd/whitenoise</a></p>
-<p>静态资源管理，通常是用来管理 <code>django admin</code> 和其他第三方包的静态资源。</p>
-<h4 id="18-django-sql-explorer"><a href="#18-django-sql-explorer" class="headerlink" title="18 django-sql-explorer"></a>18 django-sql-explorer</h4><p><a href="https://github.com/groveco/django-sql-explorer">https://github.com/groveco/django-sql-explorer</a></p>
-<p><code>SQL</code> 运行查询辅助工具</p>
-<h4 id="19-django-import-export"><a href="#19-django-import-export" class="headerlink" title="19 django-import-export"></a>19 django-import-export</h4><p><a href="https://github.com/django-import-export/django-import-export">https://github.com/django-import-export/django-import-export</a></p>
-<p>数据导入导出</p>
-<h4 id="20-django-compressor"><a href="#20-django-compressor" class="headerlink" title="20 django-compressor"></a>20 django-compressor</h4><p><a href="https://django-compressor.readthedocs.io/en/stable/">https://django-compressor.readthedocs.io/en/stable/</a></p>
-<p>合并静态资源，减少网络请求，一般使用在 <code>django admin</code> 中。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Django</tag>
       </tags>
   </entry>
   <entry>
