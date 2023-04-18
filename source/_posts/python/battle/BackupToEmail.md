@@ -150,7 +150,6 @@ def zip_files():
 [2017-04-14 12:00:02,299] INFO : send 20170414120001 backup files success
 [2017-04-14 15:01:04,696] ERROR : send 20170414150001 failed [Errno 110] Connection timed out
 [2017-04-14 15:01:05,401] INFO : send 20170414150001 backup files success
-
 ```
 
 #### 3.4 定时处理

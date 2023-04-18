@@ -21,15 +21,15 @@ date: 2020-03-03 22:07:53
 
 点击更新进入表单页面，我设置了 `state` 的初始值
 
-```
-  state = {
-    initialValues: {},
-  };
+```javascript
+state = {
+  initialValues: {},
+};
 ```
 
 然后异步请求，请求到结果后，需要重置 `initialValues`，但是根据 `antd` 的文档
 
-```
+```javascript
 initialValue 表单默认值，只有初始化以及重置时生效
 ```
 

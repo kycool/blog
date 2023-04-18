@@ -10,7 +10,7 @@ date: 2015-06-05 18:56:35
 
 ### 1 背景
 
-前端任务打包工具选用的是 `gulp`, 当时选用 `gulp` 也是偶然，在使用 `grunt` 初期，翻阅 `dailyjs.com` 时发现一片文章着重介绍了 `gulp`, 甚至还预言是 `grunt` 的劲敌，好奇心驱使，确实发现，`gulp` 的流的概念更人性化，看着当时写的 `grunt` 配置文件，不忍直视<!--more-->
+前端任务打包工具选用的是 `gulp`, 当时选用 `gulp` 也是偶然，在使用 `grunt` 初期，翻阅 `dailyjs.com` 时发现一片文章着重介绍了 `gulp`, 甚至还预言是 `grunt` 的劲敌，好奇心驱使，确实发现，`gulp` 的流的概念更人性化，看着当时写的 `grunt` 配置文件，不忍直视 <!--more-->
 
 由于项目的不断迭代，前端的任务也在不断的迭代，任务越来越多，没有优化前，全部的任务都在一个单独的 `gulpfile.js` 中，后来随着时间的推移，发现修改一个任务时，查询好麻烦，五百行左右的代码让人烦躁，代码结构和 <https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md> 如出一辙
 
