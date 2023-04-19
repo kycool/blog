@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Medium | 非订阅下阅读文章</title>
-    <url>/posts/40149/</url>
-    <content><![CDATA[<p>在不用订阅的情况下，不受限制的阅读文章，我一般都是使用 PC 进行阅读，因为宽屏看东西，比较爽。<span id="more"></span>列举下方法</p>
-<h3 id="1-chrome-使用无痕模式"><a href="#1-chrome-使用无痕模式" class="headerlink" title="1 chrome 使用无痕模式"></a>1 chrome 使用无痕模式</h3><p>复制链接地址到无痕窗口打开，即可正常阅读。</p>
-<p>缺点：每次阅读文章都需要走这样一篇流程，有些浪费功夫，对于我这样的 <code>medium</code> 重度用户，心态是要崩掉的。但是如果只是偶尔阅读下，可以这样操作。</p>
-<h3 id="2-使用插件：medium-unlimited"><a href="#2-使用插件：medium-unlimited" class="headerlink" title="2 使用插件：medium-unlimited"></a>2 使用插件：medium-unlimited</h3><p>地址：<a href="https://github.com/manojVivek/medium-unlimited">https://github.com/manojVivek/medium-unlimited</a></p>
-<p>安装后，即可顺滑流畅的享受阅读。</p>
-<p>缺点：受浏览器限制，其实这个也不算是什么缺点，毕竟 <code>chrome</code> 和 <code>firefox</code> 算是很不错的浏览器了。</p>
-]]></content>
-      <categories>
-        <category>杂记</category>
-      </categories>
-      <tags>
-        <tag>Medium</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Mac-解锁网易云置灰音乐</title>
     <url>/posts/41185/</url>
     <content><![CDATA[<p>我的网易云黑胶会员 VIP 到期了，暂时不想续期，找了个法子解锁置灰的歌，后面再想想续期的事情。解锁的原理比较简单，劫持网易云音乐客户端的请求，打到代理服务中去，代理服务会自动解析，如果有些歌听不了，会自动请求其他音源进行替换，这个大家都懂的。下面记录下步骤。<span id="more"></span></p>
@@ -52,6 +35,107 @@
       </categories>
       <tags>
         <tag>Mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Medium | 非订阅下阅读文章</title>
+    <url>/posts/40149/</url>
+    <content><![CDATA[<p>在不用订阅的情况下，不受限制的阅读文章，我一般都是使用 PC 进行阅读，因为宽屏看东西，比较爽。<span id="more"></span>列举下方法</p>
+<h3 id="1-chrome-使用无痕模式"><a href="#1-chrome-使用无痕模式" class="headerlink" title="1 chrome 使用无痕模式"></a>1 chrome 使用无痕模式</h3><p>复制链接地址到无痕窗口打开，即可正常阅读。</p>
+<p>缺点：每次阅读文章都需要走这样一篇流程，有些浪费功夫，对于我这样的 <code>medium</code> 重度用户，心态是要崩掉的。但是如果只是偶尔阅读下，可以这样操作。</p>
+<h3 id="2-使用插件：medium-unlimited"><a href="#2-使用插件：medium-unlimited" class="headerlink" title="2 使用插件：medium-unlimited"></a>2 使用插件：medium-unlimited</h3><p>地址：<a href="https://github.com/manojVivek/medium-unlimited">https://github.com/manojVivek/medium-unlimited</a></p>
+<p>安装后，即可顺滑流畅的享受阅读。</p>
+<p>缺点：受浏览器限制，其实这个也不算是什么缺点，毕竟 <code>chrome</code> 和 <code>firefox</code> 算是很不错的浏览器了。</p>
+]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+      <tags>
+        <tag>Medium</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源加速系列之 Github</title>
+    <url>/posts/19128/</url>
+    <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
+<ol>
+<li>改 hosts （亲测差异不大）</li>
+<li>先拉到 gitee，再从 gitee 克隆</li>
+<li>走代理</li>
+</ol>
+<p>我使用了代理，第二种方法不适合我，为什么，一个是自己懒，另外一个就是安装某些软件，这些软件特么的自己写死了 clone 地址（一般都是不能改的），所以果断抛弃，直奔第三种方式</p>
+<!--more-->
+
+<h3 id="2-执行方法"><a href="#2-执行方法" class="headerlink" title="2 执行方法"></a>2 执行方法</h3><p><strong>走代理，你特么的需要个梯子呀</strong></p>
+<p>我使用的是 ss 服务，看图说话</p>
+<p><img src="/posts/19128/addGithubSpeed_ssproxy.png" alt="ssproxy.png"></p>
+<p>很清晰，没毛病，然后进行下一步</p>
+<p>不同的协议他的代理配置各不相同</p>
+<ul>
+<li><code>core.gitproxy</code>  用于  <code>git://</code>  协议</li>
+<li><code>http.proxy</code>  用于  <code>http://</code>  协议</li>
+<li><code>https.proxy</code>  用于  <code>https://</code>  协议</li>
+</ul>
+<p>全局设置 git 的配置</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"># 这里是针对 http 和 https 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> http<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> https<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line"></span><br><span class="line"># 这里是针对 git 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> core<span class="variable">.gitproxy</span> <span class="string">&quot;git-proxy&quot;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> socks<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置完后, 看下 git 的全局配置 <code>git config --global --list</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">user.name=xxxx</span><br><span class="line">user.email=xxxxx@gmail.com</span><br><span class="line">core.excludesfile=/Users/kycool/.gitignore_global</span><br><span class="line">core.gitproxy=git-proxy</span><br><span class="line">difftool.sourcetree.cmd=opendiff <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span></span><br><span class="line">difftool.sourcetree.path=</span><br><span class="line">mergetool.sourcetree.cmd=/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span> -ancestor <span class="string">&quot;$BASE&quot;</span> -merge <span class="string">&quot;$MERGED&quot;</span></span><br><span class="line">mergetool.sourcetree.trustexitcode=true</span><br><span class="line">commit.template=/Users/kycool/.stCommitMsg</span><br><span class="line">http.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">https.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">socks.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br></pre></td></tr></table></figure>
+
+<p>如果后面想删掉这些配置，则可以执行以下命令</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">git config --<span class="keyword">global</span> --unset 键</span><br></pre></td></tr></table></figure>
+
+<p>添加 ssh 配置，在 <code>.ssh/config</code> 文件中添加</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">port <span class="number">22</span></span><br><span class="line">UseKeychain yes</span><br><span class="line">IdentityFile /Users/kycool/.ssh/id_rsa</span><br><span class="line">ProxyCommand nc -v -x <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span> %h %p</span><br></pre></td></tr></table></figure>
+
+<p>好了，到享受的时候了，我测试了 git 协议和 https 协议</p>
+<h3 id="3-克隆测试"><a href="#3-克隆测试" class="headerlink" title="3 克隆测试"></a>3 克隆测试</h3><p><strong>git 协议</strong>: clone antd-pro</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:ant-design/ant-design-pro.git</span><br><span class="line">Cloning into <span class="string">&#x27;ant-design-pro&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">31</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">31</span>/<span class="number">31</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">29</span>/<span class="number">29</span>), done.</span><br><span class="line">remote: Total <span class="number">18085</span> (delta <span class="number">9</span>), reused <span class="number">14</span> (delta <span class="number">2</span>), pack-reused <span class="number">18054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">18085</span>/<span class="number">18085</span>), <span class="number">6.02</span> MiB | <span class="number">299.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">12239</span>/<span class="number">12239</span>), done.</span><br></pre></td></tr></table></figure>
+
+<p>从来没有见过的速度，几乎是秒杀</p>
+<p><strong>https 协议</strong>: hexo init mm</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ hexo init mm</span><br><span class="line">INFO  Cloning hexo-starter https://github.com/hexojs/hexo-starter.git</span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">30</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">30</span>/<span class="number">30</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">24</span>/<span class="number">24</span>), done.</span><br><span class="line">remote: Total <span class="number">161</span> (delta <span class="number">12</span>), reused <span class="number">12</span> (delta <span class="number">4</span>), pack-reused <span class="number">131</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">161</span>/<span class="number">161</span>), <span class="number">31.79</span> KiB | <span class="number">206.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">74</span>/<span class="number">74</span>), done.</span><br><span class="line">Submodule <span class="string">&#x27;themes/landscape&#x27;</span> (https://github.com/hexojs/hexo-theme-landscape.git) registered <span class="keyword">for</span> path <span class="string">&#x27;themes/landscape&#x27;</span></span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm/themes/landscape&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">9</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Total <span class="number">1063</span> (delta <span class="number">1</span>), reused <span class="number">1</span> (delta <span class="number">0</span>), pack-reused <span class="number">1054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">1063</span>/<span class="number">1063</span>), <span class="number">3.22</span> MiB | <span class="number">217.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">582</span>/<span class="number">582</span>), done.</span><br><span class="line">Submodule path <span class="string">&#x27;themes/landscape&#x27;</span>: checked out <span class="string">&#x27;73a23c51f8487cfcd7c6deec96ccc7543960d350&#x27;</span></span><br><span class="line">INFO  Install dependencies</span><br></pre></td></tr></table></figure>
+
+<p>速度和上面一个几乎不相上下。</p>
+<p>测试的速度是不断变化的，我观察有瞬间跑到 600 KiB&#x2F;s，我估摸着如果代理服务器的带宽牛逼的话，那速度想都不敢想。</p>
+<h3 id="4-不足的地方"><a href="#4-不足的地方" class="headerlink" title="4 不足的地方"></a>4 不足的地方</h3><p>这里面的哪一种方法都是有些不足的，梯子偶尔也会抽风，因为是我买的别人家的服务，这种保障不能主观控制，抽风就回到解放前了。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>本地开发使用 https</title>
+    <url>/posts/32953/</url>
+    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
+<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
+<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
+<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
+
+<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
+
+<p>添加 nginx 配置文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
+<p><img src="/posts/32953/mkcert.png" alt="mkcert.png"></p>
+]]></content>
+      <categories>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>https</tag>
       </tags>
   </entry>
   <entry>
@@ -202,15 +286,16 @@
   <entry>
     <title>Debian | Media change please insert the disc labeled</title>
     <url>/posts/20380/</url>
-    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错</p>
-<span id="more"></span>
-
+    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错 <span id="more"></span></p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><code>apt update</code> 执行时，报以下错误</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"></span><br><span class="line">media change: please insert the disc labeled</span><br><span class="line">Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter</span><br></pre></td></tr></table></figure>
 
-<p>查看下 <code>/etc/apt/sources.list</code></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>错误信息通常出现在使用基于 <code>Debian</code> 或 <code>Ubuntu</code> 的 Linux 发行版时，出现这个错误的原因是 <code>/etc/apt/sources.list</code> 文件中仍然保留有光盘 <code>（CD/DVD）</code> 源，导致系统在尝试安装软件包或更新时试图从光盘源读取数据。</p>
+<p>为了解决这个问题，需要编辑 <code>/etc/apt/sources.list</code> 文件，注释掉或删除与光盘源相关的行。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>查看下 <code>/etc/apt/sources.list</code></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line">deb cdrom:[Debian GNU/Linux <span class="number">10.9</span><span class="number">.0</span> _Buster_ - Official amd64 DVD Binary-<span class="number">1</span> <span class="number">20210327</span>-<span class="number">10</span>:<span class="number">39</span>]/ buster contrib main</span><br><span class="line"></span><br><span class="line">deb http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line">deb-src http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br></pre></td></tr></table></figure>
 
-<p>果断把包含 <code>deb cdrom</code> 这行给注释掉，然后又重新把 <code>apt</code> 源设置成清华源，修改后的文件</p>
+<p>注释掉与光盘源相关的行，通常以 <code>deb cdrom:</code> 开头。<br>这里即把包含 <code>deb cdrom:</code> 这行给注释掉，为了加快更新速度，把 <code>apt</code> 源设置成清华源，修改后的文件</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
 
 <p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
@@ -319,23 +404,50 @@
     <title>Linux 不同的发行版设置静态 IP</title>
     <url>/posts/29624/</url>
     <content><![CDATA[<p>近来在折腾本地服务器，为了方式每次重启 IP 地址的变化，所以要给机器设置静态 IP <span id="more"></span></p>
-<h2 id="一-不同发行版静态-IP-设置"><a href="#一-不同发行版静态-IP-设置" class="headerlink" title="一 不同发行版静态 IP 设置"></a>一 不同发行版静态 IP 设置</h2><h3 id="1-Centos-设置静态-IP"><a href="#1-Centos-设置静态-IP" class="headerlink" title="1 Centos 设置静态 IP"></a>1 Centos 设置静态 IP</h3><h4 id="修改网络配置"><a href="#修改网络配置" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">vi <span class="regexp">/etc/</span>sysconfig<span class="regexp">/network-scripts/i</span>fcfg-eth192</span><br></pre></td></tr></table></figure>
+<h2 id="一-不同发行版静态-IP-设置"><a href="#一-不同发行版静态-IP-设置" class="headerlink" title="一 不同发行版静态 IP 设置"></a>一 不同发行版静态 IP 设置</h2><h3 id="1-Centos-设置静态-IP"><a href="#1-Centos-设置静态-IP" class="headerlink" title="1 Centos 设置静态 IP"></a>1 Centos 设置静态 IP</h3><h4 id="1-1-找出需要设置静态-IP-的网络接口名称"><a href="#1-1-找出需要设置静态-IP-的网络接口名称" class="headerlink" title="1.1 找出需要设置静态 IP 的网络接口名称"></a>1.1 找出需要设置静态 IP 的网络接口名称</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[isproot@192 ~]$ nmcli device status</span><br><span class="line">DEVICE      TYPE      STATE      CONNECTION</span><br><span class="line">eth192        ethernet  connected  System eth192</span><br><span class="line">virbr0      bridge    connected  virbr0</span><br><span class="line">lo          loopback  unmanaged  --</span><br><span class="line">virbr0-nic  tun       unmanaged  --</span><br></pre></td></tr></table></figure>
 
-<p>修改后的内容如下</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">TYPE</span>=Ethernet</span><br><span class="line"><span class="attr">PROXY_METHOD</span>=none</span><br><span class="line"><span class="attr">BROWSER_ONLY</span>=<span class="literal">no</span></span><br><span class="line"><span class="comment"># 这里可以使用 static 或者 no</span></span><br><span class="line"><span class="attr">BOOTPROTO</span>=none</span><br><span class="line"><span class="attr">DEFROUTE</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV4_FAILURE_FATAL</span>=<span class="literal">no</span></span><br><span class="line"><span class="attr">IPV6INIT</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_AUTOCONF</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_DEFROUTE</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">IPV6_FAILURE_FATAL</span>=<span class="literal">no</span></span><br><span class="line"><span class="attr">IPV6_ADDR_GEN_MODE</span>=stable-privacy</span><br><span class="line"><span class="attr">NAME</span>=ens192</span><br><span class="line"><span class="attr">UUID</span>=cd93f1df-d2d5-<span class="number">4</span>c63-a64c-<span class="number">761</span>e9ee23aae</span><br><span class="line"><span class="attr">DEVICE</span>=ens192</span><br><span class="line"><span class="comment"># 开机启用此配置</span></span><br><span class="line"><span class="attr">ONBOOT</span>=<span class="literal">yes</span></span><br><span class="line"><span class="comment"># 静态 IP</span></span><br><span class="line"><span class="attr">IPADDR</span>=<span class="number">192.168</span>.<span class="number">1.12</span></span><br><span class="line"><span class="comment"># 默认网关</span></span><br><span class="line"><span class="attr">GATEWAY</span>=<span class="number">192.168</span>.<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+<p>可以看到需要设置的接口对应的名称是 <code>eth192</code></p>
+<h4 id="1-2-修改网络接口相关的配置文件"><a href="#1-2-修改网络接口相关的配置文件" class="headerlink" title="1.2 修改网络接口相关的配置文件"></a>1.2 修改网络接口相关的配置文件</h4><p>该文件通常位于 <code>/etc/sysconfig/network-scripts/</code> 目录下，文件名格式为 <code>ifcfg-&lt;接口名称&gt;</code>。例如，如果接口名称为 ens33，需要编辑 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33 文件。使用以下命令打开文件：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">vi <span class="regexp">/etc/</span>sysconfig<span class="regexp">/network-scripts/i</span>fcfg-eth192</span><br></pre></td></tr></table></figure>
 
-<h4 id="重启网络服务"><a href="#重启网络服务" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemctl restart network</span></span><br></pre></td></tr></table></figure>
+<p>然后做以下改动</p>
+<ol>
+<li>找到 <code>BOOTPROTO=dhcp</code> 行，将 <code>dhcp</code> 更改为 <code>static</code> 或 <code>none</code></li>
+<li>在文件末尾添加以下行</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 静态 IP</span></span><br><span class="line">IPADDR=<span class="number">192.168</span><span class="number">.1</span><span class="number">.12</span></span><br><span class="line"><span class="comment"># 默认网关</span></span><br><span class="line">GATEWAY=<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="查看地址"><a href="#查看地址" class="headerlink" title="查看地址"></a>查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[isproot@192 ~]$ ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:51:63:21 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.12/24 brd 192.168.1.255 scope global noprefixroute ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a80:313:6ba6:7ad0:edd0:defe/64 scope global noprefixroute dynamic</span><br><span class="line">       valid_lft 183241sec preferred_lft 96841sec</span><br><span class="line">    inet6 fe80::b6f3:1daa:4b7b:6994/64 scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<p>修改后文件如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line"><span class="comment"># 这里可以使用 static 或者 no</span></span><br><span class="line">BOOTPROTO=none</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens192</span><br><span class="line">UUID=cd93f1df-d2d5-4c63-a64c-761e9ee23aae</span><br><span class="line">DEVICE=ens192</span><br><span class="line"><span class="comment"># 开机启用此配置</span></span><br><span class="line">ONBOOT=yes</span><br><span class="line"><span class="comment"># 静态 IP</span></span><br><span class="line">IPADDR=<span class="number">192.168</span><span class="number">.1</span><span class="number">.12</span></span><br><span class="line"><span class="comment"># 默认网关</span></span><br><span class="line">GATEWAY=<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Debian-设置静态-IP"><a href="#2-Debian-设置静态-IP" class="headerlink" title="2 Debian 设置静态 IP"></a>2 Debian 设置静态 IP</h3><h4 id="修改网络配置-1"><a href="#修改网络配置-1" class="headerlink" title="修改网络配置"></a>修改网络配置</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-重启网络服务"><a href="#1-3-重启网络服务" class="headerlink" title="1.3 重启网络服务"></a>1.3 重启网络服务</h4><p>对于 <code>Centos7</code>:</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemctl restart network</span></span><br></pre></td></tr></table></figure>
 
-<p>修改后的内容如下</p>
+<p>对于 <code>Centos8</code>:</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemctl restart NetworkManager</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-查看地址"><a href="#1-4-查看地址" class="headerlink" title="1.4 查看地址"></a>1.4 查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[isproot@192 ~]$ ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:51:63:21 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.12/24 brd 192.168.1.255 scope global noprefixroute ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a80:313:6ba6:7ad0:edd0:defe/64 scope global noprefixroute dynamic</span><br><span class="line">       valid_lft 183241sec preferred_lft 96841sec</span><br><span class="line">    inet6 fe80::b6f3:1daa:4b7b:6994/64 scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>现在，CentOS 系统应该使用指定的静态 IP 地址进行网络通信。请注意，为了避免 IP 地址冲突，您需要确保分配给 CentOS 系统的静态 IP 地址在本地网络中是唯一的，并且不在 DHCP 服务器的分配范围内</p>
+<h3 id="2-Debian-设置静态-IP"><a href="#2-Debian-设置静态-IP" class="headerlink" title="2 Debian 设置静态 IP"></a>2 Debian 设置静态 IP</h3><h4 id="2-1-找出需要设置静态-IP-的网络接口名称"><a href="#2-1-找出需要设置静态-IP-的网络接口名称" class="headerlink" title="2.1 找出需要设置静态 IP 的网络接口名称"></a>2.1 找出需要设置静态 IP 的网络接口名称</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@debian:~# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:92:2d:16 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.103/24 brd 192.168.1.255 scope global noprefixroute ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::6c5d:abfc:8b6:bd5c/64 scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>将看到类似于 eth0、enp0s3 或 enp192 等的接口名称。请记下要设置静态 IP 的接口名称，这里需要调整的接口即为 <code>eth192</code></p>
+<h4 id="2-2-修改网络配置"><a href="#2-2-修改网络配置" class="headerlink" title="2.2 修改网络配置"></a>2.2 修改网络配置</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
+<p>在文件中找到您要设置静态 IP 的接口。它应该类似于以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">iface eth192 inet dhcp</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>eth192</code> 是网络接口的名称，<code>dhcp</code> 表示该接口使用 <code>DHCP</code> 获取 IP 地址。</p>
+<p>将 <code>dhcp</code> 更改为 <code>static</code>，然后添加 <code>address</code>、<code>netmask</code>、<code>gateway</code> 和 <code>dns-nameservers</code> 参数。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">iface eth0 inet static</span><br><span class="line">    address <span class="number">192.168</span><span class="number">.1</span><span class="number">.11</span></span><br><span class="line">    netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">    gateway <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">    dns-nameservers <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span> <span class="number">8.8</span><span class="number">.4</span><span class="number">.4</span></span><br></pre></td></tr></table></figure>
+
+<p>确保使用适当的 IP 地址、子网掩码、网关和 DNS 服务器替换上述示例中的值。</p>
+<p>修改后文件如下</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file describes the network interfaces available on your system</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">and how to activate them. For more information, see interfaces(5).</span></span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d/*</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The loopback network interface</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The primary network interface</span></span><br><span class="line">allow-hotplug ens192</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">iface ens192 inet dhcp</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置成静态 IP</span></span><br><span class="line">iface ens192 inet static</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 IP</span></span><br><span class="line">address 192.168.1.11</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置子网掩码</span></span><br><span class="line">netmask 255.255.255.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置网关</span></span><br><span class="line">gateway 192.168.1.1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 DNS 服务器，我这里设置成路由器的地址</span></span><br><span class="line">dns-nameservers 192.168.1.1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This is an autoconfigured IPv6 interface</span></span><br><span class="line">iface ens192 inet6 auto</span><br></pre></td></tr></table></figure>
 
-<h4 id="重启网络服务-1"><a href="#重启网络服务-1" class="headerlink" title="重启网络服务"></a>重启网络服务</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">service networking restart</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-3-重启网络服务"><a href="#2-3-重启网络服务" class="headerlink" title="2.3 重启网络服务"></a>2.3 重启网络服务</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">service networking restart</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="查看地址-1"><a href="#查看地址-1" class="headerlink" title="查看地址"></a>查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@debian:~# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:0a:14:07 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.11/24 brd 192.168.1.255 scope global ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a81:c14f:20c:29ff:fe0a:1407/64 scope global dynamic mngtmpaddr</span><br><span class="line">       valid_lft 206755sec preferred_lft 120355sec</span><br><span class="line">    inet6 fe80::20c:29ff:fe0a:1407/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-查看地址"><a href="#2-4-查看地址" class="headerlink" title="2.4 查看地址"></a>2.4 查看地址</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@debian:~# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:0a:14:07 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.11/24 brd 192.168.1.255 scope global ens192</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 2408:8256:a81:c14f:20c:29ff:fe0a:1407/64 scope global dynamic mngtmpaddr</span><br><span class="line">       valid_lft 206755sec preferred_lft 120355sec</span><br><span class="line">    inet6 fe80::20c:29ff:fe0a:1407/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
 
 <h2 id="二-小结"><a href="#二-小结" class="headerlink" title="二 小结"></a>二 小结</h2><p>从配置的过程来看，基本上都是配置文件的目录和配置项不同而已，其他基本上都差不多，毕竟原理都是一样的。</p>
 ]]></content>
@@ -344,90 +456,6 @@
       </categories>
       <tags>
         <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 Github</title>
-    <url>/posts/19128/</url>
-    <content><![CDATA[<h3 id="1-故事发生背景"><a href="#1-故事发生背景" class="headerlink" title="1 故事发生背景"></a>1 故事发生背景</h3><p>这段时间，github 的 clone 快搞死人了，速度慢的一逼，上网看了几种方法<span id="more"></span></p>
-<ol>
-<li>改 hosts （亲测差异不大）</li>
-<li>先拉到 gitee，再从 gitee 克隆</li>
-<li>走代理</li>
-</ol>
-<p>我使用了代理，第二种方法不适合我，为什么，一个是自己懒，另外一个就是安装某些软件，这些软件特么的自己写死了 clone 地址（一般都是不能改的），所以果断抛弃，直奔第三种方式</p>
-<!--more-->
-
-<h3 id="2-执行方法"><a href="#2-执行方法" class="headerlink" title="2 执行方法"></a>2 执行方法</h3><p><strong>走代理，你特么的需要个梯子呀</strong></p>
-<p>我使用的是 ss 服务，看图说话</p>
-<p><img src="/posts/19128/addGithubSpeed_ssproxy.png" alt="ssproxy.png"></p>
-<p>很清晰，没毛病，然后进行下一步</p>
-<p>不同的协议他的代理配置各不相同</p>
-<ul>
-<li><code>core.gitproxy</code>  用于  <code>git://</code>  协议</li>
-<li><code>http.proxy</code>  用于  <code>http://</code>  协议</li>
-<li><code>https.proxy</code>  用于  <code>https://</code>  协议</li>
-</ul>
-<p>全局设置 git 的配置</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"># 这里是针对 http 和 https 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> http<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> https<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br><span class="line"></span><br><span class="line"># 这里是针对 git 协议的</span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> core<span class="variable">.gitproxy</span> <span class="string">&quot;git-proxy&quot;</span></span><br><span class="line">git <span class="keyword">config</span> --<span class="keyword">global</span> socks<span class="variable">.proxy</span> &#x27;socks5:<span class="comment">//127.0.0.1:1086&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>设置完后, 看下 git 的全局配置 <code>git config --global --list</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">user.name=xxxx</span><br><span class="line">user.email=xxxxx@gmail.com</span><br><span class="line">core.excludesfile=/Users/kycool/.gitignore_global</span><br><span class="line">core.gitproxy=git-proxy</span><br><span class="line">difftool.sourcetree.cmd=opendiff <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span></span><br><span class="line">difftool.sourcetree.path=</span><br><span class="line">mergetool.sourcetree.cmd=/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh <span class="string">&quot;$LOCAL&quot;</span> <span class="string">&quot;$REMOTE&quot;</span> -ancestor <span class="string">&quot;$BASE&quot;</span> -merge <span class="string">&quot;$MERGED&quot;</span></span><br><span class="line">mergetool.sourcetree.trustexitcode=true</span><br><span class="line">commit.template=/Users/kycool/.stCommitMsg</span><br><span class="line">http.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">https.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br><span class="line">socks.proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span></span><br></pre></td></tr></table></figure>
-
-<p>如果后面想删掉这些配置，则可以执行以下命令</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">git config --<span class="keyword">global</span> --unset 键</span><br></pre></td></tr></table></figure>
-
-<p>添加 ssh 配置，在 <code>.ssh/config</code> 文件中添加</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">port <span class="number">22</span></span><br><span class="line">UseKeychain yes</span><br><span class="line">IdentityFile /Users/kycool/.ssh/id_rsa</span><br><span class="line">ProxyCommand nc -v -x <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1086</span> %h %p</span><br></pre></td></tr></table></figure>
-
-<p>好了，到享受的时候了，我测试了 git 协议和 https 协议</p>
-<h3 id="3-克隆测试"><a href="#3-克隆测试" class="headerlink" title="3 克隆测试"></a>3 克隆测试</h3><p><strong>git 协议</strong>: clone antd-pro</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:ant-design/ant-design-pro.git</span><br><span class="line">Cloning into <span class="string">&#x27;ant-design-pro&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">31</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">31</span>/<span class="number">31</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">29</span>/<span class="number">29</span>), done.</span><br><span class="line">remote: Total <span class="number">18085</span> (delta <span class="number">9</span>), reused <span class="number">14</span> (delta <span class="number">2</span>), pack-reused <span class="number">18054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">18085</span>/<span class="number">18085</span>), <span class="number">6.02</span> MiB | <span class="number">299.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">12239</span>/<span class="number">12239</span>), done.</span><br></pre></td></tr></table></figure>
-
-<p>从来没有见过的速度，几乎是秒杀</p>
-<p><strong>https 协议</strong>: hexo init mm</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">$ hexo init mm</span><br><span class="line">INFO  Cloning hexo-starter https://github.com/hexojs/hexo-starter.git</span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">30</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">30</span>/<span class="number">30</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">24</span>/<span class="number">24</span>), done.</span><br><span class="line">remote: Total <span class="number">161</span> (delta <span class="number">12</span>), reused <span class="number">12</span> (delta <span class="number">4</span>), pack-reused <span class="number">131</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">161</span>/<span class="number">161</span>), <span class="number">31.79</span> KiB | <span class="number">206.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">74</span>/<span class="number">74</span>), done.</span><br><span class="line">Submodule <span class="string">&#x27;themes/landscape&#x27;</span> (https://github.com/hexojs/hexo-theme-landscape.git) registered <span class="keyword">for</span> path <span class="string">&#x27;themes/landscape&#x27;</span></span><br><span class="line">Cloning into <span class="string">&#x27;/Users/kycool/Documents/test/mm/themes/landscape&#x27;</span>...</span><br><span class="line">remote: Enumerating objects: <span class="number">9</span>, done.</span><br><span class="line">remote: Counting objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Compressing objects: <span class="number">100</span>% (<span class="number">9</span>/<span class="number">9</span>), done.</span><br><span class="line">remote: Total <span class="number">1063</span> (delta <span class="number">1</span>), reused <span class="number">1</span> (delta <span class="number">0</span>), pack-reused <span class="number">1054</span></span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">1063</span>/<span class="number">1063</span>), <span class="number">3.22</span> MiB | <span class="number">217.00</span> KiB/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">582</span>/<span class="number">582</span>), done.</span><br><span class="line">Submodule path <span class="string">&#x27;themes/landscape&#x27;</span>: checked out <span class="string">&#x27;73a23c51f8487cfcd7c6deec96ccc7543960d350&#x27;</span></span><br><span class="line">INFO  Install dependencies</span><br></pre></td></tr></table></figure>
-
-<p>速度和上面一个几乎不相上下。</p>
-<p>测试的速度是不断变化的，我观察有瞬间跑到 600 KiB&#x2F;s，我估摸着如果代理服务器的带宽牛逼的话，那速度想都不敢想。</p>
-<h3 id="4-不足的地方"><a href="#4-不足的地方" class="headerlink" title="4 不足的地方"></a>4 不足的地方</h3><p>这里面的哪一种方法都是有些不足的，梯子偶尔也会抽风，因为是我买的别人家的服务，这种保障不能主观控制，抽风就回到解放前了。</p>
-]]></content>
-      <categories>
-        <category>资源加速</category>
-      </categories>
-      <tags>
-        <tag>加速</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>本地开发使用 https</title>
-    <url>/posts/32953/</url>
-    <content><![CDATA[<p>这阵子本地开发测试，需要本地可以使用 HTTPS 证书，找到了 <code>mkcert</code> 这个傻瓜式的工具（<a href="https://github.com/FiloSottile/mkcert">https://github.com/FiloSottile/mkcert</a>),</p>
-<p>mkcert 设计很简单，优雅，隐藏了几乎所有生成 TLS 证书所必须的知识，它适用于任何域名，主机名，IP，包括 localhost，但是切记，只能在本地使用。<span id="more"></span></p>
-<p>证书是由你自己的私有 CA 签发，当你运行 <code>mkcert-install</code> 会自动配置这些信任，因此，当浏览器访问时，就会显示安全标识。</p>
-<p>与 OpenSSL 不同的是，不需要为每个证书配置很多选项。mkcert 最主要的功能是作为开发者工具，聚焦于让本地环境配置 TLS 证书变得简单高效。</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mkcert</span><br><span class="line">brew install nss # if you use Firefox</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2 使用"></a>2 使用</h3><p>您需要首先在系统信任库中安装本地 CA.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mkcert -install</span></span><br><span class="line"></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line">The local CA is already installed in the system trust store! 👍</span><br></pre></td></tr></table></figure>
-
-<p>完成后，可以给自己的本地域名生成证书了，生成证书很简单</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo mkcert kycooltest.cn <span class="string">&#x27;*.kycooltest.cn&#x27;</span> localhost 127.0.0.1 ::1</span></span><br><span class="line">Using the local CA at &quot;/Users/kycool/Library/Application Support/mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;kycooltest.cn&quot;</span><br><span class="line"> - &quot;*.kycooltest.cn&quot;</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"></span><br><span class="line">Reminder: X.509 wildcards only go one level deep, so this won&#x27;t match a.b.kycooltest.cn ℹ️</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./kycooltest.cn+4.pem&quot; and the key at &quot;./kycooltest.cn+4-key.pem&quot; ✅</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-验证"><a href="#3-验证" class="headerlink" title="3 验证"></a>3 验证</h3><p>添加本地 <code>hosts</code> 记录</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> kycooltest.cn</span><br></pre></td></tr></table></figure>
-
-<p>添加 nginx 配置文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen *:<span class="number">443</span> ssl;</span><br><span class="line">    server_name  kycooltest.cn;</span><br><span class="line"></span><br><span class="line">    root /var/www;</span><br><span class="line"></span><br><span class="line">    ssl_certificate /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4.</span>pem;</span><br><span class="line">    ssl_certificate_key /Users/kycool/Documents/caddy/kycooltest.cn+<span class="number">4</span>-key.pem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接着在 浏览器中打开 <code>https://kycooltest.cn</code></p>
-<p><img src="/posts/32953/mkcert.png" alt="mkcert.png"></p>
-]]></content>
-      <categories>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>https</tag>
       </tags>
   </entry>
   <entry>
@@ -456,86 +484,6 @@
       </categories>
       <tags>
         <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 pip</title>
-    <url>/posts/26327/</url>
-    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
-<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">https:</span>//pypi<span class="meta">.org</span>/simple</span><br></pre></td></tr></table></figure>
-
-<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
-<!--more-->
-
-<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
-<ul>
-<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
-<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
-<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
-<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
-</ul>
-<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
-<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -i 镜像源地址 包名称</span><br></pre></td></tr></table></figure>
-
-<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install -i https:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/pypi/</span>simple/ django</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
-<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
-<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
-<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">timeout = <span class="number">60</span></span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-
-<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">You can <span class="built_in">set</span> <span class="keyword">a</span> custom path location <span class="keyword">for</span> this config</span><br><span class="line"><span class="built_in">file</span> <span class="keyword">using</span> <span class="keyword">the</span> environment <span class="built_in">variable</span> PIP_CONFIG_FILE.</span><br></pre></td></tr></table></figure>
-
-<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
-<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
-]]></content>
-      <categories>
-        <category>资源加速</category>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>加速</tag>
-        <tag>镜像</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源加速系列之 pyenv</title>
-    <url>/posts/22631/</url>
-    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
-<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python/</span><br></pre></td></tr></table></figure>
-
-<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
-<p>例如安装 3.6.7 版本，命令行如下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">v=<span class="number">3.6</span>.<span class="number">7</span>;wget https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python<span class="regexp">/$v/</span>Python-<span class="variable">$v</span>.tar.xz -P ~<span class="regexp">/.pyenv/</span>cache/;pyenv install <span class="variable">$v</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">pyenvInstallPython</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">    v=<span class="variable">$1</span></span><br><span class="line">    wget https://npm.taobao.org/mirrors/python/<span class="variable">$v</span>/Python-<span class="variable">$v</span>.tar.xz -P ~/.pyenv/cache/;pyenv install <span class="variable">$v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pyenvInstallPython $*</span><br></pre></td></tr></table></figure>
-
-<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
-<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pyversion</span> 版本号</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">3.6.7</span><br><span class="line">--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225</span><br><span class="line">正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 302 Found</span><br><span class="line">位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]</span><br><span class="line">--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...</span><br><span class="line">正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 200 OK</span><br><span class="line">长度：17178476 (16M) [application/x-xz]</span><br><span class="line">正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”</span><br><span class="line"></span><br><span class="line">Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s</span><br><span class="line"></span><br><span class="line">2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])</span><br><span class="line"></span><br><span class="line">python-build: use openssl@1.1 from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-3.6.7...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">python-build: use zlib from xcode sdk</span><br><span class="line">Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7</span><br></pre></td></tr></table></figure>
-
-<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (set by <span class="regexp">/Users/</span>kycool<span class="regexp">/.pyenv/</span>version)</span><br><span class="line">  <span class="number">3.6</span>.<span class="number">0</span></span><br><span class="line">  <span class="number">3.6</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
-
-<p>可以，后续就可以这样玩了，省时省力。</p>
-]]></content>
-      <categories>
-        <category>资源加速</category>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>加速</tag>
-        <tag>镜像</tag>
       </tags>
   </entry>
   <entry>
@@ -712,6 +660,47 @@
       </tags>
   </entry>
   <entry>
+    <title>Django | Mysql 返回不合法的日期时间对象</title>
+    <url>/posts/26483/</url>
+    <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">38</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line"></span><br><span class="line">Out[<span class="number">38</span>]: SELECT DISTINCT</span><br><span class="line">CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br></pre></td></tr></table></figure>
+
+<p>然后报错</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: Database returned an invalid datetime value. Are time zone definitions <span class="keyword">for</span> your database installed?</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-解决问题"><a href="#2-解决问题" class="headerlink" title="2 解决问题"></a>2 解决问题</h3><p>实际情况，数据库中是有数据，目测月份提取失败；到 mysql 执行了下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| NULL                                                        |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>果然，结果返回令人诧异的 <code>NULL</code></p>
+<p>看了下 Django orm 的 datetimes 官方文档</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Note</span><br><span class="line">This function performs time zone conversions directly <span class="keyword">in</span> the database. As a consequence, your database must be able to interpret the value of tzinfo.tzname(<span class="literal">None</span>). This translates into the following requirements:</span><br><span class="line"></span><br><span class="line">SQLite: no requirements. Conversions are performed <span class="keyword">in</span> Python <span class="keyword">with</span> pytz (installed when you install Django).</span><br><span class="line">PostgreSQL: no requirements (see Time Zones).</span><br><span class="line">Oracle: no requirements (see Choosing a Time Zone File).</span><br><span class="line">MySQL: load the time zone tables <span class="keyword">with</span> mysql_tzinfo_to_sql.</span><br></pre></td></tr></table></figure>
+
+<p>即 mysql 需要使用 mysql_tzinfo_to_sql 载入时区表，接着跳到 <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html">https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html</a></p>
+<p>按照 mysql 官方的文档</p>
+<p><code>For the first invocation syntax, pass the zoneinfo directory path name to mysql_tzinfo_to_sql and send the output into the mysql program. For example:</code></p>
+<p>我需要按照以下命令执行</p>
+<blockquote>
+<p>mysql_tzinfo_to_sql &#x2F;usr&#x2F;share&#x2F;zoneinfo | mysql -u root mysql</p>
+</blockquote>
+<p>然后再次执行上面执行过的转换语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| <span class="number">2018</span>-05-<span class="number">10</span> <span class="number">20</span>:<span class="number">30</span>:<span class="number">00</span>                                         |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>yes，返回了正确的结果；</p>
+<p>在 shell 中 执行数据库查询语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">45</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line">Out[<span class="number">45</span>]: SELECT DISTINCT CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Execution time: <span class="number">0.000591</span>s [Database: default]</span><br><span class="line"></span><br><span class="line">&lt;QuerySet [datetime.datetime(<span class="number">2018</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, tzinfo=&lt;DstTzInfo <span class="string">&#x27;Asia/Shanghai&#x27;</span> CST+<span class="number">8</span>:<span class="number">00</span>:<span class="number">00</span> STD&gt;)]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>正常，so 问题解决，看来还得认真看文档呀</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django | 虚拟字段</title>
     <url>/posts/37001/</url>
     <content><![CDATA[<p>这次写写 Django 模型中的虚拟字段。这个虚拟字段很有意思，在某些场景下，反查可以让业务代码看起来很清晰，大部分时候都是结合 <code>prefetch_related</code> 和 <code>select_related</code> 来使用。<span id="more"></span></p>
@@ -788,44 +777,83 @@
       </tags>
   </entry>
   <entry>
-    <title>Django | Mysql 返回不合法的日期时间对象</title>
-    <url>/posts/26483/</url>
-    <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">38</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line"></span><br><span class="line">Out[<span class="number">38</span>]: SELECT DISTINCT</span><br><span class="line">CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br></pre></td></tr></table></figure>
+    <title>资源加速系列之 pip</title>
+    <url>/posts/26327/</url>
+    <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">https:</span>//pypi<span class="meta">.org</span>/simple</span><br></pre></td></tr></table></figure>
 
-<p>然后报错</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: Database returned an invalid datetime value. Are time zone definitions <span class="keyword">for</span> your database installed?</span><br></pre></td></tr></table></figure>
+<p>中下载，速度较慢，原因不多说了，针对这个情况，国内有些公司和机构做了镜像站，以便国内的用户提高下载速度。</p>
+<!--more-->
 
-<h3 id="2-解决问题"><a href="#2-解决问题" class="headerlink" title="2 解决问题"></a>2 解决问题</h3><p>实际情况，数据库中是有数据，目测月份提取失败；到 mysql 执行了下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| NULL                                                        |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-国内的镜像源列表"><a href="#1-国内的镜像源列表" class="headerlink" title="1 国内的镜像源列表"></a>1 国内的镜像源列表</h3><p>列举几个常用的，少用的就不列了</p>
+<ul>
+<li><a href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> 阿里云</li>
+<li><a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</li>
+<li><a href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> 豆瓣</li>
+<li><a href="https://mirrors.ustc.edu.cn/pypi/web/simple/">https://mirrors.ustc.edu.cn/pypi/web/simple/</a> 中国科学技术大学</li>
+</ul>
+<p>上面的源站都测试过，对我来说，首选阿里云，因为确实快</p>
+<h3 id="2-临时指定镜像源"><a href="#2-临时指定镜像源" class="headerlink" title="2 临时指定镜像源"></a>2 临时指定镜像源</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -i 镜像源地址 包名称</span><br></pre></td></tr></table></figure>
 
-<p>果然，结果返回令人诧异的 <code>NULL</code></p>
-<p>看了下 Django orm 的 datetimes 官方文档</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Note</span><br><span class="line">This function performs time zone conversions directly <span class="keyword">in</span> the database. As a consequence, your database must be able to interpret the value of tzinfo.tzname(<span class="literal">None</span>). This translates into the following requirements:</span><br><span class="line"></span><br><span class="line">SQLite: no requirements. Conversions are performed <span class="keyword">in</span> Python <span class="keyword">with</span> pytz (installed when you install Django).</span><br><span class="line">PostgreSQL: no requirements (see Time Zones).</span><br><span class="line">Oracle: no requirements (see Choosing a Time Zone File).</span><br><span class="line">MySQL: load the time zone tables <span class="keyword">with</span> mysql_tzinfo_to_sql.</span><br></pre></td></tr></table></figure>
+<p>例如安装 <code>django</code>，选用阿里云镜像源，则</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install -i https:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/pypi/</span>simple/ django</span><br></pre></td></tr></table></figure>
 
-<p>即 mysql 需要使用 mysql_tzinfo_to_sql 载入时区表，接着跳到 <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html">https://dev.mysql.com/doc/refman/8.0/en/mysql-tzinfo-to-sql.html</a></p>
-<p>按照 mysql 官方的文档</p>
-<p><code>For the first invocation syntax, pass the zoneinfo directory path name to mysql_tzinfo_to_sql and send the output into the mysql program. For example:</code></p>
-<p>我需要按照以下命令执行</p>
-<blockquote>
-<p>mysql_tzinfo_to_sql &#x2F;usr&#x2F;share&#x2F;zoneinfo | mysql -u root mysql</p>
-</blockquote>
-<p>然后再次执行上面执行过的转换语句</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mysql root@localhost:py365&gt; select convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>);</span><br><span class="line">+-------------------------------------------------------------+</span><br><span class="line">| convert_tz(<span class="string">&#x27;2018-05-10 12:30:00&#x27;</span>, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>)   |</span><br><span class="line">|-------------------------------------------------------------|</span><br><span class="line">| <span class="number">2018</span>-05-<span class="number">10</span> <span class="number">20</span>:<span class="number">30</span>:<span class="number">00</span>                                         |</span><br><span class="line">+-------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-全局设置镜像源"><a href="#3-全局设置镜像源" class="headerlink" title="3 全局设置镜像源"></a>3 全局设置镜像源</h3><p>我个人使用的是 mac，步骤：</p>
+<p>1 在用户主目录下 <code>~/.config</code> 中新建 <code>pip</code> 文件夹（也可以直接在用户主目录下建立 <code>.pip</code> 文件夹)</p>
+<p>2 在上一步新建的文件中新建 <code>pip.conf</code></p>
+<p>3 在 <code>pip.conf</code> 文件中添加以下配置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">timeout = <span class="number">60</span></span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
 
-<p>yes，返回了正确的结果；</p>
-<p>在 shell 中 执行数据库查询语句</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">45</span>]: Device.objects.datetimes(<span class="string">&#x27;latest_alarm_time&#x27;</span>, <span class="string">&#x27;month&#x27;</span>)</span><br><span class="line">Out[<span class="number">45</span>]: SELECT DISTINCT CAST(DATE_FORMAT(CONVERT_TZ(`device_device`.`latest_alarm_time`, <span class="string">&#x27;UTC&#x27;</span>, <span class="string">&#x27;Asia/Shanghai&#x27;</span>), <span class="string">&#x27;%Y-%m-01 00:00:00&#x27;</span>) AS DATETIME) AS `datetimefield` FROM `device_device` WHERE `device_device`.`latest_alarm_time` IS NOT NULL ORDER BY `datetimefield` ASC LIMIT <span class="number">21</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Execution time: <span class="number">0.000591</span>s [Database: default]</span><br><span class="line"></span><br><span class="line">&lt;QuerySet [datetime.datetime(<span class="number">2018</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, tzinfo=&lt;DstTzInfo <span class="string">&#x27;Asia/Shanghai&#x27;</span> CST+<span class="number">8</span>:<span class="number">00</span>:<span class="number">00</span> STD&gt;)]&gt;</span><br></pre></td></tr></table></figure>
+<p>可以阅览官方文档：<a href="https://pip.pypa.io/en/stable/user_guide/#config-file">https://pip.pypa.io/en/stable/user_guide/#config-file</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">You can <span class="built_in">set</span> <span class="keyword">a</span> custom path location <span class="keyword">for</span> this config</span><br><span class="line"><span class="built_in">file</span> <span class="keyword">using</span> <span class="keyword">the</span> environment <span class="built_in">variable</span> PIP_CONFIG_FILE.</span><br></pre></td></tr></table></figure>
 
-<p>正常，so 问题解决，看来还得认真看文档呀</p>
+<p>用户可以自定义配置文件路径，配置好环境变量 <code>PIP_CONFIG_FILE</code> 即可。</p>
+<p>后续再安装 <code>python</code> 包都会使用设置好的源，节省时间。</p>
 ]]></content>
       <categories>
+        <category>资源加速</category>
         <category>后端</category>
         <category>Python</category>
       </categories>
       <tags>
-        <tag>Django</tag>
-        <tag>Mysql</tag>
+        <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源加速系列之 pyenv</title>
+    <url>/posts/22631/</url>
+    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
+<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python/</span><br></pre></td></tr></table></figure>
+
+<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
+<p>例如安装 3.6.7 版本，命令行如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">v=<span class="number">3.6</span>.<span class="number">7</span>;wget https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python<span class="regexp">/$v/</span>Python-<span class="variable">$v</span>.tar.xz -P ~<span class="regexp">/.pyenv/</span>cache/;pyenv install <span class="variable">$v</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">pyenvInstallPython</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">    v=<span class="variable">$1</span></span><br><span class="line">    wget https://npm.taobao.org/mirrors/python/<span class="variable">$v</span>/Python-<span class="variable">$v</span>.tar.xz -P ~/.pyenv/cache/;pyenv install <span class="variable">$v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pyenvInstallPython $*</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
+<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pyversion</span> 版本号</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">3.6.7</span><br><span class="line">--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225</span><br><span class="line">正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 302 Found</span><br><span class="line">位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]</span><br><span class="line">--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...</span><br><span class="line">正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 200 OK</span><br><span class="line">长度：17178476 (16M) [application/x-xz]</span><br><span class="line">正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”</span><br><span class="line"></span><br><span class="line">Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s</span><br><span class="line"></span><br><span class="line">2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])</span><br><span class="line"></span><br><span class="line">python-build: use openssl@1.1 from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-3.6.7...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">python-build: use zlib from xcode sdk</span><br><span class="line">Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7</span><br></pre></td></tr></table></figure>
+
+<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (set by <span class="regexp">/Users/</span>kycool<span class="regexp">/.pyenv/</span>version)</span><br><span class="line">  <span class="number">3.6</span>.<span class="number">0</span></span><br><span class="line">  <span class="number">3.6</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>可以，后续就可以这样玩了，省时省力。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
       </tags>
   </entry>
 </search>
