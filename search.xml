@@ -284,30 +284,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Debian | Media change please insert the disc labeled</title>
-    <url>/posts/20380/</url>
-    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错 <span id="more"></span></p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><code>apt update</code> 执行时，报以下错误</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"></span><br><span class="line">media change: please insert the disc labeled</span><br><span class="line">Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>错误信息通常出现在使用基于 <code>Debian</code> 或 <code>Ubuntu</code> 的 Linux 发行版时，出现这个错误的原因是 <code>/etc/apt/sources.list</code> 文件中仍然保留有光盘 <code>（CD/DVD）</code> 源，导致系统在尝试安装软件包或更新时试图从光盘源读取数据。</p>
-<p>为了解决这个问题，需要编辑 <code>/etc/apt/sources.list</code> 文件，注释掉或删除与光盘源相关的行。</p>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>查看下 <code>/etc/apt/sources.list</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line">deb cdrom:[Debian GNU/Linux <span class="number">10.9</span><span class="number">.0</span> _Buster_ - Official amd64 DVD Binary-<span class="number">1</span> <span class="number">20210327</span>-<span class="number">10</span>:<span class="number">39</span>]/ buster contrib main</span><br><span class="line"></span><br><span class="line">deb http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line">deb-src http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br></pre></td></tr></table></figure>
-
-<p>注释掉与光盘源相关的行，通常以 <code>deb cdrom:</code> 开头。<br>这里即把包含 <code>deb cdrom:</code> 这行给注释掉，为了加快更新速度，把 <code>apt</code> 源设置成清华源，修改后的文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
-
-<p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux | 查看服务器登录用户的活动情况</title>
     <url>/posts/10000/</url>
     <content><![CDATA[<p>为了安全，会经常性的查看服务器登录的用户的情况，下面列举常用命令的使用<span id="more"></span></p>
@@ -487,6 +463,45 @@
       </tags>
   </entry>
   <entry>
+    <title>DRF：书写接口的通用流程</title>
+    <url>/posts/11214/</url>
+    <content><![CDATA[<p>描述：书写接口的基本流程</p>
+<span id="more"></span>
+
+<p>在使用 <code>django-restful-framework</code> 写后台接口的业务中，在下通用的做法；</p>
+<blockquote>
+<p>前端数据数据—-&gt;检测(包含限流，认证，权限验证，数据检测)—-&gt;持久化</p>
+</blockquote>
+<p>其中对于限流和权限验证，都可以自定义类解决需求，重点还是在于数据检测，本着不能相信前端输入的数据的原则，要做好数据检测，也不是件轻而易举的事情，毕竟疯子的想法你是猜不透的。</p>
+<p>这里针对数据检测，在这里说说我的通用做法，还是以例说明：</p>
+<h3 id="1-场景：认证服务"><a href="#1-场景：认证服务" class="headerlink" title="1 场景：认证服务"></a>1 场景：认证服务</h3><p>这里只是简单的验证用户，根据用户输入的姓名，身份证号码，手机号码（需要填写手机号码是为了短信验证，这年头，不加点料，都对不起自己），验证输入的信息是否合法，当然这个验证不是很靠谱，只是为了做个例子而已，不用太当真，不然掉进了你是谁，我又是谁的黑洞，那就完蛋了。</p>
+<h3 id="2-业务流程步骤"><a href="#2-业务流程步骤" class="headerlink" title="2 业务流程步骤"></a>2 业务流程步骤</h3><p>说明：代码以伪代码为主</p>
+<h4 id="2-1-准备两个-serializer"><a href="#2-1-准备两个-serializer" class="headerlink" title="2.1 准备两个 serializer"></a>2.1 准备两个 serializer</h4><p>为什么要准备两个 <code>serializer</code>，因为：</p>
+<ul>
+<li>输入的数据结构和你期望返回的数据结构有可能是不一样的</li>
+<li>业务拆分，保持业务独立，清晰</li>
+</ul>
+<p>检测数据的 serializer:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifyForm</span>(serializers.Serializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;验证认证用户输入数据&quot;&quot;&quot;</span></span><br><span class="line">    username = serializers.CharField(max_length=<span class="number">64</span>, min_length=<span class="number">2</span>)</span><br><span class="line">    id_number = serializers.CharField(max_length=<span class="number">18</span>, min_length=<span class="number">15</span>)</span><br><span class="line">    sms_code = serializers.CharField(max_length=<span class="number">6</span>, min_length=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_username</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的用户名不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_id_number</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的身份证号码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_sms_code</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的短信验证码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, attrs</span>):</span><br><span class="line">        <span class="keyword">if</span> 外部服务(username, id_number) 不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, validated_data</span>):</span><br><span class="line">         持久化</span><br><span class="line">         <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
+
+<p>序列化对象的 serializer:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifySerializer</span>(serializers.ModelSerializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;序列化数据&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    你可以做点自己喜欢的事情，啊哈</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Meta</span>:</span><br><span class="line">        model = Verify</span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-书写-views"><a href="#2-2-书写-views" class="headerlink" title="2.2 书写 views"></a>2.2 书写 views</h4><p>针对创建的业务，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">perform_create</span>(<span class="params">self, serializer</span>):</span><br><span class="line">    <span class="keyword">return</span> serializer.save()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, request, *args, **kwargs</span>):</span><br><span class="line">    serializer = VerifyForm(data=request.data, context=&#123;<span class="string">&#x27;request&#x27;</span>: request&#125;)</span><br><span class="line">    <span class="comment"># 检验数据</span></span><br><span class="line">    serializer.is_valid(raise_exception=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 持久化</span></span><br><span class="line">    instance = self.perform_create(serializer)</span><br><span class="line">    <span class="comment"># 序列化数据</span></span><br><span class="line">    serializer = self.get_serializer(instance)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>这种做法是我通常写接口业务的流程，验证检测归验证检测，序列化归序列化，两种类型互不干扰，当然对于简单的业务你可以全部放到同一个 serializer 中，这个根据自己的业务需求走，没有更好，只有合适。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Django</tag>
+        <tag>Django-Rest-Framework</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django | 通用的开发包</title>
     <url>/posts/51719/</url>
     <content><![CDATA[<p>更新时间：2019-12-20 22:05:03</p>
@@ -621,45 +636,6 @@
       </tags>
   </entry>
   <entry>
-    <title>DRF：书写接口的通用流程</title>
-    <url>/posts/11214/</url>
-    <content><![CDATA[<p>描述：书写接口的基本流程</p>
-<span id="more"></span>
-
-<p>在使用 <code>django-restful-framework</code> 写后台接口的业务中，在下通用的做法；</p>
-<blockquote>
-<p>前端数据数据—-&gt;检测(包含限流，认证，权限验证，数据检测)—-&gt;持久化</p>
-</blockquote>
-<p>其中对于限流和权限验证，都可以自定义类解决需求，重点还是在于数据检测，本着不能相信前端输入的数据的原则，要做好数据检测，也不是件轻而易举的事情，毕竟疯子的想法你是猜不透的。</p>
-<p>这里针对数据检测，在这里说说我的通用做法，还是以例说明：</p>
-<h3 id="1-场景：认证服务"><a href="#1-场景：认证服务" class="headerlink" title="1 场景：认证服务"></a>1 场景：认证服务</h3><p>这里只是简单的验证用户，根据用户输入的姓名，身份证号码，手机号码（需要填写手机号码是为了短信验证，这年头，不加点料，都对不起自己），验证输入的信息是否合法，当然这个验证不是很靠谱，只是为了做个例子而已，不用太当真，不然掉进了你是谁，我又是谁的黑洞，那就完蛋了。</p>
-<h3 id="2-业务流程步骤"><a href="#2-业务流程步骤" class="headerlink" title="2 业务流程步骤"></a>2 业务流程步骤</h3><p>说明：代码以伪代码为主</p>
-<h4 id="2-1-准备两个-serializer"><a href="#2-1-准备两个-serializer" class="headerlink" title="2.1 准备两个 serializer"></a>2.1 准备两个 serializer</h4><p>为什么要准备两个 <code>serializer</code>，因为：</p>
-<ul>
-<li>输入的数据结构和你期望返回的数据结构有可能是不一样的</li>
-<li>业务拆分，保持业务独立，清晰</li>
-</ul>
-<p>检测数据的 serializer:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifyForm</span>(serializers.Serializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;验证认证用户输入数据&quot;&quot;&quot;</span></span><br><span class="line">    username = serializers.CharField(max_length=<span class="number">64</span>, min_length=<span class="number">2</span>)</span><br><span class="line">    id_number = serializers.CharField(max_length=<span class="number">18</span>, min_length=<span class="number">15</span>)</span><br><span class="line">    sms_code = serializers.CharField(max_length=<span class="number">6</span>, min_length=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_username</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的用户名不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_id_number</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的身份证号码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate_sms_code</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> 检测输入的短信验证码不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, attrs</span>):</span><br><span class="line">        <span class="keyword">if</span> 外部服务(username, id_number) 不合法:</span><br><span class="line">            <span class="keyword">raise</span> 异常</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, validated_data</span>):</span><br><span class="line">         持久化</span><br><span class="line">         <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
-
-<p>序列化对象的 serializer:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VerifySerializer</span>(serializers.ModelSerializer):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;序列化数据&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    你可以做点自己喜欢的事情，啊哈</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Meta</span>:</span><br><span class="line">        model = Verify</span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-书写-views"><a href="#2-2-书写-views" class="headerlink" title="2.2 书写 views"></a>2.2 书写 views</h4><p>针对创建的业务，示例如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">perform_create</span>(<span class="params">self, serializer</span>):</span><br><span class="line">    <span class="keyword">return</span> serializer.save()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, request, *args, **kwargs</span>):</span><br><span class="line">    serializer = VerifyForm(data=request.data, context=&#123;<span class="string">&#x27;request&#x27;</span>: request&#125;)</span><br><span class="line">    <span class="comment"># 检验数据</span></span><br><span class="line">    serializer.is_valid(raise_exception=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 持久化</span></span><br><span class="line">    instance = self.perform_create(serializer)</span><br><span class="line">    <span class="comment"># 序列化数据</span></span><br><span class="line">    serializer = self.get_serializer(instance)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>这种做法是我通常写接口业务的流程，验证检测归验证检测，序列化归序列化，两种类型互不干扰，当然对于简单的业务你可以全部放到同一个 serializer 中，这个根据自己的业务需求走，没有更好，只有合适。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Django</tag>
-        <tag>Django-Rest-Framework</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Django | Mysql 返回不合法的日期时间对象</title>
     <url>/posts/26483/</url>
     <content><![CDATA[<h3 id="1-错误描述"><a href="#1-错误描述" class="headerlink" title="1 错误描述"></a>1 错误描述</h3><p>在查询数据集中的日期时间对象时</p>
@@ -777,6 +753,42 @@
       </tags>
   </entry>
   <entry>
+    <title>资源加速系列之 pyenv</title>
+    <url>/posts/22631/</url>
+    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
+<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python/</span><br></pre></td></tr></table></figure>
+
+<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
+<p>例如安装 3.6.7 版本，命令行如下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">v=<span class="number">3.6</span>.<span class="number">7</span>;wget https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python<span class="regexp">/$v/</span>Python-<span class="variable">$v</span>.tar.xz -P ~<span class="regexp">/.pyenv/</span>cache/;pyenv install <span class="variable">$v</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">pyenvInstallPython</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">    v=<span class="variable">$1</span></span><br><span class="line">    wget https://npm.taobao.org/mirrors/python/<span class="variable">$v</span>/Python-<span class="variable">$v</span>.tar.xz -P ~/.pyenv/cache/;pyenv install <span class="variable">$v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pyenvInstallPython $*</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
+<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pyversion</span> 版本号</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">3.6.7</span><br><span class="line">--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225</span><br><span class="line">正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 302 Found</span><br><span class="line">位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]</span><br><span class="line">--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...</span><br><span class="line">正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 200 OK</span><br><span class="line">长度：17178476 (16M) [application/x-xz]</span><br><span class="line">正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”</span><br><span class="line"></span><br><span class="line">Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s</span><br><span class="line"></span><br><span class="line">2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])</span><br><span class="line"></span><br><span class="line">python-build: use openssl@1.1 from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-3.6.7...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">python-build: use zlib from xcode sdk</span><br><span class="line">Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7</span><br></pre></td></tr></table></figure>
+
+<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (set by <span class="regexp">/Users/</span>kycool<span class="regexp">/.pyenv/</span>version)</span><br><span class="line">  <span class="number">3.6</span>.<span class="number">0</span></span><br><span class="line">  <span class="number">3.6</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>可以，后续就可以这样玩了，省时省力。</p>
+]]></content>
+      <categories>
+        <category>资源加速</category>
+        <category>后端</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>加速</tag>
+        <tag>镜像</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源加速系列之 pip</title>
     <url>/posts/26327/</url>
     <content><![CDATA[<p>在 <code>python</code> 项目中，安装包时，都会从官方默认的源：<span id="more"></span></p>
@@ -821,39 +833,27 @@
       </tags>
   </entry>
   <entry>
-    <title>资源加速系列之 pyenv</title>
-    <url>/posts/22631/</url>
-    <content><![CDATA[<p>对于 <code>python</code> 相关的业务，我都是使用 <code>pyenv</code>，来管理我本地的 <code>python</code> 版本，由于不同项目的需要，有些项目使用的 <code>python</code> 版本都是不一致，所以本地安装了不同的版本。<span id="more"></span></p>
-<h3 id="1-加速"><a href="#1-加速" class="headerlink" title="1 加速"></a>1 加速</h3><p>刚开始装 <code>python</code>，都是执行 <code>pyenv install 版本号</code> 进行安装，但是发现速度，在国内，你懂得，太慢，所以就去找镜像，我使用了淘宝的镜像，地址如下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python/</span><br></pre></td></tr></table></figure>
+    <title>Debian | Media change please insert the disc labeled</title>
+    <url>/posts/20380/</url>
+    <content><![CDATA[<p>使用 <code>apt install xxx</code> 时，出现下面的报错 <span id="more"></span></p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><code>apt update</code> 执行时，报以下错误</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"></span><br><span class="line">media change: please insert the disc labeled</span><br><span class="line">Debian 10.9.3 - Release amd64 (20210327.10) in the drive /media/cdrom/ and press enter</span><br></pre></td></tr></table></figure>
 
-<p>其实加速就是从镜像地址把指定版本的 <code>python</code> 压缩包下载到 <code>~/.pyenv/cache</code> 下面，然后执行 <code>pyenv install 对应的版本号</code> 即可。</p>
-<p>例如安装 3.6.7 版本，命令行如下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">v=<span class="number">3.6</span>.<span class="number">7</span>;wget https:<span class="regexp">//</span>npm.taobao.org<span class="regexp">/mirrors/</span>python<span class="regexp">/$v/</span>Python-<span class="variable">$v</span>.tar.xz -P ~<span class="regexp">/.pyenv/</span>cache/;pyenv install <span class="variable">$v</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>错误信息通常出现在使用基于 <code>Debian</code> 或 <code>Ubuntu</code> 的 Linux 发行版时，出现这个错误的原因是 <code>/etc/apt/sources.list</code> 文件中仍然保留有光盘 <code>（CD/DVD）</code> 源，导致系统在尝试安装软件包或更新时试图从光盘源读取数据。</p>
+<p>为了解决这个问题，需要编辑 <code>/etc/apt/sources.list</code> 文件，注释掉或删除与光盘源相关的行。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>查看下 <code>/etc/apt/sources.list</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line">deb cdrom:[Debian GNU/Linux <span class="number">10.9</span><span class="number">.0</span> _Buster_ - Official amd64 DVD Binary-<span class="number">1</span> <span class="number">20210327</span>-<span class="number">10</span>:<span class="number">39</span>]/ buster contrib main</span><br><span class="line"></span><br><span class="line">deb http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line">deb-src http://security.debian.org/debian-security buster/updates main contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-做成可执行文件"><a href="#2-做成可执行文件" class="headerlink" title="2 做成可执行文件"></a>2 做成可执行文件</h3><p>我个人是有懒癌的，如果每次安装其他版本，都要这么执行，输入一长串，受不鸟，那就封装成 <code>shell</code> 脚本，脚本如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">pyenvInstallPython</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">    v=<span class="variable">$1</span></span><br><span class="line">    wget https://npm.taobao.org/mirrors/python/<span class="variable">$v</span>/Python-<span class="variable">$v</span>.tar.xz -P ~/.pyenv/cache/;pyenv install <span class="variable">$v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pyenvInstallPython $*</span><br></pre></td></tr></table></figure>
+<p>注释掉与光盘源相关的行，通常以 <code>deb cdrom:</code> 开头。<br>这里即把包含 <code>deb cdrom:</code> 这行给注释掉，为了加快更新速度，把 <code>apt</code> 源设置成清华源，修改后的文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb cdrom:[Debian GNU/Linux 10.9.0 _Buster_ - Official amd64 DVD Binary-1 20210327-10:39]/ buster contrib main</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://security.debian.org/debian-security buster/updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buster-updates, previously known as &#x27;volatile&#x27;</span></span><br><span class="line"><span class="comment"># A network mirror was not selected during install.  The following entries</span></span><br><span class="line"><span class="comment"># are provided as examples, but you should amend them as appropriate</span></span><br><span class="line"><span class="comment"># for your mirror of choice.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># deb http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"><span class="comment"># deb-src http://deb.debian.org/debian/ buster-updates main contrib</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
 
-<p>然后把这个脚本写到可执行文件（我起的名字叫做 <code>pyversion</code>)中，然后把可执行文件移动到可执行目录中（即能在 <code>$PATH</code> 指定的路径中找到这个文件），我个人的做法，在我的用户目录建立了一个 <code>bin</code> 目录（加入到 <code>$PATH</code> 中去），然后把 <code>pyversion</code> 这个可执行文件移动到 <code>~/bin</code> 中去。</p>
-<p>好了，可以了，后面想安装对应的版本，直接在终端中执行</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pyversion</span> 版本号</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3 测试"></a>3 测试</h3><p>例如我要装 3.6.7 版本，在终端执行 <code>pyversion 3.6.7</code>，执行结果：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">3.6.7</span><br><span class="line">--2016-10-22 01:16:10--  https://npm.taobao.org/mirrors/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 npm.taobao.org (npm.taobao.org)... 114.55.80.225</span><br><span class="line">正在连接 npm.taobao.org (npm.taobao.org)|114.55.80.225|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 302 Found</span><br><span class="line">位置：https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz [跟随至新的 URL]</span><br><span class="line">--2016-10-22 01:16:10--  https://cdn.npm.taobao.org/dist/python/3.6.7/Python-3.6.7.tar.xz</span><br><span class="line">正在解析主机 cdn.npm.taobao.org (cdn.npm.taobao.org)... 119.147.111.226, 119.147.111.229, 113.105.168.156, ...</span><br><span class="line">正在连接 cdn.npm.taobao.org (cdn.npm.taobao.org)|119.147.111.226|:443... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... 200 OK</span><br><span class="line">长度：17178476 (16M) [application/x-xz]</span><br><span class="line">正在保存至: “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz”</span><br><span class="line"></span><br><span class="line">Python-3.6.7.tar.xz              100%[========================================================&gt;]  16.38M  8.36MB/s  用时 2.0s</span><br><span class="line"></span><br><span class="line">2016-10-22 01:16:12 (8.36 MB/s) - 已保存 “/Users/kycool/.pyenv/cache/Python-3.6.7.tar.xz” [17178476/17178476])</span><br><span class="line"></span><br><span class="line">python-build: use openssl@1.1 from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-3.6.7...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">python-build: use zlib from xcode sdk</span><br><span class="line">Installed Python-3.6.7 to /Users/kycool/.pyenv/versions/3.6.7</span><br></pre></td></tr></table></figure>
-
-<p>速度果然是杠杠的，再输入 <code>pyenv versions</code> 看下</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (set by <span class="regexp">/Users/</span>kycool<span class="regexp">/.pyenv/</span>version)</span><br><span class="line">  <span class="number">3.6</span>.<span class="number">0</span></span><br><span class="line">  <span class="number">3.6</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
-
-<p>可以，后续就可以这样玩了，省时省力。</p>
+<p>然后执行 <code>apt update</code>，最后重新安装软件成功。</p>
 ]]></content>
       <categories>
-        <category>资源加速</category>
-        <category>后端</category>
-        <category>Python</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>加速</tag>
-        <tag>镜像</tag>
+        <tag>Debian</tag>
       </tags>
   </entry>
 </search>
